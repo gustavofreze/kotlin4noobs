@@ -55,10 +55,4 @@ Licenciado sob [MIT](/LICENSE).
 
 ## Contribuindo
 
-Para iniciar o desenvolvimento, você precisará seguir alguns passos:
-
-- Fork este repositório.
-- Faça um clone do repositório que você fez seu fork.
-- Crie uma branch a partir da branch `main`.
-- Adicione sua contribuição, faça o commit e push.
-- Abra um [pull request](https://github.com/gustavofreze/kotlin4noobs/pulls).
+Siga as [diretrizes de contribuição](doc/readmes/CONTRIBUTING.md) para contribuir com o projeto.

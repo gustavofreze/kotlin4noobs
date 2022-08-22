@@ -55,4 +55,4 @@ Licenciado sob [MIT](/LICENSE).
 
 ## Contribuindo
 
-Siga as [diretrizes de contribuição](doc/readmes/CONTRIBUTING.md) para contribuir com o projeto.
+Siga as [diretrizes de contribuição](CONTRIBUTING.md) para contribuir com o projeto.

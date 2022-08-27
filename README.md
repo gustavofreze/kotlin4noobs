@@ -1,11 +1,17 @@
-# kotlin4noobs
-
 <!--suppress HtmlDeprecatedAttribute -->
 <header>
-    <p align="center"> <img src="doc/images/header-4noobs.svg" alt=""> </p>
+    <p align="center"> <img src="doc/images/header-4noobs.svg" alt="Imagem de header."> </p>
+</header>
+
+<header>
+  <h2 align="center">kotlin4noobs</h2>
+  <h1 align="center"><img src="doc/images/kotlin-logo.svg" alt="Imagem da linguagem." width="100"></h1>
+
 </header>
 
 * [Roadmap](#roadmap)
+    - [A linguagem](#language)
+    - [Configuração de ambiente](#environment)
 * [Licença](#license)
 * [Outros](#others)
 * [Contribuindo](#contributing)
@@ -14,37 +20,30 @@
 
 ## Roadmap
 
-### O que é Kotlin?
-
-[Kotlin](https://kotlinlang.org) é uma linguagem de programação desenvolvida pela JetBrains, e tem características
-como:
-
-- **Multiparadigma**: além de suportar a orientação a objetos, existem features comuns do paradigma funcional.
-- **Multiplataforma**: além de rodar em seu modo nativo, ela também pode ser compilada e executada na própria JVM.
-  Também, é possível escrever em Kotlin e gerar código JavaScript.
-
-### Como configurar o ambiente?
-
-Por executar na JVM, a configuração do ambiente é a mesma que a do Java. Você pode executar sob uma imagem docker, ou,
-com uma instalação local em sua máquina
-([Linux](https://github.com/paulorievrs/java4noobs/blob/master/2%20-%20Ambiente/2.1-Ambiente-Linux.md)
-/[Windows](https://github.com/paulorievrs/java4noobs/blob/master/2%20-%20Ambiente/2.1-Ambiente-Windows.md)).
+<div id='language'></div> 
 
 ### A linguagem
 
-Esta [seção](doc/readmes/SINTAXE.md) descreve a sintaxe básica, operadores, tipos de dados e outros.
+- [Funções](doc/readmes/roadmap/FUNCTIONS.md)
+- [Variáveis](doc/readmes/roadmap/VARIABLES.md)
+- [Tipos de dados](doc/readmes/roadmap/TYPES.md)
+- [Loops](doc/readmes/roadmap/LOOPS.md)
+- [Classes e objetos](doc/readmes/roadmap/CLASS.md)
+- [Expressões condicionais](doc/readmes/roadmap/EXPRESSIONS.md)
 
-### Perguntas frequentes
+<div id='environment'></div> 
 
-Confira à seção de [FAQ](doc/readmes/FAQ.md).
+### Configuração de ambiente
+
+- [Linux](doc/readmes/environment/LINUX.md)
 
 <div id='others'></div> 
 
 ## Outros
 
+- [IDEA](https://www.jetbrains.com/idea/download/#section=linux).
 - [Livros](doc/readmes/BOOKS.md).
 - [POCs em Kotlin](doc/readmes/POCs.md).
-- [IDEs e ferramentas](doc/readmes/TOOLS.md).
 - [Empresas brasileiras que usam Kotlin](https://github.com/Kotlin-BR/kotlin-no-backend).
 
 ## Licença

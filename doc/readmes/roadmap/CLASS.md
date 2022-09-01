@@ -2,6 +2,7 @@
 
 * [Class](#class)
 * [Data class](#data-class)
+* [Enum class](#enum-class)
 * [Abstract class](#abstract-class)
 * [Objects](#objects)
 
@@ -81,6 +82,46 @@ ou usando argumentos nomeados:
 val person = Person(age = 25, name = "Gustavo")
 ```
 
+<div id='enum-class'></div> 
+
+## Enum class
+
+As classes do tipo enum em Kotlin são declaradas usando a palavra-chave `enum`:
+
+```kotlin
+enum class Type {
+    CUSTOMER,
+    EMPLOYEE
+}
+```
+
+Cada constante enum é um objeto. As constantes de enumeração são separadas por vírgulas. Como cada enum é uma instância
+da classe enum, ele pode ser inicializado como:
+
+```kotlin
+enum class Type(val value: String) {
+    CUSTOMER(value),
+    EMPLOYEE(value)
+}
+```
+
+As constantes de enumeração podem declarar suas próprias classes anônimas com seus métodos correspondentes, bem como
+substituir os métodos base:
+
+```kotlin
+enum class Type {
+    CUSTOMER {
+        override fun register() = CUSTOMER
+    },
+
+    EMPLOYEE {
+        override fun register() = EMPLOYEE
+    };
+
+    abstract fun register(): Type
+}
+```
+
 <div id='abstract-class'></div> 
 
 ## Abstract class
@@ -104,6 +145,11 @@ class Person(val age: Int, var name: String = "Desconhecido") : Customer() {
     }
 }
 ```
+
+**Nota**
+> Uma classe enum pode implementar uma interface, mas não pode derivar de uma classe, fornecendo uma implementação
+> comum de membros de interface para todas as entradas ou implementações separadas para cada entrada dentro de sua
+> classe anônima. Isso é feito adicionando as interfaces que você deseja implementar à declaração da classe enum.
 
 <div id='objects'></div> 
 

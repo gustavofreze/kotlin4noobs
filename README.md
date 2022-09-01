@@ -36,6 +36,7 @@
 ### Configuração de ambiente
 
 - [Linux](doc/readmes/environment/LINUX.md)
+- [Online](https://play.kotlinlang.org)
 
 <div id='others'></div> 
 

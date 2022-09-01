@@ -122,6 +122,11 @@ enum class Type {
 }
 ```
 
+**Nota**
+> Uma classe enum pode implementar uma interface, mas não pode derivar de uma classe, fornecendo uma implementação
+> comum de membros de interface para todas as entradas ou implementações separadas para cada entrada dentro de sua
+> classe anônima. Isso é feito adicionando as interfaces que você deseja implementar à declaração da classe enum.
+
 <div id='abstract-class'></div> 
 
 ## Abstract class
@@ -145,11 +150,6 @@ class Person(val age: Int, var name: String = "Desconhecido") : Customer() {
     }
 }
 ```
-
-**Nota**
-> Uma classe enum pode implementar uma interface, mas não pode derivar de uma classe, fornecendo uma implementação
-> comum de membros de interface para todas as entradas ou implementações separadas para cada entrada dentro de sua
-> classe anônima. Isso é feito adicionando as interfaces que você deseja implementar à declaração da classe enum.
 
 <div id='objects'></div> 
 

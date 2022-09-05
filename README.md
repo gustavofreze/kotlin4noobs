@@ -4,7 +4,7 @@
 </header>
 
 <header>
-  <h2 align="center">kotlin4noobs</h2>
+  <h2 align="center">Kotlin4noobs</h2>
   <h1 align="center"><img src="doc/images/kotlin-logo.svg" alt="Imagem da linguagem." width="100"></h1>
 
 </header>

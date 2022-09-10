@@ -76,3 +76,5 @@ O `when` pode ser usado como uma expressão ou como uma instrução. Se for usad
 ramificação correspondente se tornará o valor da expressão geral. Se for usado como uma instrução, os valores de
 ramificações individuais serão ignorados. Assim como com if, cada ramificação pode ser um bloco e seu valor é o valor da
 última expressão do bloco.
+
+Ir para [exceções](EXCEPTIONS.md).

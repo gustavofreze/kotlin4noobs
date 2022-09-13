@@ -41,7 +41,7 @@ while (value > 0) {
 }
 ```
 
-_Você pode testar esse código [online](https://pl.kotl.in/_GWC69-Si)._
+_Você pode testar esse código [online](https://pl.kotl.in/8F5YNLU0W)._
 
 ### Do-while
 
@@ -57,6 +57,6 @@ do {
 } while (value > 0)
 ```
 
-_Você pode testar esse código [online](https://pl.kotl.in/r6xO8tOfn)._
+_Você pode testar esse código [online](https://pl.kotl.in/jmbkQSwMF)._
 
 Ir para [classes e objetos](CLASS.md).

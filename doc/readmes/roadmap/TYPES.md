@@ -135,11 +135,11 @@ Cada tipo de número tem funções auxiliares que convertem de um tipo de nu�
 val value: Double = 9999.999
 
 fun main() {
-    println(value.toFloat())  // Imprime "9999.999".
+    println(value.toFloat()) // Imprime "9999.999".
 }
 ```
 
-_Você pode testar esse código [online](https://pl.kotl.in/fUJJ14_zq)._
+_Você pode testar esse código [online](https://pl.kotl.in/XcmN3AU3P)._
 
 ## Booleans
 

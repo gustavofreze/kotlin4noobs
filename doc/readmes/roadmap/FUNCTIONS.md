@@ -35,7 +35,10 @@ ou usando argumentos nomeados:
 add(augend = 1, addend = 1)
 ```
 
-Usar argumentos nomeados pode ser útil quando uma função tem muitos argumentos e é difícil associar um valor a um
-argumento.
+_Você pode testar esse código [online](https://pl.kotl.in/RjVduWnGr)._
+
+**Nota**
+> Usar argumentos nomeados pode ser útil quando uma função tem muitos argumentos e é difícil associar um valor a um
+> argumento.
 
 Ir para [variáveis](VARIABLES.md).

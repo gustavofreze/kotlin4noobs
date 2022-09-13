@@ -89,7 +89,7 @@ fun main() {
 }
 ```
 
-Você pode testar esse código [online](https://pl.kotl.in/ZNnMuVnMf).
+_Você pode testar esse código [online](https://pl.kotl.in/ZNnMuVnMf)._
 
 **Nota**
 > Quando você inicializa uma variável sem especificação de tipo explícita, o compilador infere automaticamente o tipo
@@ -139,7 +139,7 @@ fun main() {
 }
 ```
 
-Você pode testar esse código [online](https://pl.kotl.in/fUJJ14_zq).
+_Você pode testar esse código [online](https://pl.kotl.in/fUJJ14_zq)._
 
 ## Booleans
 
@@ -172,7 +172,7 @@ fun main() {
 }
 ```
 
-Você pode testar esse código [online](https://pl.kotl.in/Y-qzMlJwj).
+_Você pode testar esse código [online](https://pl.kotl.in/Y-qzMlJwj)._
 
 <div id='strings'></div>
 
@@ -199,7 +199,7 @@ fun main() {
 }
 ```
 
-Você pode testar esse código [online](https://pl.kotl.in/HzzvtZb2F).
+_Você pode testar esse código [online](https://pl.kotl.in/HzzvtZb2F)._
 
 Para criar uma sequêcia de caracteres que abrange várias linhas no arquivo de origem, nós usamos aspas triplas:
 
@@ -219,7 +219,7 @@ fun main() {
 }
 ```
 
-Você pode testar esse código [online](https://pl.kotl.in/x8dJfuIjs).
+_Você pode testar esse código [online](https://pl.kotl.in/x8dJfuIjs)._
 
 Kotlin também oferece suporte a interpolação de strings ou de string templates. Esta é uma maneira mais fácil de
 construir strings dinâmicas do que a concatenação, que é o que usamos em Java. Usando string templates, podemos
@@ -245,18 +245,27 @@ fun main() {
 }
 ```
 
-Você pode testar esse código [online](https://pl.kotl.in/GCWMkEuHf).
+_Você pode testar esse código [online](https://pl.kotl.in/GCWMkEuHf)._
 
 <div id='arrays'></div> 
 
 ## Arrays
 
 Em Kotlin os arrays são representadas pelo tipo `Array`. Para criar um array, use a função `arrayOf()`
-e passe os valores dos itens para ela.
+e passe os valores dos itens para ela:
 
 ```kotlin
 val names = arrayOf("Kotlin", "Java", "PHP")
 val values = arrayOf(1, 2, 3)
+val mixedValues = arrayOf(1, "Kotlin", true, 2.51)
+
+fun main() {
+    println(names.contentToString())       // Imprime "[Kotlin, Java, PHP]".
+    println(values.contentToString())      // Imprime "[1, 2, 3]".
+    println(mixedValues.contentToString()) // Imprime "[1, Kotlin, true, 2.51]".
+}
 ```
+
+_Você pode testar esse código [online](https://pl.kotl.in/RDK1wzTW4)._
 
 Ir para [loops](LOOPS.md).

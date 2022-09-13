@@ -19,6 +19,8 @@ for (value in values) {
 }
 ```
 
+_Você pode testar esse código [online](https://pl.kotl.in/hEp_xK2X8)._
+
 <div id='while'></div> 
 
 ## While
@@ -31,12 +33,15 @@ eles é o tempo de verificação de condição.
 Verifica a condição e, se for satisfeita, executa o corpo e retorna à verificação de condição:
 
 ```kotlin
-val value = 0
+var value = 2
 
 while (value > 0) {
+    println(value)
     value--
 }
 ```
+
+_Você pode testar esse código [online](https://pl.kotl.in/_GWC69-Si)._
 
 ### Do-while
 
@@ -44,9 +49,14 @@ Executa o corpo, e, em seguida, verifica a condição. Se estiver satisfeito, o 
 de `do-while` executa pelo menos uma vez, independentemente da condição:
 
 ```kotlin
+var value = 2
+
 do {
-    val value = null
-} while (value != null)
+    println(value)
+    value--
+} while (value > 0)
 ```
+
+_Você pode testar esse código [online](https://pl.kotl.in/r6xO8tOfn)._
 
 Ir para [classes e objetos](CLASS.md).

@@ -11,7 +11,6 @@ Em Kotlin, `if` é uma expressão, e ela retorna um valor. Portanto, não há op
 ordinário funciona bem nessa função:
 
 ```kotlin
-
 var value = 1
 val other = 5
 
@@ -21,7 +20,6 @@ if (2 < other) value = other
 Com else:
 
 ```kotlin
-
 val value = 1
 val other = 2
 
@@ -32,10 +30,11 @@ if (value >= other) {
 }
 ```
 
+_Você pode testar esse código [online](https://pl.kotl.in/oxoYfp-bN)._
+
 Uma expressão `if` podem ser usada em blocos. Neste caso, a última expressão é o valor de um bloco:
 
 ```kotlin
-
 val value = 1
 val other = 2
 
@@ -47,6 +46,8 @@ val max = if (value > other) {
     other
 }
 ```
+
+_Você pode testar esse código [online](https://pl.kotl.in/AEc7dCRRh)._
 
 **Nota**
 > Se estiver usando `if` como expressão, por exemplo, para retornar seu valor ou atribuí-lo a uma variável, o `else` é
@@ -62,7 +63,6 @@ em linguagens como o PHP. O `when` corresponde seu argumento a todas as ramifica
 condição de ramificação seja satisfeita:
 
 ```kotlin
-
 val value = 3
 
 when (value) {
@@ -71,6 +71,8 @@ when (value) {
     else -> println("O valor é: $value")
 }
 ```
+
+_Você pode testar esse código [online](https://pl.kotl.in/EZYAVJQKf)._
 
 O `when` pode ser usado como uma expressão ou como uma instrução. Se for usado como uma expressão, o valor da primeira
 ramificação correspondente se tornará o valor da expressão geral. Se for usado como uma instrução, os valores de

@@ -63,4 +63,6 @@ fun main() {
 
 _Você pode testar esse código [online](https://pl.kotl.in/2EZqH2QuF)._
 
+<br>
+
 Ir para [tipos de dados](TYPES.md).

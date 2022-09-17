@@ -268,4 +268,6 @@ fun main() {
 
 _Você pode testar esse código [online](https://pl.kotl.in/RDK1wzTW4)._
 
+<br>
+
 Ir para [loops](LOOPS.md).

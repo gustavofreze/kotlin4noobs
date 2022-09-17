@@ -175,4 +175,6 @@ Para se referir ao objeto, use seu nome diretamente:
 Environment.get("KOTLIN")
 ```
 
+<br>
+
 Ir para [expressões condicionais](EXPRESSIONS.md).

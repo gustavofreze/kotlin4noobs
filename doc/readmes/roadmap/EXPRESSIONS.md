@@ -79,4 +79,6 @@ ramificação correspondente se tornará o valor da expressão geral. Se for usa
 ramificações individuais serão ignorados. Assim como com if, cada ramificação pode ser um bloco e seu valor é o valor da
 última expressão do bloco.
 
+<br>
+
 Ir para [exceções](EXCEPTIONS.md).

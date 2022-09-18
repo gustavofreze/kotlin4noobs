@@ -30,10 +30,7 @@ Propriedades em classes Kotlin podem ser declaradas como mutáveis, usando a pal
 ou como somente leitura, usando a palavra-chave `val`:
 
 ```kotlin
-class Person {
-    val age: Int
-    var name: String = "Desconhecido"
-}
+class Person(val age: Int, val name: String)
 ```
 
 Para declarar uma instância dessa classe, basta fazer:
@@ -48,16 +45,18 @@ ou usando argumentos nomeados:
 val person = Person(age = 25, name = "Gustavo")
 ```
 
+_Você pode testar esse código [online](https://pl.kotl.in/TDiA03ZFD)._
+
 <div id='data-class'></div> 
 
 ## Data class
 
 Não é incomum criar classes cujo objetivo principal seja armazenar dados, como,
 [DTOs](https://pt.wikipedia.org/wiki/Objeto_de_Transfer%C3%AAncia_de_Dados).
-Em Kotlin, elas são chamadas de classes de dados e são declaradas usando a palavra-chave `data`:
+Em Kotlin, elas são chamadas classes de dados sendo declaradas usando a palavra-chave `data`:
 
 ```kotlin
-data class Person(val age: Int, var name: String = "Desconhecido")
+data class Person(val age: Int, val name: String)
 ```
 
 O compilador deriva automaticamente os seguintes membros de todas as propriedades declaradas no construtor primário:
@@ -82,6 +81,8 @@ ou usando argumentos nomeados:
 val person = Person(age = 25, name = "Gustavo")
 ```
 
+_Você pode testar esse código [online](https://pl.kotl.in/4W4PATUVR)._
+
 <div id='enum-class'></div> 
 
 ## Enum class
@@ -99,11 +100,13 @@ Cada constante enum é um objeto. As constantes de enumeração são separadas p
 da classe enum, ele pode ser inicializado como:
 
 ```kotlin
-enum class Type(val value: String) {
-    CUSTOMER(value),
-    EMPLOYEE(value)
+enum class Type(val value: Int) {
+    CUSTOMER(1),
+    EMPLOYEE(2)
 }
 ```
+
+_Você pode testar esse código [online](https://pl.kotl.in/00-YikxBE)._
 
 As constantes de enumeração podem declarar suas próprias classes anônimas com seus métodos correspondentes, bem como
 substituir os métodos base:
@@ -121,6 +124,8 @@ enum class Type {
     abstract fun register(): Type
 }
 ```
+
+_Você pode testar esse código [online](https://pl.kotl.in/R8LU2li0v)._
 
 **Nota**
 > Uma classe enum pode implementar uma interface, mas não pode derivar de uma classe, fornecendo uma implementação
@@ -143,13 +148,15 @@ abstract class Customer {
 E na classe que você deseja que estenda a classe abstrata, basta fazer:
 
 ```kotlin
-class Person(val age: Int, var name: String = "Desconhecido") : Customer() {
+class Person(val age: Int, val name: String) : Customer() {
 
     override fun register() {
-        //...
+        println("Registrado %s, %s anos.".format(name, age))
     }
 }
 ```
+
+_Você pode testar esse código [online](https://pl.kotl.in/E2T0nDAiU)._
 
 <div id='objects'></div> 
 

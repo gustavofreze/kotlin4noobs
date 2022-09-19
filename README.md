@@ -12,8 +12,8 @@
 * [Roadmap](#roadmap)
     - [A linguagem](#language)
     - [Configuração de ambiente](#environment)
-* [Licença](#license)
 * [Outros](#others)
+* [Licença](#license)
 * [Contribuindo](#contributing)
 
 <div id='roadmap'></div> 
@@ -50,7 +50,7 @@
 
 ## Licença
 
-Licenciado sob [MIT](/LICENSE).
+Licenciado sob [MIT](LICENSE).
 
 <div id='contributing'></div>
 

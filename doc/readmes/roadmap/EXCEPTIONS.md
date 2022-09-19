@@ -19,8 +19,11 @@ try {
 }
 ```
 
-Pode haver mais de um bloco `catch`.
+_Você pode testar esse código [online](https://pl.kotl.in/wGn1povmB)._
+
+**Nota**
+> Pode haver mais de um bloco `catch`.
 
 <br>
 
-Ir para [roadmap](../../../README.md).
+Ir para [roadmap](../../../README.md#roadmap).

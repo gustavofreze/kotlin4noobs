@@ -50,10 +50,11 @@ então, precisamos usar a palavra-chave `open` para que a herança seja permitid
 
 ```kotlin
 open class Person(val age: Int, val name: String)
-class Driver(val license: String, age: Int, name: String) : Person(age, name)
+
+class Driver(age: Int, name: String, val license: String) : Person(age, name)
 ```
 
-_Você pode testar esse código [online](https://pl.kotl.in/EfJs-NFyX)._
+_Você pode testar esse código [online](https://pl.kotl.in/swgTEKOFu)._
 
 <div id='data-class'></div> 
 

@@ -5,6 +5,7 @@
 * [Enum class](#enum-class)
 * [Abstract class](#abstract-class)
 * [Objects](#objects)
+* [Interfaces](#interfaces)
 
 <div id='class'></div> 
 
@@ -190,6 +191,62 @@ Para se referir ao objeto, use seu nome diretamente:
 ```kotlin
 Environment.get("KOTLIN")
 ```
+
+<div id='interfaces'></div> 
+
+## Interfaces
+
+Interfaces em Kotlin podem conter declarações de métodos abstratos, bem como implementações de métodos. O que as torna
+diferentes das classes abstratas é que as interfaces não podem armazenar o estado. Eles podem ter propriedades, mas elas
+precisam ser abstratas ou fornecer implementações de acessador.
+
+Uma interface é definida usando a palavra-chave `interface`:
+
+```kotlin
+interface Customer {
+    fun register()
+}
+```
+
+Uma interface pode derivar de outras interfaces, o que significa que ela pode fornecer implementações para seus membros
+e declarar novas funções e propriedades:
+
+```kotlin
+interface PremiumCustomer : Customer
+```
+
+Você pode declarar propriedades em interfaces. Uma propriedade declarada em uma interface pode ser abstrata ou fornecer
+implementações para acessadores:
+
+```kotlin
+interface PremiumCustomer : Customer {
+    val minimumLimit: Int
+}
+```
+
+_Você pode testar esse código [online](https://pl.kotl.in/XPntbJUUm)._
+
+O padrão [Delegation](https://en.wikipedia.org/wiki/Delegation_pattern) provou ser uma boa alternativa para a herança de
+implementação, e o Kotlin o suporta nativamente. Uma classe `Person` pode implementar uma interface `Customer`
+delegando todos os seus membros públicos a um
+objeto especificado:
+
+```kotlin
+interface Customer {
+    fun register()
+}
+
+class CustomerAdapter(val name: String) : Customer {
+
+    override fun register() {
+        println("Registrado %s.".format(name, age))
+    }
+}
+
+class Person(customer: Customer) : Customer by customer
+```
+
+_Você pode testar esse código [online](https://pl.kotl.in/UE_2B6z0E)._
 
 <br>
 

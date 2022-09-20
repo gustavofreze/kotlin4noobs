@@ -197,7 +197,9 @@ um objeto que fica dentro de uma classe, como no exemplo abaixo:
 
 ```kotlin
 class Person(val name: String, val age: Int) {
+
     companion object {
+
         fun newborn(name: String): Person {
             return Person(name, 0)
         }

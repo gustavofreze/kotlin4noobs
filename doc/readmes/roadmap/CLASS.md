@@ -45,7 +45,15 @@ ou usando argumentos nomeados:
 val person = Person(age = 25, name = "Gustavo")
 ```
 
-_Você pode testar esse código [online](https://pl.kotl.in/TDiA03ZFD)._
+Por padrão, toda classe que criamos não é aberta para ser herdada por outra,
+então, precisamos usar a palavra-chave `open` para que a herança seja permitida:
+
+```kotlin
+open class Person(val age: Int, val name: String)
+class Driver(val license: String, age: Int, name: String) : Person(age, name)
+```
+
+_Você pode testar esse código [online](https://pl.kotl.in/EfJs-NFyX)._
 
 <div id='data-class'></div> 
 

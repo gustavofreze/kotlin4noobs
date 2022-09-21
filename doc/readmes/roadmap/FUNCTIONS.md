@@ -77,7 +77,7 @@ fun String.screaming(): String = this.uppercase() + "!!!"
 _Você pode testar esse código [online](https://pl.kotl.in/9frrrEcb1)_
 
 **Nota**
-> Como a função faz parte do contexto String, temos acesso ao this, que neste caso está correspondendo à própria string.
+> Como a função faz parte do contexto String, temos acesso ao this, que neste caso está correspondendo a própria string.
 
 <br>
 

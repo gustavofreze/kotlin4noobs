@@ -65,7 +65,7 @@ fun ClassName.newFunctionName(arguments...) {
 ```
 
 Agora vamos extender uma função chamada `screaming` na classe `String`, onde ela irá retornar a própria String em maiúscula 
-e com três pontos de exclamação no final.
+e com três pontos de exclamação no final:
 
 ```kotlin
 fun String.screaming(): String = this.uppercase() + "!!!"
@@ -76,7 +76,7 @@ fun String.screaming(): String = this.uppercase() + "!!!"
 _Você pode testar esse código [online](https://pl.kotl.in/9frrrEcb1)._
 
 **Nota**
-> Como a função faz parte do contexto String, temos acesso ao this, que neste caso está correspondendo a própria string.
+> Como a função faz parte do contexto String, temos acesso ao this, que neste caso está correspondendo a própria String.
 
 <br>
 

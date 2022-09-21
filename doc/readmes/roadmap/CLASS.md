@@ -192,29 +192,27 @@ Para se referir ao objeto, use seu nome diretamente:
 Environment.get("KOTLIN")
 ```
 
-O Kotlin também nos permite criar o que é chamado de **Companion Object**, 
-um objeto que fica dentro de uma classe, como no exemplo abaixo:
+O Kotlin também nos permite criar o que é chamado companion object, um objeto que fica dentro de uma classe. Para isso,
+precisamos usar a palavra-chave `companion object`:
 
 ```kotlin
-class Person(val name: String, val age: Int) {
+class Person(val age: Int, val name: String) {
 
     companion object {
 
-        fun newborn(name: String): Person {
-            return Person(name, 0)
-        }
+        fun newborn(name: String) = Person(age = 0, name = name)
     }
 }
 ```
 
-O Companion Object nos dá a possibilidade de utilizarmos o método newborn 
-através da classe Person sem precisarmos criar uma instância da mesma:
+O companion object nos dá a possibilidade de utilizarmos o método `newborn` através da classe `Person` sem precisarmos
+criar uma instância da mesma:
 
 ```kotlin
-val enzo = Person.newborn("Enzo")
+val person = Person.newborn("Enzo")
 ```
 
-_Você pode testar esse código [online](https://pl.kotl.in/EtuPIDokM)_
+_Você pode testar esse código [online](https://pl.kotl.in/P5V6KMc3R)_
 
 <div id='interfaces'></div> 
 

@@ -48,14 +48,13 @@ _Você pode testar esse código [online](https://pl.kotl.in/fuB8CNime)._
 > Usar argumentos nomeados pode ser útil quando uma função tem muitos argumentos e é difícil associar um valor a um
 > argumento.
 
-<div id='Extensions'></div>
+<div id='extensions'></div>
 
 ## Extensions
 
 É comum alguma hora querermos adicionar uma funcionalidade a mais em algum objeto. 
 
-Pensando nisso, o Kotlin possui o que chamamos de `extensions functions`, que é uma forma de adicionarmos novos comportamentos em algum objeto sem precisarmos fazer alguma modificação no objeto em si ou criar um novo objeto com o 
-novo comportamento.
+Pensando nisso, o Kotlin possui o que chamamos de `extension functions`, que é uma forma de adicionarmos novos comportamentos em algum objeto sem precisarmos fazer alguma modificação no objeto em si ou criar um novo objeto com o novo comportamento.
 
 Para criarmos uma extension function, utilizamos a sintaxe:
 
@@ -74,7 +73,7 @@ fun String.screaming(): String = this.uppercase() + "!!!"
 "Hello World".screaming() // "HELLO WORLD!!!"
 ```
 
-_Você pode testar esse código [online](https://pl.kotl.in/9frrrEcb1)_
+_Você pode testar esse código [online](https://pl.kotl.in/9frrrEcb1)._
 
 **Nota**
 > Como a função faz parte do contexto String, temos acesso ao this, que neste caso está correspondendo a própria string.

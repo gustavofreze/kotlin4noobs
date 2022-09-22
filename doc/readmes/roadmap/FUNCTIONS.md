@@ -52,9 +52,11 @@ _Você pode testar esse código [online](https://pl.kotl.in/fuB8CNime)._
 
 ## Extensions
 
-É comum alguma hora querermos adicionar uma funcionalidade a mais em algum objeto. 
+É comum alguma hora querermos adicionar uma funcionalidade a mais em algum objeto.
 
-Pensando nisso, o Kotlin possui o que chamamos de `extension functions`, que é uma forma de adicionarmos novos comportamentos em algum objeto sem precisarmos fazer alguma modificação no objeto em si ou criar um novo objeto com o novo comportamento.
+Pensando nisso, o Kotlin possui o que chamamos de `extension functions`, que é uma forma de adicionarmos novos
+comportamentos em algum objeto sem precisarmos fazer alguma modificação no objeto ou criar um objeto com o
+novo comportamento.
 
 Para criarmos uma extension function, utilizamos a sintaxe:
 
@@ -64,19 +66,20 @@ fun ClassName.newFunctionName(arguments...) {
 }
 ```
 
-Agora vamos extender uma função chamada `screaming` na classe `String`, onde ela irá retornar a própria String em maiúscula 
-e com três pontos de exclamação no final:
+Agora vamos extender uma função chamada `screaming` na classe `String`, onde ela irá retornar a própria string em
+maiúscula e com três pontos de exclamação no final:
 
 ```kotlin
 fun String.screaming(): String = this.uppercase() + "!!!"
 
-"Hello World".screaming() // "HELLO WORLD!!!"
+"Hello World".screaming()
 ```
 
-_Você pode testar esse código [online](https://pl.kotl.in/9frrrEcb1)._
+_Você pode testar esse código [online](https://pl.kotl.in/vJ2KMqCUv)._
 
 **Nota**
-> Como a função faz parte do contexto String, temos acesso ao this, que neste caso está correspondendo a própria String.
+> Como a função faz parte do contexto String, temos acesso ao `this`, que neste caso está correspondendo a própria
+> String.
 
 <br>
 

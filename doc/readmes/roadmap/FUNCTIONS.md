@@ -1,7 +1,8 @@
 # Funções
 
 * [Sintaxe](#sintaxe)
-* [Extensions](#extensions)
+* [Extensões](#extensions)
+* [Operadores aritméticos](#arithmetic-operators)
 
 <div id='sintaxe'></div>
 
@@ -50,7 +51,7 @@ _Você pode testar esse código [online](https://pl.kotl.in/fuB8CNime)._
 
 <div id='extensions'></div>
 
-## Extensions
+## Extensões
 
 É comum alguma hora querermos adicionar uma funcionalidade a mais em algum objeto.
 
@@ -80,6 +81,30 @@ _Você pode testar esse código [online](https://pl.kotl.in/vJ2KMqCUv)._
 **Nota**
 > Como a função faz parte do contexto String, temos acesso ao `this`, que neste caso está correspondendo a própria
 > String.
+
+<div id='arithmetic-operators'></div>
+
+## Operadores aritméticos
+
+Kotlin permite que você forneça implementações personalizadas para o conjunto predefinido de operadores em tipos. Esses
+operadores têm representação simbólica predefinida como `+` ou `*` e precedência.
+
+As funções são declaradas usando a palavra-chave `operator fun`:
+
+```kotlin
+data class BigNumber(val value: Int) {
+
+    operator fun div(divisor: Int): Int = value / divisor
+
+    operator fun plus(addend: Int): Int = value + addend
+
+    operator fun minus(subtrahend: Int): Int = value - subtrahend
+
+    operator fun times(multiplier: Int): Int = value * multiplier
+}
+```
+
+_Você pode testar esse código [online](https://pl.kotl.in/3xM6IT0Ay)._
 
 <br>
 

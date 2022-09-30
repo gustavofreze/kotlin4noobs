@@ -94,17 +94,17 @@ As funções são declaradas usando a palavra-chave `operator fun`:
 ```kotlin
 data class BigNumber(val value: Int) {
 
-    operator fun div(divisor: Int): Int = value / divisor
+    operator fun div(divisor: BigNumber): Int = value / divisor.value
 
-    operator fun plus(addend: Int): Int = value + addend
+    operator fun plus(addend: BigNumber): Int = value + addend.value
 
-    operator fun minus(subtrahend: Int): Int = value - subtrahend
+    operator fun minus(subtrahend: BigNumber): Int = value - subtrahend.value
 
-    operator fun times(multiplier: Int): Int = value * multiplier
+    operator fun times(multiplier: BigNumber): Int = value * multiplier.value
 }
 ```
 
-_Você pode testar esse código [online](https://pl.kotl.in/3xM6IT0Ay)._
+_Você pode testar esse código [online](https://pl.kotl.in/daW6QGiZg)._
 
 <br>
 

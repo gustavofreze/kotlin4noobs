@@ -3,6 +3,7 @@
 * [Sintaxe](#sintaxe)
 * [Extensões](#extensions)
 * [Operadores aritméticos](#arithmetic-operators)
+* [Funções de alta ordem e lambdas](#high-order-functions-and-lambdas)
 
 <div id='sintaxe'></div>
 
@@ -105,6 +106,67 @@ data class BigNumber(val value: Int) {
 ```
 
 _Você pode testar esse código [online](https://pl.kotl.in/daW6QGiZg)._
+
+<div id='high-order-functions-and-lambdas'></div>
+
+## Funções de alta ordem e lambdas
+
+Em Kotlin as funções são tratadas como _cidadãos de primeira-classe_, isso significa que elas podem ser usadas como
+argumentos ou retornos de funções.
+
+Como Kotlin é uma linguagem estaticamente tipada, precisamos definir o que a função recebe e o que a função retorna.
+Podemos fazer isso usando as function types que a linguagem nos fornece.
+
+```kotlin
+fun discountFactory(ratio: Int): (Double) -> Double {
+    val percentage = ratio.toDouble() / 100
+
+    val discount = fun(value: Double): Double {
+        return value - (percentage * value)
+    }
+
+    return discount
+}
+```
+
+Declaramos uma função chamada `discountFactory` que vai nos retornar uma função que recebe um `Double` e
+retorna um `Double`.
+
+```kotlin
+val discountOf15Percent = discountFactory(15)
+
+var amount = 3459.99
+
+amount = discountOf15Percent(amount)
+println(amount)
+```
+
+Podemos instanciar funções de duas formas: utilizando a expressão lambda ou funções anônimas.
+
+```kotlin
+val plusOneLambda = { i: Int -> i + 1 }
+
+val plusOneAnonymous = fun(i: Int): Int {
+    return i + 1
+}
+```
+
+Podemos invocar as funções com o `operator invoke` ou apenas chamando como uma função normal `f(x)`:
+
+```kotlin
+plusOneLambda.invoke(41)
+plusOneLambda(42)
+```
+
+É possível criar um tipo nomeado para funções usando a palavra-chave `typealias`.
+
+```kotlin
+typealias PlusOne = (Int) -> Int
+
+val plusOneLambda: PlusOne = { i -> i + 1 }
+```
+
+_Você pode testar esse código [online](https://pl.kotl.in/wS1dVy3tT)._
 
 <br>
 

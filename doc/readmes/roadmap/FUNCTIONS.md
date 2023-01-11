@@ -115,7 +115,7 @@ Em Kotlin as funções são tratadas como _cidadãos de primeira-classe_, isso s
 argumentos ou retornos de funções.
 
 Como Kotlin é uma linguagem estaticamente tipada, precisamos definir o que a função recebe e o que a função retorna.
-Podemos fazer isso usando as function types que a linguagem nos fornece.
+Podemos fazer isso usando as _function types_ que a linguagem nos fornece.
 
 ```kotlin
 fun discountFactory(ratio: Int): (Double) -> Double {
@@ -166,7 +166,7 @@ typealias PlusOne = (Int) -> Int
 val plusOneLambda: PlusOne = { i -> i + 1 }
 ```
 
-_Você pode testar esse código [online](https://pl.kotl.in/wS1dVy3tT)._
+_Você pode testar esse código [online](https://pl.kotl.in/RgfsQ2IUe)._
 
 <br>
 

@@ -43,10 +43,10 @@
 
 ## Outros
 
-- [IDEA](https://www.jetbrains.com/idea/download/#section=linux).
-- [Livros](doc/readmes/BOOKS.md).
-- [POCs em Kotlin](doc/readmes/POCs.md).
-- [Empresas brasileiras que usam Kotlin](https://github.com/Kotlin-BR/kotlin-no-backend).
+- [IDEA](https://www.jetbrains.com/idea/download/#section=linux)
+- [Livros](doc/readmes/BOOKS.md)
+- [POCs em Kotlin](doc/readmes/POCs.md)
+- [Empresas brasileiras que usam Kotlin](https://github.com/Kotlin-BR/kotlin-no-backend)
 
 ## Licença
 

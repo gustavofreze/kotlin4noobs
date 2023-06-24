@@ -31,6 +31,7 @@
 - [Classes e objetos](doc/readmes/roadmap/CLASS.md)
 - [Expressões condicionais](doc/readmes/roadmap/EXPRESSIONS.md)
 - [Exceções](doc/readmes/roadmap/EXCEPTIONS.md)
+- [Corrotinas](doc/readmes/roadmap/COROUTINES.md)
 
 <div id='environment'></div> 
 

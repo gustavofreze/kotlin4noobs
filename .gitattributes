@@ -1,3 +1,2 @@
 * linguist-vendored
 *.ruby linguist-vendored=false
-*.kotlin linguist-detectable=true

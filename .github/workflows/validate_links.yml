@@ -21,9 +21,7 @@ jobs:
           ruby-version: 3.0
 
       - name: Install bundle dependencies
-        run: |
-          cd ./
-          bundle install
+        run: bundle install
 
       - name: Run link validation
         run: bundle exec awesome_bot README.md **/*.md --allow-redirect --allow-ssl

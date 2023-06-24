@@ -24,4 +24,4 @@ jobs:
         run: bundle install
 
       - name: Run link validation
-        run: bundle exec awesome_bot README.md doc/readmes/*.md --allow-redirect --allow-ssl
+        run: bundle exec awesome_bot README.md doc/readmes/*.md doc/readmes/roadmap/*.md --allow-redirect --allow-ssl

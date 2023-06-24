@@ -43,7 +43,7 @@ class Language {
     val name = "Kotlin"
 
     fun register() {
-        val template = "Language: %s."
+        val template = "Language <%s>."
         println(template.format(name))
     }
 }
@@ -54,14 +54,13 @@ função `register`. A variável de nível elevado `name` pode ser utilizada em 
 arquivos, enquanto a variável local `template` pode ser utilizada somente na função onde foi declarada:
 
 ```kotlin
-fun main() {
-    val language = Language()
-    language.register()    // Imprime "Language: Kotlin.".
-    println(language.name) // Eu posso acessar a variável name, pois ela é global. Imprime "Kotlin".
-}
+val language = Language()
+
+language.name // Eu posso acessar a variável name, pois ela é global.
+language.register()
 ```
 
-_Você pode testar esse código [online](https://pl.kotl.in/2EZqH2QuF)._
+_Você pode testar esse código [online](https://pl.kotl.in/2-eNuhQuI)._
 
 <br>
 

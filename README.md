@@ -48,6 +48,8 @@
 - [POCs em Kotlin](doc/readmes/POCs.md)
 - [Empresas brasileiras que usam Kotlin](https://github.com/Kotlin-BR/kotlin-no-backend)
 
+<div id='license'></div> 
+
 ## Licença
 
 Licenciado sob [MIT](LICENSE).

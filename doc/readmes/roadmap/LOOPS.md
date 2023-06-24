@@ -19,7 +19,7 @@ for (value in values) {
 }
 ```
 
-_Você pode testar esse código [online](https://pl.kotl.in/hEp_xK2X8)._
+_Você pode testar esse código [online](https://pl.kotl.in/WaFWomLtB)._
 
 <div id='while'></div> 
 
@@ -41,7 +41,7 @@ while (value > 0) {
 }
 ```
 
-_Você pode testar esse código [online](https://pl.kotl.in/8F5YNLU0W)._
+_Você pode testar esse código [online](https://pl.kotl.in/-2BPqA0uf)._
 
 ### Do-while
 
@@ -57,7 +57,7 @@ do {
 } while (value > 0)
 ```
 
-_Você pode testar esse código [online](https://pl.kotl.in/jmbkQSwMF)._
+_Você pode testar esse código [online](https://pl.kotl.in/KphDdxhcj)._
 
 <br>
 

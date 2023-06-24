@@ -80,16 +80,14 @@ val threeBillion = 3000000000
 Cada tipo de número tem funções auxiliares que convertem de um tipo de número para outro:
 
 ```kotlin
-val value: Int = 1234567
+const val value: Int = 1234567
 
-fun main() {
-    println(value.toByte())  // Imprime "-121".
-    println(value.toLong())  // Imprime "1234567".
-    println(value.toShort()) // Imprime "-10617".
-}
+value.toByte()
+value.toLong()
+value.toShort()
 ```
 
-_Você pode testar esse código [online](https://pl.kotl.in/ZNnMuVnMf)._
+_Você pode testar esse código [online](https://pl.kotl.in/KuyHSxdnK)._
 
 **Nota**
 > Quando você inicializa uma variável sem especificação de tipo explícita, o compilador infere automaticamente o tipo
@@ -132,14 +130,12 @@ val withDecimal = 2.123456789
 Cada tipo de número tem funções auxiliares que convertem de um tipo de número para outro:
 
 ```kotlin
-val value: Double = 9999.999
+const val value: Double = 9999.999
 
-fun main() {
-    println(value.toFloat()) // Imprime "9999.999".
-}
+value.toFloat()
 ```
 
-_Você pode testar esse código [online](https://pl.kotl.in/XcmN3AU3P)._
+_Você pode testar esse código [online](https://pl.kotl.in/k5sFsEkfI)._
 
 ## Booleans
 
@@ -156,23 +152,21 @@ O tipo `Boolean` em Kotlin é o mesmo que em Java. As operações de disjunc�
 conjunção `&&` e negação `!`, podem ser executadas em tipos booleanos, como em Java.
 
 ```kotlin
-val one: Int = 1
-val two: Int = 2
-val three: Int = 3
+const val one: Int = 1
+const val two: Int = 2
+const val three: Int = 3
 
-fun main() {
-    println(one < two)                // Imprime "true".
-    println(one > two)                // Imprime "false".
-    println(one <= two)               // Imprime "true".
-    println(one >= two)               // Imprime "false".
-    println(one == two)               // Imprime "false".
-    println(one != three)             // Imprime "true".
-    println(one < two && one < three) // Imprime "true".
-    println(one < two || one < three) // Imprime "true".
-}
+// one < two)                
+// one > two)                
+// one <= two)               
+// one >= two)               
+// one == two)               
+// one != three)             
+// one < two && one < three) 
+// one < two || one < three) 
 ```
 
-_Você pode testar esse código [online](https://pl.kotl.in/Y-qzMlJwj)._
+_Você pode testar esse código [online](https://pl.kotl.in/AHVuyJKyK)._
 
 <div id='strings'></div>
 
@@ -193,13 +187,11 @@ original inalterada:
 ```kotlin
 val name = "Kotlin"
 
-fun main() {
-    println(name.uppercase()) // Cria e imprime um novo objeto String. Imprime "KOTLIN".
-    println(name)             // A string original permanece a mesma. Imprime "Kotlin".
-}
+name.uppercase() // Cria um novo objeto String.
+name             // A string original permanece a mesma.
 ```
 
-_Você pode testar esse código [online](https://pl.kotl.in/HzzvtZb2F)._
+_Você pode testar esse código [online](https://pl.kotl.in/DkGFWBin6)._
 
 Para criar uma sequêcia de caracteres que abrange várias linhas no arquivo de origem, nós usamos aspas triplas:
 
@@ -213,25 +205,17 @@ val json = """
         }
     }
     """
-
-fun main() {
-    println(json)  // Imprime o json.
-}
 ```
 
-_Você pode testar esse código [online](https://pl.kotl.in/x8dJfuIjs)._
+_Você pode testar esse código [online](https://pl.kotl.in/CYxZNp5Cu)._
 
-Kotlin também oferece suporte a interpolação de strings ou de string templates. Esta é uma maneira mais fácil de
+Kotlin também oferece suporte a interpolação de strings ou de string _templates_. Esta é uma maneira mais fácil de
 construir strings dinâmicas do que a concatenação, que é o que usamos em Java. Usando string templates, podemos
 inserir variáveis e expressões em uma string:
 
 ```kotlin
 val kotlin = "Kotlin"
 val template = "$kotlin is a programming language."
-
-fun main() {
-    println(template)  // Imprime "Kotlin is a programming language.".
-}
 ```
 
 Também é possível obter o mesmo resultado usando a função `format`:
@@ -240,12 +224,10 @@ Também é possível obter o mesmo resultado usando a função `format`:
 val kotlin = "Kotlin"
 val template = "%s is a programming language."
 
-fun main() {
-    println(template.format(kotlin))  // Imprime "Kotlin is a programming language.".
-}
+template.format(kotlin)
 ```
 
-_Você pode testar esse código [online](https://pl.kotl.in/GCWMkEuHf)._
+_Você pode testar esse código [online](https://pl.kotl.in/anUxBdbnq)._
 
 <div id='arrays'></div> 
 
@@ -258,15 +240,9 @@ e passe os valores dos itens para ela:
 val names = arrayOf("Kotlin", "Java", "PHP")
 val values = arrayOf(1, 2, 3)
 val mixedValues = arrayOf(1, "Kotlin", true, 2.51)
-
-fun main() {
-    println(names.contentToString())       // Imprime "[Kotlin, Java, PHP]".
-    println(values.contentToString())      // Imprime "[1, 2, 3]".
-    println(mixedValues.contentToString()) // Imprime "[1, Kotlin, true, 2.51]".
-}
 ```
 
-_Você pode testar esse código [online](https://pl.kotl.in/RDK1wzTW4)._
+_Você pode testar esse código [online](https://pl.kotl.in/72LZvgi4a)._
 
 <br>
 

@@ -30,7 +30,7 @@ if (value >= other) {
 }
 ```
 
-_Você pode testar esse código [online](https://pl.kotl.in/oxoYfp-bN)._
+_Você pode testar esse código [online](https://pl.kotl.in/QcTvJtShd)._
 
 Uma expressão `if` podem ser usada em blocos. Neste caso, a última expressão é o valor de um bloco:
 
@@ -38,16 +38,10 @@ Uma expressão `if` podem ser usada em blocos. Neste caso, a última expressão 
 val value = 1
 val other = 2
 
-val max = if (value > other) {
-    println("$value")
-    value
-} else {
-    println("$other")
-    other
-}
+val max = if (value > other) value else other
 ```
 
-_Você pode testar esse código [online](https://pl.kotl.in/AEc7dCRRh)._
+_Você pode testar esse código [online](https://pl.kotl.in/weL73zq2m)._
 
 **Nota**
 > Se estiver usando `if` como expressão, por exemplo, para retornar seu valor ou atribuí-lo a uma variável, o `else` é
@@ -65,14 +59,26 @@ condição de ramificação seja satisfeita:
 ```kotlin
 val value = 3
 
-when (value) {
-    1    -> println("O valor é: 1")
-    2    -> println("O valor é: 2")
-    else -> println("O valor é: $value")
+val matchesWith = when (value) {
+    1 -> "1ª condição."
+    1 -> "2ª condição."
+    else -> "Condição do else."
 }
 ```
 
-_Você pode testar esse código [online](https://pl.kotl.in/EZYAVJQKf)._
+Você pode trabalhar com _ranges_ distintos nas ramificações/condições:
+
+```kotlin
+val value = (1..1001).random()
+
+val matchesWith = when (value) {
+    in (1..100) -> "O valor é <$value> e está entre 1 e 100."
+    in (101..1000) -> "O valor é <$value> e está entre 101 e 1000."
+    else -> "O valor é <$value> e está acima de 1000."
+}
+```
+
+_Você pode testar esse código [online](https://pl.kotl.in/BuUpfd3wa)._
 
 O `when` pode ser usado como uma expressão ou como uma instrução. Se for usado como uma expressão, o valor da primeira
 ramificação correspondente se tornará o valor da expressão geral. Se for usado como uma instrução, os valores de

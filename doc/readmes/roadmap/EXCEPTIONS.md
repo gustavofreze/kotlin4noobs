@@ -19,7 +19,7 @@ try {
 }
 ```
 
-_Você pode testar esse código [online](https://pl.kotl.in/wGn1povmB)._
+_Você pode testar esse código [online](https://pl.kotl.in/5xBQdFA7k)._
 
 **Nota**
 > Pode haver mais de um bloco `catch`.

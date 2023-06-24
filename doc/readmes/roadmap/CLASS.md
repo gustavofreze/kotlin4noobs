@@ -55,7 +55,7 @@ open class Person(val age: Int, val name: String)
 class Driver(age: Int, name: String, val license: String) : Person(age, name)
 ```
 
-_Você pode testar esse código [online](https://pl.kotl.in/swgTEKOFu)._
+_Você pode testar esse código [online](https://pl.kotl.in/tbZIp3Oh9)._
 
 <div id='data-class'></div> 
 
@@ -91,7 +91,7 @@ ou usando argumentos nomeados:
 val person = Person(age = 25, name = "Gustavo")
 ```
 
-_Você pode testar esse código [online](https://pl.kotl.in/4W4PATUVR)._
+_Você pode testar esse código [online](https://pl.kotl.in/FNgKZQOgv)._
 
 <div id='enum-class'></div> 
 
@@ -111,15 +111,15 @@ da classe enum, ele pode ser inicializado como:
 
 ```kotlin
 enum class Type(val value: Int) {
-    CUSTOMER(1),
-    EMPLOYEE(2)
+    CUSTOMER(value = 1),
+    EMPLOYEE(value = 2)
 }
 ```
 
-_Você pode testar esse código [online](https://pl.kotl.in/00-YikxBE)._
+_Você pode testar esse código [online](https://pl.kotl.in/gGooXKfK6)._
 
 As constantes de enumeração podem declarar suas próprias classes anônimas com seus métodos correspondentes, bem como
-substituir os métodos base:
+substituir os métodos-base:
 
 ```kotlin
 enum class Type {
@@ -135,7 +135,7 @@ enum class Type {
 }
 ```
 
-_Você pode testar esse código [online](https://pl.kotl.in/R8LU2li0v)._
+_Você pode testar esse código [online](https://pl.kotl.in/sja_3Pcab)._
 
 **Nota**
 > Uma classe enum pode implementar uma interface, mas não pode derivar de uma classe, fornecendo uma implementação
@@ -161,12 +161,13 @@ E na classe que você deseja que estenda a classe abstrata, basta fazer:
 class Person(val age: Int, val name: String) : Customer() {
 
     override fun register() {
-        println("Registrado %s, %s anos.".format(name, age))
+        val template = "Registrado %s, %s anos."
+        println(template.format(name, age))
     }
 }
 ```
 
-_Você pode testar esse código [online](https://pl.kotl.in/E2T0nDAiU)._
+_Você pode testar esse código [online](https://pl.kotl.in/mHZ7oPp6Q)._
 
 <div id='objects'></div> 
 
@@ -176,12 +177,11 @@ Em Kotlin podemos fazer a declaração de objetos que fazem a implementação do
 padrão [singleton](https://pt.wikipedia.org/wiki/Singleton), basta declarar a palavra-chave `object`:
 
 ```kotlin
-object Environment {
+object PalindromeChecker {
 
-    fun get(variable: String): String {
-        val template = "A variável de ambiente <%s> está ausente."
-
-        return getenv(variable) ?: error(template.format(variable))
+    fun isPalindrome(word: String): Boolean {
+        val reversedWord = word.reversed()
+        return word == reversedWord
     }
 }
 ```
@@ -189,8 +189,10 @@ object Environment {
 Para se referir ao objeto, use seu nome diretamente:
 
 ```kotlin
-Environment.get("KOTLIN")
+PalindromeChecker.isPalindrome(word = "level")
 ```
+
+_Você pode testar esse código [online](https://pl.kotl.in/pMjQUZmtY)._
 
 O Kotlin também nos permite criar o que é chamado companion object, um objeto que fica dentro de uma classe. Para isso,
 precisamos usar a palavra-chave `companion object`:
@@ -199,7 +201,6 @@ precisamos usar a palavra-chave `companion object`:
 class Person(val age: Int, val name: String) {
 
     companion object {
-
         fun newborn(name: String) = Person(age = 0, name = name)
     }
 }
@@ -209,10 +210,10 @@ O companion object nos dá a possibilidade de utilizarmos o método `newborn` at
 criar uma instância da mesma:
 
 ```kotlin
-val person = Person.newborn("Enzo")
+val person = Person.newborn(name = "Gustavo")
 ```
 
-_Você pode testar esse código [online](https://pl.kotl.in/P5V6KMc3R)_
+_Você pode testar esse código [online](https://pl.kotl.in/0RJRIx0HF)_
 
 <div id='interfaces'></div> 
 
@@ -242,11 +243,11 @@ implementações para acessadores:
 
 ```kotlin
 interface PremiumCustomer : Customer {
-    val minimumLimit: Int
+    val minimumLimit: Double
 }
 ```
 
-_Você pode testar esse código [online](https://pl.kotl.in/XPntbJUUm)._
+_Você pode testar esse código [online](https://pl.kotl.in/g_ZeAKUQk)._
 
 O padrão [Delegation](https://en.wikipedia.org/wiki/Delegation_pattern) provou ser uma boa alternativa para a herança de
 implementação, e o Kotlin o suporta nativamente. Uma classe `Person` pode implementar uma interface `Customer`
@@ -258,17 +259,18 @@ interface Customer {
     fun register()
 }
 
-class CustomerAdapter(val name: String) : Customer {
+class CustomerAdapter(private val name: String) : Customer {
 
     override fun register() {
-        println("Registrado %s.".format(name, age))
+        val template = "Registrado %s."
+        println(template.format(name))
     }
 }
 
 class Person(customer: Customer) : Customer by customer
 ```
 
-_Você pode testar esse código [online](https://pl.kotl.in/UE_2B6z0E)._
+_Você pode testar esse código [online](https://pl.kotl.in/XcVoJuT6y)._
 
 <br>
 

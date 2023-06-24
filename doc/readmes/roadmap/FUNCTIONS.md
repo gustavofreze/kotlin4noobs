@@ -44,7 +44,7 @@ ou usando argumentos nomeados:
 add(augend = 1, addend = 1)
 ```
 
-_Você pode testar esse código [online](https://pl.kotl.in/fuB8CNime)._
+_Você pode testar esse código [online](https://pl.kotl.in/T8z8K0oGs)._
 
 **Nota**
 > Usar argumentos nomeados pode ser útil quando uma função tem muitos argumentos e é difícil associar um valor a um
@@ -72,16 +72,12 @@ Agora vamos extender uma função chamada `screaming` na classe `String`, onde e
 maiúscula e com três pontos de exclamação no final:
 
 ```kotlin
-fun String.screaming(): String = this.uppercase() + "!!!"
+fun String.screaming(): String = uppercase() + "!!!"
 
 "Hello World".screaming()
 ```
 
-_Você pode testar esse código [online](https://pl.kotl.in/vJ2KMqCUv)._
-
-**Nota**
-> Como a função faz parte do contexto String, temos acesso ao `this`, que neste caso está correspondendo a própria
-> String.
+_Você pode testar esse código [online](https://pl.kotl.in/fLREzywKY)._
 
 <div id='arithmetic-operators'></div>
 
@@ -105,11 +101,13 @@ data class BigNumber(val value: Int) {
 }
 ```
 
-_Você pode testar esse código [online](https://pl.kotl.in/daW6QGiZg)._
+_Você pode testar esse código [online](https://pl.kotl.in/HUgjR3y9n)._
 
 <div id='high-order-functions-and-lambdas'></div>
 
 ## Funções de alta ordem e lambdas
+
+### Funções de alta ordem
 
 Em Kotlin as funções são tratadas como _cidadãos de primeira-classe_, isso significa que elas podem ser usadas como
 argumentos ou retornos de funções.
@@ -118,55 +116,55 @@ Como Kotlin é uma linguagem estaticamente tipada, precisamos definir o que a fu
 Podemos fazer isso usando as _function types_ que a linguagem nos fornece.
 
 ```kotlin
-fun discountFactory(ratio: Int): (Double) -> Double {
-    val percentage = ratio.toDouble() / 100
-
-    val discount = fun(value: Double): Double {
-        return value - (percentage * value)
-    }
-
-    return discount
+fun applyDiscount(discount: Int): (Double) -> Double {
+    val percentage = discount.toDouble() / 100
+    return { value -> value - (percentage * value) }
 }
 ```
 
-Declaramos uma função chamada `discountFactory` que vai nos retornar uma função que recebe um `Double` e
+Declaramos uma função chamada `applyDiscount` que vai nos retornar uma função que recebe um `Double` e
 retorna um `Double`.
 
 ```kotlin
-val discountOf15Percent = discountFactory(15)
-
+val discountOf15Percent = applyDiscount(discount = 15)
 var amount = 3459.99
 
 amount = discountOf15Percent(amount)
-println(amount)
 ```
+
+_Você pode testar esse código [online](https://pl.kotl.in/yWlXN-Xa7)._
+
+### Lambdas
 
 Podemos instanciar funções de duas formas: utilizando a expressão lambda ou funções anônimas.
 
 ```kotlin
-val plusOneLambda = { i: Int -> i + 1 }
+val plusOneLambda = { value: Int -> value + 1 }
 
-val plusOneAnonymous = fun(i: Int): Int {
-    return i + 1
+val plusOneAnonymous = fun(value: Int): Int {
+    return value + 1
 }
 ```
 
 Podemos invocar as funções com o `operator invoke` ou apenas chamando como uma função normal `f(x)`:
 
 ```kotlin
-plusOneLambda.invoke(41)
-plusOneLambda(42)
+plusOneLambda(1)
+plusOneLambda.invoke(1)
+
+plusOneAnonymous(2)
+plusOneAnonymous.invoke(2)
 ```
 
 É possível criar um tipo nomeado para funções usando a palavra-chave `typealias`.
 
 ```kotlin
-typealias PlusOne = (Int) -> Int
+typealias Sum = (Int) -> Int
 
-val plusOneLambda: PlusOne = { i -> i + 1 }
+val plusOneLambda: Sum = { value: Int -> value + 1 }
 ```
 
-_Você pode testar esse código [online](https://pl.kotl.in/RgfsQ2IUe)._
+_Você pode testar esse código [online](https://pl.kotl.in/VzxpM3Wl0)._
 
 <br>
 

@@ -26,4 +26,4 @@ _Você pode testar esse código [online](https://pl.kotl.in/5xBQdFA7k)._
 
 <br>
 
-Ir para [roadmap](../../../README.md#roadmap).
+Ir para [corrotinas](COROUTINES.md).

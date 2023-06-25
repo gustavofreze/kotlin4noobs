@@ -80,14 +80,14 @@ val threeBillion = 3000000000
 Cada tipo de número tem funções auxiliares que convertem de um tipo de número para outro:
 
 ```kotlin
-const val value: Int = 1234567
+const val VALUE: Int = 1234567
 
-value.toByte()
-value.toLong()
-value.toShort()
+VALUE.toByte()
+VALUE.toLong()
+VALUE.toShort()
 ```
 
-_Você pode testar esse código [online](https://pl.kotl.in/KuyHSxdnK)._
+_Você pode testar esse código [online](https://pl.kotl.in/CowLWv7N-)._
 
 **Nota**
 > Quando você inicializa uma variável sem especificação de tipo explícita, o compilador infere automaticamente o tipo
@@ -130,12 +130,12 @@ val withDecimal = 2.123456789
 Cada tipo de número tem funções auxiliares que convertem de um tipo de número para outro:
 
 ```kotlin
-const val value: Double = 9999.999
+const val VALUE: Double = 9999.999
 
-value.toFloat()
+VALUE.toFloat()
 ```
 
-_Você pode testar esse código [online](https://pl.kotl.in/k5sFsEkfI)._
+_Você pode testar esse código [online](https://pl.kotl.in/bjqlyLS9B)._
 
 ## Booleans
 
@@ -152,21 +152,21 @@ O tipo `Boolean` em Kotlin é o mesmo que em Java. As operações de disjunc�
 conjunção `&&` e negação `!`, podem ser executadas em tipos booleanos, como em Java.
 
 ```kotlin
-const val one: Int = 1
-const val two: Int = 2
-const val three: Int = 3
+const val ONE: Int = 1
+const val TWO: Int = 2
+const val THREE: Int = 3
 
-// one < two)                
-// one > two)                
-// one <= two)               
-// one >= two)               
-// one == two)               
-// one != three)             
-// one < two && one < three) 
-// one < two || one < three) 
+// ONE < TWO)                
+// ONE > TWO)                
+// ONE <= TWO)               
+// ONE >= TWO)               
+// ONE == TWO)               
+// ONE != THREE)             
+// ONE < TWO && ONE < THREE) 
+// ONE < TWO || ONE < THREE) 
 ```
 
-_Você pode testar esse código [online](https://pl.kotl.in/AHVuyJKyK)._
+_Você pode testar esse código [online](https://pl.kotl.in/MENBcZNDX)._
 
 <div id='strings'></div>
 
@@ -180,7 +180,7 @@ val name: String = "Kotlin"
 val name = "Kotlin 123"
 ```
 
-Strings são imutáveis. Depois de inicializar uma string, você não pode alterar seu valor ou atribuir um novo valor a
+Strings são imutáveis. Após inicializar uma string, você não pode alterar seu valor ou atribuir um novo valor a
 ela. Todas as operações que transformam strings retornam seus resultados em um novo `String` objeto, deixando a string
 original inalterada:
 

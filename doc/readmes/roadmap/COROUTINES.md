@@ -82,11 +82,12 @@ fun execute() = runBlocking {
 
 suspend fun accountBalance(): Double {
     delay(1000)
+    
     return (100..10000).random().toDouble()
 }
 ```
 
-_Você pode testar esse código [online](https://pl.kotl.in/abxGfL7ty)._
+_Você pode testar esse código [online](https://pl.kotl.in/-nCIVfaPS)._
 
 Nesse exemplo, usamos `async` para iniciar uma coroutine assíncrona que chama a função `accountBalance`. Essa
 função pausa a execução por 1000 milissegundos e retorna um valor. Usando `await` em `deferred`, esperamos que a tarefa
@@ -102,4 +103,4 @@ determinado período, permitindo que a thread seja liberada para executar outras
 
 <br>
 
-Ir para o [início](https://github.com/gustavofreze/kotlin4noobs#Roadmap).
+Ir para [convenções de codificação](CONVENTIONS.md).

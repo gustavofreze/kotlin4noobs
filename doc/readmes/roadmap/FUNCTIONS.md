@@ -118,6 +118,7 @@ Podemos fazer isso usando as _function types_ que a linguagem nos fornece.
 ```kotlin
 fun applyDiscount(discount: Int): (Double) -> Double {
     val percentage = discount.toDouble() / 100
+    
     return { value -> value - (percentage * value) }
 }
 ```
@@ -132,7 +133,7 @@ var amount = 3459.99
 amount = discountOf15Percent(amount)
 ```
 
-_Você pode testar esse código [online](https://pl.kotl.in/yWlXN-Xa7)._
+_Você pode testar esse código [online](https://pl.kotl.in/fsLKC10-P)._
 
 ### Lambdas
 

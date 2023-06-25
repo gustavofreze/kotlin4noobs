@@ -181,6 +181,7 @@ object PalindromeChecker {
 
     fun isPalindrome(word: String): Boolean {
         val reversedWord = word.reversed()
+        
         return word == reversedWord
     }
 }
@@ -192,7 +193,7 @@ Para se referir ao objeto, use seu nome diretamente:
 PalindromeChecker.isPalindrome(word = "level")
 ```
 
-_Você pode testar esse código [online](https://pl.kotl.in/pMjQUZmtY)._
+_Você pode testar esse código [online](https://pl.kotl.in/9fUb-6O1R)._
 
 O Kotlin também nos permite criar o que é chamado companion object, um objeto que fica dentro de uma classe. Para isso,
 precisamos usar a palavra-chave `companion object`:
@@ -213,7 +214,7 @@ criar uma instância da mesma:
 val person = Person.newborn(name = "Gustavo")
 ```
 
-_Você pode testar esse código [online](https://pl.kotl.in/0RJRIx0HF)_
+_Você pode testar esse código [online](https://pl.kotl.in/9ZLa5JNU0)_
 
 <div id='interfaces'></div> 
 

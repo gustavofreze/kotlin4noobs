@@ -26,3 +26,11 @@ jobs:
           title: Link checker report
           content-filepath: ./lychee/out.md
           labels: report, automated-issue
+
+      - name: Assign issue
+        if: env.lychee_exit_code != 0
+        uses: actions/github-script@v4
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          mark-issue: true
+          assignee: gustavofreze

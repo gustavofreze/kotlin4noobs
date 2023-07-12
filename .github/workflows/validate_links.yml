@@ -32,5 +32,13 @@ jobs:
         uses: actions/github-script@v4
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          mark-issue: true
-          assignee: gustavofreze
+          script: |
+            const assignees = ["gustavofreze"];
+            const issueNumber = context.payload.issue.number;
+            const octokit = context.octokit;
+            await octokit.issues.addAssignees({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: issueNumber,
+              assignees: assignees,
+            });

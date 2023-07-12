@@ -2,7 +2,7 @@
 
 A ideia desta seção, é fornecer exemplos de códigos para quem está começando.
 
-- [financial](https://github.com/gustavofreze/financial)
+- [financial](https://github.com/gustavofreze/financial000)
 - [transactional-outbox](https://github.com/gustavofreze/transactional-outbox)
 - [poc-bank-api-kotlin](https://github.com/GuillaumeFalourd/poc-bank-api-kotlin)
 - [kotlin-script-examples](https://github.com/Kotlin/kotlin-script-examples)

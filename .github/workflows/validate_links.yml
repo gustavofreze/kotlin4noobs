@@ -33,4 +33,4 @@ jobs:
         with:
           assignees: gustavofreze
           numOfAssignee: 1
-          allowSelfAssign: false
+          allowSelfAssign: true

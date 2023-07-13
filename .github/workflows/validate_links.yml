@@ -1,6 +1,8 @@
 name: Validate links
 
 on:
+  issues:
+    types: [ opened ]
   pull_request:
   schedule:
     - cron: "0 0 * * *"
@@ -30,5 +32,6 @@ jobs:
         if: env.lychee_exit_code != 0
         uses: pozil/auto-assign-issue@v1.11.0
         with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
           assignees: gustavofreze
-          allowSelfAssign: true
+          numOfAssignee: 1

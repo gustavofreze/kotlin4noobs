@@ -33,21 +33,20 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const { owner, repo } = context.repo;
-            const issueNumber = context.payload.issue.number;
             const assignees = ["gustavofreze"];
+            const issueNumber = context.issue.number;
 
-            const { data: issue } = await octokit.rest.issues.get({
-              owner,
-              repo,
+            const { data: issue } = await github.rest.issues.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
               issue_number: issueNumber
             });
 
             if (issue.assignees.length === 0) {
-              await octokit.rest.issues.addAssignees({
-                owner,
-                repo,
+              await github.rest.issues.addAssignees({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
                 issue_number: issueNumber,
-                assignees
+                assignees: assignees
               });
             }

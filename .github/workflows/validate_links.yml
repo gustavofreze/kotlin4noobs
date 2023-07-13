@@ -29,12 +29,7 @@ jobs:
 
       - name: Assign issue
         if: env.lychee_exit_code != 0
-        run: |
-          assignees="gustavofreze"
-          issue_number=$(jq --raw-output .issue.number "$GITHUB_EVENT_PATH")
-          curl \
-            -X POST \
-            -H "Accept: application/vnd.github.v3+json" \
-            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
-            -d "{\"assignees\":[\"$assignees\"]}" \
-            "https://api.github.com/repos/${{ github.repository }}/issues/$issue_number/assignees"
+        uses: marvinpinto/action-automatic-assign@v2
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          assignees: gustavofreze

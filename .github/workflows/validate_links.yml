@@ -38,7 +38,15 @@ jobs:
               "authorization": "Bearer ${{ secrets.GITHUB_TOKEN }}",
               "accept": "application/vnd.github.squirrel-girl-preview+json"
             }
-          body: |
+          request: |
             {
-              "assignees": ["gustavofreze"]
+              "method": "POST",
+              "url": "/repos/${{ github.repository }}/issues/${{ github.event.issue.number }}/assignees",
+              "headers": {
+                "authorization": "Bearer ${{ secrets.GITHUB_TOKEN }}",
+                "accept": "application/vnd.github.squirrel-girl-preview+json"
+              },
+              "data": {
+                "assignees": ["gustavofreze"]
+              }
             }

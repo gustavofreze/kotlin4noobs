@@ -1,6 +1,7 @@
 name: Auto Assign
 
 on:
+  push:
   issues:
     types: [ opened ]
   pull_request:

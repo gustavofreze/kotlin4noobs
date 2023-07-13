@@ -17,7 +17,7 @@ jobs:
 
       - name: Check links
         id: lychee
-        uses: lycheeverse/lychee-action@v1.8.0
+        uses: lycheeverse/lychee-action@v1.x
 
       - name: Create issue
         if: env.lychee_exit_code != 0
@@ -29,14 +29,8 @@ jobs:
 
       - name: Assign issue
         if: env.lychee_exit_code != 0
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          curl \
-            -X POST \
-            -H "Authorization: Bearer $GITHUB_TOKEN" \
-            -H "Accept: application/vnd.github.squirrel-girl-preview+json" \
-            -d '{
-              "assignees": ["gustavofreze"]
-            }' \
-            "https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.issue.number }}/assignees"
+        uses: pozil/auto-assign-issue@v1.x
+        with:
+          assignees: gustavofreze
+          numOfAssignee: 1
+          allowSelfAssign: false

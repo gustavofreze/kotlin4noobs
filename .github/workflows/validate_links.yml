@@ -29,7 +29,12 @@ jobs:
 
       - name: Assign issue
         if: env.lychee_exit_code != 0
-        uses: marvinpinto/action-automatic-assign@v2
+        uses: octokit/request-action@v2.x
         with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          assignees: gustavofreze
+          route: POST /repos/${{ github.repository }}/issues/${{ github.event.issue.number }}/assignees
+          headers: |
+            authorization: token ${{ secrets.GITHUB_TOKEN }}
+          data: |
+            {
+              "assignees": ["gustavofreze"]
+            }

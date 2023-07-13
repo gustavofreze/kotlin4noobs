@@ -32,9 +32,13 @@ jobs:
         uses: octokit/request-action@v2.x
         with:
           route: POST /repos/${{ github.repository }}/issues/${{ github.event.issue.number }}/assignees
+          mediaType: '{"previews":["squirrel-girl"]}'
           headers: |
-            authorization: token ${{ secrets.GITHUB_TOKEN }}
-          data: |
+            {
+              "authorization": "Bearer ${{ secrets.GITHUB_TOKEN }}",
+              "accept": "application/vnd.github.squirrel-girl-preview+json"
+            }
+          body: |
             {
               "assignees": ["gustavofreze"]
             }

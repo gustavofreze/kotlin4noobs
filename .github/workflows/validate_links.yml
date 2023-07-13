@@ -4,10 +4,9 @@ on:
   pull_request:
   schedule:
     - cron: "0 0 * * *"
-  issues:
-    types: [ opened ]
 
-permissions: write-all
+permissions:
+  issues: write
 
 jobs:
   link-checker:
@@ -32,4 +31,4 @@ jobs:
         uses: pozil/auto-assign-issue@v1.11.0
         with:
           assignees: gustavofreze
-          numOfAssignee: 1
+          allowSelfAssign: true

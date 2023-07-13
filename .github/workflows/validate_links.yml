@@ -29,24 +29,14 @@ jobs:
 
       - name: Assign issue
         if: env.lychee_exit_code != 0
-        uses: octokit/request-action@v2.x
-        with:
-          route: POST /repos/${{ github.repository }}/issues/${{ github.event.issue.number }}/assignees
-          mediaType: '{"previews":["squirrel-girl"]}'
-          headers: |
-            {
-              "authorization": "Bearer ${{ secrets.GITHUB_TOKEN }}",
-              "accept": "application/vnd.github.squirrel-girl-preview+json"
-            }
-          request: |
-            {
-              "method": "POST",
-              "url": "/repos/${{ github.repository }}/issues/${{ github.event.issue.number }}/assignees",
-              "headers": {
-                "authorization": "Bearer ${{ secrets.GITHUB_TOKEN }}",
-                "accept": "application/vnd.github.squirrel-girl-preview+json"
-              },
-              "data": {
-                "assignees": ["gustavofreze"]
-              }
-            }
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          curl \
+            -X POST \
+            -H "Authorization: Bearer $GITHUB_TOKEN" \
+            -H "Accept: application/vnd.github.squirrel-girl-preview+json" \
+            -d '{
+              "assignees": ["your-username"]
+            }' \
+            "https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.issue.number }}/assignees"

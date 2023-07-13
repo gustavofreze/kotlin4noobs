@@ -29,11 +29,3 @@ jobs:
           title: Link checker report
           content-filepath: ./lychee/out.md
           labels: report, automated-issue
-
-      - name: Assign issue
-        if: env.lychee_exit_code != 0
-        uses: pozil/auto-assign-issue@v1.11.0
-        with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          assignees: gustavofreze
-          numOfAssignee: 1

@@ -29,24 +29,12 @@ jobs:
 
       - name: Assign issue
         if: env.lychee_exit_code != 0
-        uses: actions/github-script@v4
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            const assignees = ["gustavofreze"];
-            const issueNumber = context.issue.number;
-
-            const { data: issue } = await github.rest.issues.get({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              issue_number: issueNumber
-            });
-
-            if (issue.assignees.length === 0) {
-              await github.rest.issues.addAssignees({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                issue_number: issueNumber,
-                assignees: assignees
-              });
-            }
+        run: |
+          assignees="gustavofreze"
+          issue_number=$(jq --raw-output .issue.number "$GITHUB_EVENT_PATH")
+          curl \
+            -X POST \
+            -H "Accept: application/vnd.github.v3+json" \
+            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+            -d "{\"assignees\":[\"$assignees\"]}" \
+            "https://api.github.com/repos/${{ github.repository }}/issues/$issue_number/assignees"

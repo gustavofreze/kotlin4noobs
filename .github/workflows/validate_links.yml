@@ -5,8 +5,6 @@ on:
   schedule:
     - cron: "0 0 * * *"
 
-permissions: write-all
-
 jobs:
   link-checker:
     runs-on: ubuntu-latest
@@ -17,6 +15,11 @@ jobs:
         id: lychee
         uses: lycheeverse/lychee-action@v1.8.0
 
+  automated-issue:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
       - name: Create issue
         if: env.lychee_exit_code != 0
         uses: peter-evans/create-issue-from-file@v4

@@ -29,7 +29,25 @@ jobs:
 
       - name: Assign issue
         if: env.lychee_exit_code != 0
-        uses: peter-evans/assignee@v2
+        uses: actions/github-script@v4
         with:
-          issue-number: ${{ github.event.issue.number }}
-          assignees: gustavofreze
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const { owner, repo } = context.repo;
+            const issueNumber = context.payload.issue.number;
+            const assignees = ["gustavofreze"];
+
+            const { data: issue } = await octokit.rest.issues.get({
+              owner,
+              repo,
+              issue_number: issueNumber
+            });
+
+            if (issue.assignees.length === 0) {
+              await octokit.rest.issues.addAssignees({
+                owner,
+                repo,
+                issue_number: issueNumber,
+                assignees
+              });
+            }

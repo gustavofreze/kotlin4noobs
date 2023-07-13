@@ -1,4 +1,4 @@
-name: Auto Assign
+name: Auto assign
 
 on:
   push:
@@ -8,15 +8,16 @@ on:
     types: [ opened ]
 
 jobs:
-  auto-assign:
+  assign:
     runs-on: ubuntu-latest
     permissions:
       issues: write
       pull-requests: write
     steps:
-      - name: 'Auto assign issue'
+      - name: Auto-assign issue
         uses: pozil/auto-assign-issue@v1
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           assignees: gustavofreze
           numOfAssignee: 1
+          allowSelfAssign: true

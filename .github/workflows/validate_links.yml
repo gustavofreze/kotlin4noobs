@@ -17,7 +17,7 @@ jobs:
 
       - name: Check links
         id: lychee
-        uses: lycheeverse/lychee-action@v1.8
+        uses: lycheeverse/lychee-action@v1.8.0
 
       - name: Create issue
         if: env.lychee_exit_code != 0
@@ -29,7 +29,7 @@ jobs:
 
       - name: Assign issue
         if: env.lychee_exit_code != 0
-        uses: pozil/auto-assign-issue@v1.11
+        uses: pozil/auto-assign-issue@v1
         with:
           assignees: gustavofreze
           numOfAssignee: 1

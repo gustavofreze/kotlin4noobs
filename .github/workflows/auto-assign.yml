@@ -14,6 +14,6 @@ jobs:
       - name: Assign issues
         uses: gustavofreze/auto-assign@1.0.11
         with:
-          assignees: 'gustavofreze'
+          assignees: '${{ env.INPUT_ASSIGNEES }}'
           github_token: '${{ secrets.GITHUB_TOKEN }}'
           assignment_options: 'ISSUE'

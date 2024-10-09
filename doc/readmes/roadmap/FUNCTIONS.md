@@ -1,24 +1,17 @@
 # Funções
 
-* [Sintaxe](#sintaxe)
-* [Extensões](#extensions)
-* [Operadores aritméticos](#arithmetic-operators)
-* [Funções de alta ordem e lambdas](#high-order-functions-and-lambdas)
-
-<div id='sintaxe'></div>
-
-## Sintaxe
+### Sintaxe
 
 Em Kotlin, as funções são declaradas usando a palavra-chave `fun`:
 
 ```kotlin
 fun add() {
-    //...
+    // ...
 }
 ```
 
-Você pode definir parâmetros para a função usando a notação _Pascal_, `name : type`. Os parâmetros são separados
-por vírgulas e cada parâmetro deve ser digitado explicitamente:
+Você pode definir parâmetros para a função usando a notação _Pascal_, `name: type`. Os parâmetros são separados por
+vírgulas, e cada parâmetro deve ser explicitamente tipado:
 
 ```kotlin
 fun add(augend: Int, addend: Int): Int {
@@ -26,7 +19,7 @@ fun add(augend: Int, addend: Int): Int {
 }
 ```
 
-Quando uma função retorna uma única expressão, as chaves podem ser omitidas e o corpo é especificado após um `=`:
+Quando uma função retorna uma única expressão, as chaves podem ser omitidas, e o corpo é especificado após um `=`:
 
 ```kotlin
 fun add(augend: Int, addend: Int): Int = augend + addend
@@ -38,29 +31,24 @@ Para fazer a chamada da função:
 add(1, 1)
 ```
 
-ou usando argumentos nomeados:
+Ou usando argumentos nomeados:
 
 ```kotlin
 add(augend = 1, addend = 1)
 ```
 
-_Você pode testar esse código [online](https://pl.kotl.in/T8z8K0oGs)._
+_Você pode testar esse código [online](https://pl.kotl.in/YZMIY5CDY)._
 
 **Nota**
-> Usar argumentos nomeados pode ser útil quando uma função tem muitos argumentos e é difícil associar um valor a um
-> argumento.
+> Usar argumentos nomeados pode ser útil quando uma função tem muitos parâmetros, facilitando a associação de valores
+> aos argumentos.
 
-<div id='extensions'></div>
+### Funções de extensão
 
-## Extensões
+Kotlin permite adicionar funcionalidades a classes existentes sem alterá-las diretamente, usando _extension functions_.
+Isso é útil para estender o comportamento de objetos existentes sem modificá-los ou criar novos tipos.
 
-É comum alguma hora querermos adicionar uma funcionalidade a mais em algum objeto.
-
-Pensando nisso, o Kotlin possui o que chamamos de `extension functions`, que é uma forma de adicionarmos novos
-comportamentos em algum objeto sem precisarmos fazer alguma modificação no objeto ou criar um objeto com o
-novo comportamento.
-
-Para criarmos uma extension function, utilizamos a sintaxe:
+Para criar uma função de extensão, a sintaxe é:
 
 ```kotlin
 fun ClassName.newFunctionName(arguments...) {
@@ -68,8 +56,8 @@ fun ClassName.newFunctionName(arguments...) {
 }
 ```
 
-Agora vamos extender uma função chamada `screaming` na classe `String`, onde ela irá retornar a própria string em
-maiúscula e com três pontos de exclamação no final:
+Vamos criar uma função de extensão chamada `screaming` para a classe `String`, que retorna a string em letras
+maiúsculas, seguida por três pontos de exclamação:
 
 ```kotlin
 fun String.screaming(): String = uppercase() + "!!!"
@@ -77,16 +65,12 @@ fun String.screaming(): String = uppercase() + "!!!"
 "Hello World".screaming()
 ```
 
-_Você pode testar esse código [online](https://pl.kotl.in/fLREzywKY)._
+_Você pode testar esse código [online](https://pl.kotl.in/tmV30VrgP)._
 
-<div id='arithmetic-operators'></div>
+### Operadores aritméticos
 
-## Operadores aritméticos
-
-Kotlin permite que você forneça implementações personalizadas para o conjunto predefinido de operadores em tipos. Esses
-operadores têm representação simbólica predefinida como `+` ou `*` e precedência.
-
-As funções são declaradas usando a palavra-chave `operator fun`:
+Kotlin permite que você sobrescreva operadores, fornecendo implementações personalizadas para operadores como `+` ou
+`*`. Essas funções são declaradas usando `operator fun`:
 
 ```kotlin
 data class BigNumber(val value: Int) {
@@ -101,30 +85,27 @@ data class BigNumber(val value: Int) {
 }
 ```
 
-_Você pode testar esse código [online](https://pl.kotl.in/HUgjR3y9n)._
+_Você pode testar esse código [online](https://pl.kotl.in/x2pU4Iixq)._
 
-<div id='high-order-functions-and-lambdas'></div>
+### Funções de alta ordem e lambdas
 
-## Funções de alta ordem e lambdas
+#### Funções de alta ordem
 
-### Funções de alta ordem
+Em Kotlin, funções podem ser tratadas como cidadãos de primeira classe, ou seja, podem ser usadas como argumentos ou
+valores de retorno de outras funções.
 
-Em Kotlin as funções são tratadas como _cidadãos de primeira-classe_, isso significa que elas podem ser usadas como
-argumentos ou retornos de funções.
-
-Como Kotlin é uma linguagem estaticamente tipada, precisamos definir o que a função recebe e o que a função retorna.
-Podemos fazer isso usando as _function types_ que a linguagem nos fornece.
+Como Kotlin é uma linguagem estaticamente tipada, você precisa definir os tipos dos parâmetros e do retorno da função,
+usando _function types_.
 
 ```kotlin
 fun applyDiscount(discount: Int): (Double) -> Double {
     val percentage = discount.toDouble() / 100
-    
+
     return { value -> value - (percentage * value) }
 }
 ```
 
-Declaramos uma função chamada `applyDiscount` que vai nos retornar uma função que recebe um `Double` e
-retorna um `Double`.
+Aqui, a função `applyDiscount` retorna uma função que recebe um `Double` e também retorna um `Double`.
 
 ```kotlin
 val discountOf15Percent = applyDiscount(discount = 15)
@@ -133,11 +114,11 @@ var amount = 3459.99
 amount = discountOf15Percent(amount)
 ```
 
-_Você pode testar esse código [online](https://pl.kotl.in/fsLKC10-P)._
+_Você pode testar esse código [online](https://pl.kotl.in/p5_E6KQhn)._
 
-### Lambdas
+#### Lambdas
 
-Podemos instanciar funções de duas formas: utilizando a expressão lambda ou funções anônimas.
+Funções podem ser instanciadas de duas maneiras: usando expressões lambda ou funções anônimas.
 
 ```kotlin
 val plusOneLambda = { value: Int -> value + 1 }
@@ -147,7 +128,7 @@ val plusOneAnonymous = fun(value: Int): Int {
 }
 ```
 
-Podemos invocar as funções com o `operator invoke` ou apenas chamando como uma função normal `f(x)`:
+Essas funções podem ser invocadas diretamente ou usando o `operator invoke`:
 
 ```kotlin
 plusOneLambda(1)
@@ -157,7 +138,7 @@ plusOneAnonymous(2)
 plusOneAnonymous.invoke(2)
 ```
 
-É possível criar um tipo nomeado para funções usando a palavra-chave `typealias`.
+Também é possível criar tipos nomeados para funções usando `typealias`:
 
 ```kotlin
 typealias Sum = (Int) -> Int
@@ -165,7 +146,7 @@ typealias Sum = (Int) -> Int
 val plusOneLambda: Sum = { value: Int -> value + 1 }
 ```
 
-_Você pode testar esse código [online](https://pl.kotl.in/VzxpM3Wl0)._
+_Você pode testar esse código [online](https://pl.kotl.in/RIlBayu5x)._
 
 <br>
 

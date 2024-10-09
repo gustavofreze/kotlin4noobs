@@ -27,13 +27,15 @@
 - [Funções](doc/readmes/roadmap/FUNCTIONS.md)
 - [Variáveis](doc/readmes/roadmap/VARIABLES.md)
 - [Tipos de dados](doc/readmes/roadmap/TYPES.md)
+- [Coleções](doc/readmes/roadmap/COLLECTIONS.md)
 - [Loops](doc/readmes/roadmap/LOOPS.md)
 - [Classes e objetos](doc/readmes/roadmap/CLASS.md)
 - [Expressões condicionais](doc/readmes/roadmap/EXPRESSIONS.md)
 - [Exceções](doc/readmes/roadmap/EXCEPTIONS.md)
 - [Corrotinas](doc/readmes/roadmap/COROUTINES.md)
+- [Operadores seguros](doc/readmes/roadmap/NULL_SAFETY.md)
 - [Convenções de codificação](doc/readmes/roadmap/CONVENTIONS.md)
-  
+
 <div id='environment'></div> 
 
 ### Configuração de ambiente

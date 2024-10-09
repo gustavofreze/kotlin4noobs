@@ -1,15 +1,6 @@
 # Classes e objetos
 
-* [Class](#class)
-* [Data class](#data-class)
-* [Enum class](#enum-class)
-* [Abstract class](#abstract-class)
-* [Objects](#objects)
-* [Interfaces](#interfaces)
-
-<div id='class'></div> 
-
-## Class
+### Class
 
 As classes em Kotlin são declaradas usando a palavra-chave `class`:
 
@@ -55,11 +46,9 @@ open class Person(val age: Int, val name: String)
 class Driver(age: Int, name: String, val license: String) : Person(age, name)
 ```
 
-_Você pode testar esse código [online](https://pl.kotl.in/tbZIp3Oh9)._
+_Você pode testar esse código [online](https://pl.kotl.in/lZcGrvRDU)._
 
-<div id='data-class'></div> 
-
-## Data class
+### Data class
 
 Não é incomum criar classes cujo objetivo principal seja armazenar dados, como,
 [DTOs](https://pt.wikipedia.org/wiki/Objeto_de_Transfer%C3%AAncia_de_Dados).
@@ -91,11 +80,9 @@ ou usando argumentos nomeados:
 val person = Person(age = 25, name = "Gustavo")
 ```
 
-_Você pode testar esse código [online](https://pl.kotl.in/FNgKZQOgv)._
+_Você pode testar esse código [online](https://pl.kotl.in/hI0qXU9o6)._
 
-<div id='enum-class'></div> 
-
-## Enum class
+### Enum class
 
 As classes do tipo enum em Kotlin são declaradas usando a palavra-chave `enum`:
 
@@ -116,7 +103,7 @@ enum class Type(val value: Int) {
 }
 ```
 
-_Você pode testar esse código [online](https://pl.kotl.in/gGooXKfK6)._
+_Você pode testar esse código [online](https://pl.kotl.in/ave2beLMk)._
 
 As constantes de enumeração podem declarar suas próprias classes anônimas com seus métodos correspondentes, bem como
 substituir os métodos-base:
@@ -135,18 +122,16 @@ enum class Type {
 }
 ```
 
-_Você pode testar esse código [online](https://pl.kotl.in/sja_3Pcab)._
+_Você pode testar esse código [online](https://pl.kotl.in/spA3c977p)._
 
 **Nota**
 > Uma classe enum pode implementar uma interface, mas não pode derivar de uma classe, fornecendo uma implementação
 > comum de membros de interface para todas as entradas ou implementações separadas para cada entrada dentro de sua
 > classe anônima. Isso é feito adicionando as interfaces que você deseja implementar à declaração da classe enum.
 
-<div id='abstract-class'></div> 
+### Abstract class
 
-## Abstract class
-
-As classes em Kotlin podem ser abstratas, basta declara-las usando a palavra-chave `abstract`:
+As classes em Kotlin podem ser abstratas, basta declará-las usando a palavra-chave `abstract`:
 
 ```kotlin
 abstract class Customer {
@@ -167,11 +152,9 @@ class Person(val age: Int, val name: String) : Customer() {
 }
 ```
 
-_Você pode testar esse código [online](https://pl.kotl.in/mHZ7oPp6Q)._
+_Você pode testar esse código [online](https://pl.kotl.in/PkMY-aqvc)._
 
-<div id='objects'></div> 
-
-## Objects
+### Objects
 
 Em Kotlin podemos fazer a declaração de objetos que fazem a implementação do
 padrão [singleton](https://pt.wikipedia.org/wiki/Singleton), basta declarar a palavra-chave `object`:
@@ -181,7 +164,7 @@ object PalindromeChecker {
 
     fun isPalindrome(word: String): Boolean {
         val reversedWord = word.reversed()
-        
+
         return word == reversedWord
     }
 }
@@ -193,9 +176,9 @@ Para se referir ao objeto, use seu nome diretamente:
 PalindromeChecker.isPalindrome(word = "level")
 ```
 
-_Você pode testar esse código [online](https://pl.kotl.in/9fUb-6O1R)._
+_Você pode testar esse código [online](https://pl.kotl.in/rqiwOmWeG)._
 
-O Kotlin também nos permite criar o que é chamado companion object, um objeto que fica dentro de uma classe. Para isso,
+O Kotlin também nos permite criar o que é chamado companion object, um objeto que fica em uma classe. Para isso,
 precisamos usar a palavra-chave `companion object`:
 
 ```kotlin
@@ -214,11 +197,9 @@ criar uma instância da mesma:
 val person = Person.newborn(name = "Gustavo")
 ```
 
-_Você pode testar esse código [online](https://pl.kotl.in/9ZLa5JNU0)_
+_Você pode testar esse código [online](https://pl.kotl.in/SDrwc351W)_
 
-<div id='interfaces'></div> 
-
-## Interfaces
+### Interfaces
 
 Interfaces em Kotlin podem conter declarações de métodos abstratos, bem como implementações de métodos. O que as torna
 diferentes das classes abstratas é que as interfaces não podem armazenar o estado. Eles podem ter propriedades, mas elas
@@ -248,7 +229,7 @@ interface PremiumCustomer : Customer {
 }
 ```
 
-_Você pode testar esse código [online](https://pl.kotl.in/g_ZeAKUQk)._
+_Você pode testar esse código [online](https://pl.kotl.in/EIYA4su3V)._
 
 O padrão [Delegation](https://en.wikipedia.org/wiki/Delegation_pattern) provou ser uma boa alternativa para a herança de
 implementação, e o Kotlin o suporta nativamente. Uma classe `Person` pode implementar uma interface `Customer`
@@ -271,7 +252,7 @@ class CustomerAdapter(private val name: String) : Customer {
 class Person(customer: Customer) : Customer by customer
 ```
 
-_Você pode testar esse código [online](https://pl.kotl.in/XcVoJuT6y)._
+_Você pode testar esse código [online](https://pl.kotl.in/aHbsrJryC)._
 
 <br>
 

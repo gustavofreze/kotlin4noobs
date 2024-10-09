@@ -1,89 +1,85 @@
 # Expressões condicionais
 
-* [If](#if)
-* [When](#when)
+### If
 
-<div id='if'></div> 
-
-## If
-
-Em Kotlin, `if` é uma expressão, e ela retorna um valor. Portanto, não há operador ternário, dado que o operador
-ordinário funciona bem nessa função:
+Em Kotlin, `if` é uma expressão, e retorna um valor. Por isso, não há necessidade de um operador ternário, pois `if`
+pode ser usado diretamente:
 
 ```kotlin
 var value = 1
-val other = 5
+val otherValue = 5
 
-if (2 < other) value = other
+if (2 < otherValue) value = otherValue
 ```
 
-Com else:
+Com `else`:
 
 ```kotlin
-val value = 1
-val other = 2
+val firstValue = 1
+val secondValue = 2
 
-if (value >= other) {
-    println("$value")
+if (firstValue >= secondValue) {
+    println("$firstValue")
 } else {
-    println("$other")
+    println("$secondValue")
 }
 ```
 
-_Você pode testar esse código [online](https://pl.kotl.in/QcTvJtShd)._
+_Você pode testar esse código [online](https://pl.kotl.in/URiwC3jLx)._
 
-Uma expressão `if` podem ser usada em blocos. Neste caso, a última expressão é o valor de um bloco:
+Uma expressão `if` pode ser usada em blocos. Nesse caso, a última expressão é o valor do bloco:
 
 ```kotlin
-val value = 1
-val other = 2
+val firstValue = 1
+val secondValue = 2
 
-val max = if (value > other) value else other
+val maxValue = if (firstValue > secondValue) firstValue else secondValue
 ```
 
-_Você pode testar esse código [online](https://pl.kotl.in/weL73zq2m)._
+_Você pode testar esse código [online](https://pl.kotl.in/848r8GHUT)._
 
 **Nota**
-> Se estiver usando `if` como expressão, por exemplo, para retornar seu valor ou atribuí-lo a uma variável, o `else` é
-> obrigatório.
+> Quando usar `if` como expressão para retornar ou atribuir valores, o uso de `else` é obrigatório para garantir que o
+> fluxo sempre tenha um resultado.
 
 <div id='when'></div> 
 
-## When
+### When
 
-Em Kotlin, `when` é uma expressão que define uma expressão condicional com várias ramificações. É semelhante à instrução
-[switch](https://github.com/DanielHe4rt/php4noobs/blob/master/3-Basico/13-Estruturas-de-controle-cond.md#condi%C3%A7%C3%A3o-switch-case)
-em linguagens como o PHP. O `when` corresponde seu argumento a todas as ramificações sequencialmente até que alguma
-condição de ramificação seja satisfeita:
+Em Kotlin, `when` é uma expressão condicional com várias ramificações, semelhante à instrução `switch` em outras
+linguagens como PHP. O `when` avalia seu argumento e compara com as condições de cada ramificação até que uma seja
+satisfeita:
 
 ```kotlin
 val value = 3
 
-val matchesWith = when (value) {
-    1 -> "1ª condição."
-    1 -> "2ª condição."
-    else -> "Condição do else."
+val result = when (value) {
+    1 -> "Primeira condição."
+    2 -> "Segunda condição."
+    else -> "Condição padrão (else)."
 }
 ```
 
-Você pode trabalhar com _ranges_ distintos nas ramificações/condições:
+_Você pode testar esse código [online](https://pl.kotl.in/Ivu64vLKM)._
+
+O `when` também suporta _ranges_ nas condições:
 
 ```kotlin
-val value = (1..1001).random()
+val randomValue = (1..1001).random()
 
-val matchesWith = when (value) {
-    in (1..100) -> "O valor é <$value> e está entre 1 e 100."
-    in (101..1000) -> "O valor é <$value> e está entre 101 e 1000."
-    else -> "O valor é <$value> e está acima de 1000."
+val result = when (randomValue) {
+    in 1..100 -> "O valor <$randomValue> está entre 1 e 100."
+    in 101..1000 -> "O valor <$randomValue> está entre 101 e 1000."
+    else -> "O valor <$randomValue> é maior que 1000."
 }
 ```
 
-_Você pode testar esse código [online](https://pl.kotl.in/BuUpfd3wa)._
+_Você pode testar esse código [online](https://pl.kotl.in/NfoUhTTrZ)._
 
-O `when` pode ser usado como uma expressão ou como uma instrução. Se for usado como uma expressão, o valor da primeira
-ramificação correspondente se tornará o valor da expressão geral. Se for usado como uma instrução, os valores de
-ramificações individuais serão ignorados. Assim como com if, cada ramificação pode ser um bloco e seu valor é o valor da
-última expressão do bloco.
+O `when` pode ser usado tanto como uma expressão quanto como uma instrução. Se usado como expressão, o valor da primeira
+condição correspondida será o valor da expressão. Se usado como instrução, os valores das ramificações individuais serão
+ignorados. Assim como no `if`, cada ramificação pode ser um bloco, e o valor da última expressão no bloco será o valor
+retornado.
 
 <br>
 

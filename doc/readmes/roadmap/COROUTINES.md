@@ -1,13 +1,20 @@
 # Corrotinas
 
-As coroutines do Kotlin são uma ótima ferramenta para lidar com concorrência e tarefas assíncronas de maneira simples e
-eficiente.
+As coroutines do Kotlin são uma ferramenta poderosa para lidar com concorrência e tarefas assíncronas de maneira simples
+e eficiente.
 
-É importante ressaltar que as coroutines do Kotlin são baseadas no conceito de suspensão, o que permite que uma função
-seja pausada e retomada mais tarde, sem bloquear a thread em que está sendo executada. Isso é especialmente útil para
-operações de I/O, como chamadas de rede, acesso a banco de dados ou interações com sistemas de arquivos.
+As coroutines se baseiam no conceito de suspensão, permitindo que uma função seja pausada e retomada posteriormente sem
+bloquear a thread. Isso é extremamente útil para operações de I/O, como chamadas de rede, acesso a banco de dados ou
+interação com sistemas de arquivos.
+
+### GlobalScope
 
 ```kotlin
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+
 @OptIn(DelicateCoroutinesApi::class)
 fun execute() {
     GlobalScope.launch {
@@ -18,35 +25,33 @@ fun execute() {
     println("A execução do programa continua enquanto a coroutine está sendo executada...")
 
     // Esperando a execução da coroutine finalizar
-    Thread.sleep(2000)
+    Thread.sleep(2000) // Não é recomendado em coroutines
 }
 ```
 
-_Você pode testar esse código [online](https://pl.kotl.in/qtfhJ71HM)._
+_Você pode testar esse código [online](https://pl.kotl.in/9Aj0TsKI4)._
 
-Neste exemplo, usamos a função `launch` do `GlobalScope` para iniciar uma coroutine. Dentro dela, temos a
-função `delay`, que pausa a execução por um determinado período (nesse caso, 1000 milissegundos) antes de imprimir
-a mensagem "Coroutine executada.".
+> **Nota:** Evite usar `GlobalScope` a menos que necessário, pois ele cria coroutines que não são vinculadas ao ciclo de
+> vida da aplicação, o que pode levar a vazamentos de memória e execução indesejada de coroutines em segundo plano.
 
-Observe que a execução do programa principal continua mesmo enquanto a coroutine está em execução. Para garantir que a
-coroutine finalize antes de encerrar o programa, usamos `Thread.sleep(2000)` para aguardar por mais
-2000 milissegundos (2 segundos) após a criação da coroutine.
+### CoroutineScope com Dispatchers.Default
 
-Use com cuidado o `GlobalScope`, ele cria um escopo global para execução de corrotinas que não está associado a
-nenhum componente específico da sua aplicação. Isso significa que as corrotinas lançadas no `GlobalScope` não estão
-vinculadas ao ciclo de vida de nenhum objeto e podem continuar em execução mesmo depois que outras partes do seu
-programa foram finalizadas. Sem um escopo apropriado, as corrotinas podem continuar executando em segundo plano,
-consumindo recursos e causando problemas de gerenciamento de memória. Isso pode levar a travamentos, vazamento de
-recursos e mau desempenho da aplicação.
-
-Em vez disso, é recomendado criar e usar escopos de corrotinas mais específicos, como escopos de classe ou de função.
+Neste exemplo, usamos `CoroutineScope(Default)` para criar um escopo de coroutines que será executado no pool de threads
+padrão (`Dispatchers.Default`). Isso oferece melhor controle sobre o ciclo de vida da coroutine.
 
 ```kotlin
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.Default
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+
 fun execute() = runBlocking {
-    val coroutineScope = CoroutineScope(Dispatchers.Default)
+    val defaultScope = CoroutineScope(Default)
 
     // Iniciando uma coroutine dentro do escopo.
-    coroutineScope.launch {
+    defaultScope.launch {
         delay(1000)
         println("Coroutine executada.")
     }
@@ -55,23 +60,25 @@ fun execute() = runBlocking {
 
     // Esperando a execução da coroutine finalizar.
     delay(2000)
-    coroutineScope.cancel() // Cancelando todas as coroutines dentro do escopo.
+    defaultScope.cancel() // Cancelando todas as coroutines dentro do escopo.
 }
 ```
 
-_Você pode testar esse código [online](https://pl.kotl.in/EuTXYOH2R)._
+_Você pode testar esse código [online](https://pl.kotl.in/j3nqrHKKF)._
 
-Nesse exemplo, usamos `runBlocking` para criar um escopo de coroutine dentro da função `execute`. Dentro desse escopo,
-criamos uma instância de `CoroutineScope` e, em seguida, chamamos `launch` para iniciar a coroutine.
+Aqui usamos `runBlocking` para bloquear o thread principal até que todas as coroutines dentro do `defaultScope` sejam
+finalizadas e corretamente canceladas.
 
-Note que chamamos `delay` e `println` diretamente dentro da coroutine. Além disso, utilizamos `delay` e `cancel` do
-`coroutineScope`, em vez de `Thread.sleep`, para garantir a suspensão da coroutine e o cancelamento adequado das
-tarefas.
+### Async/await
 
-As coroutines do Kotlin também suportam o conceito de _async/await_, que permite que você espere o resultado de uma
-tarefa assíncrona.
+Coroutines no Kotlin também suportam o padrão `async/await`, permitindo que você espere pelo resultado de tarefas
+assíncronas:
 
 ```kotlin
+import kotlinx.coroutines.async
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.runBlocking
+
 fun execute() = runBlocking {
     val deferred = async { accountBalance() }
     val balance = deferred.await()
@@ -82,25 +89,21 @@ fun execute() = runBlocking {
 
 suspend fun accountBalance(): Double {
     delay(1000)
-    
+
     return (100..10000).random().toDouble()
 }
 ```
 
-_Você pode testar esse código [online](https://pl.kotl.in/-nCIVfaPS)._
+_Você pode testar esse código [online](https://pl.kotl.in/8GYzf82R-)._
 
-Nesse exemplo, usamos `async` para iniciar uma coroutine assíncrona que chama a função `accountBalance`. Essa
-função pausa a execução por 1000 milissegundos e retorna um valor. Usando `await` em `deferred`, esperamos que a tarefa
-assíncrona seja concluída e obtemos o resultado.
+Nesse exemplo, usamos `async` para executar a função `accountBalance`, que simula uma operação demorada com `delay` e
+retorna um valor. A função `await` é usada para esperar a conclusão da coroutine.
 
-A palavra-chave `suspend` em Kotlin é usada para marcar funções que podem ser suspensas e retomadas posteriormente sem
-bloquear a thread em que estão sendo executadas. No contexto de coroutines, a suspensão é uma forma eficiente de lidar
-com operações assíncronas, como chamadas de rede, acesso a banco de dados e outras operações de I/O.
-
-No exemplo em questão, a função `accountBalance` é marcada com `suspend` porque ela contém uma chamada para a
-função `delay`, que é uma função suspensa das coroutines. A função `delay` pausa a execução da coroutine por um
-determinado período, permitindo que a thread seja liberada para executar outras tarefas.
+> A palavra-chave `suspend` em Kotlin é usada para marcar funções que podem ser suspensas e retomadas sem bloquear a
+> thread. É especialmente útil para lidar com operações assíncronas como chamadas de rede e acesso a banco de dados.
+> Lembre-se de que coroutines não são gerenciadas automaticamente pelo ciclo de vida da aplicação. Para evitar problemas
+> de gerenciamento de memória ou vazamentos de coroutines, sempre prefira escopos específicos em vez do `GlobalScope`.
 
 <br>
 
-Ir para [convenções de codificação](CONVENTIONS.md).
+Ir para [operadores seguros](NULL_SAFETY.md).

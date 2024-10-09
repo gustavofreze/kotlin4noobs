@@ -1,249 +1,188 @@
 # Tipos de dados
 
-Em Kotlin, tudo é um objeto no sentido de que você pode chamar funções de membro, e propriedades em qualquer variável.
-
-* [Numbers](#numbers)
-    - [Integers](#integers)
-        - [Byte](#byte)
-        - [Short](#short)
-        - [Int](#int)
-        - [Long](#long)
-        - [Funções auxiliares](#integers-functions)
-    - [Floating](#floating)
-        - [Float](#float)
-        - [Double](#double)
-        - [Funções auxiliares](#floating-functions)
-* [Booleans](#booleans)
-* [Strings](#strings)
-* [Arrays](#arrays)
-
-<div id='numbers'></div> 
-
-## Numbers
-
-<div id='integers'></div> 
+Kotlin oferece uma ampla gama de tipos de dados, desde os básicos como números inteiros e ponto flutuante, até tipos
+mais específicos como `Date` e outros. Aqui estão os tipos mais comuns que você encontrará em Kotlin.
 
 ### Integers
 
-Kotlin fornece um conjunto de tipos internos que representam números. Para números inteiros, existem quatro tipos com
-tamanhos diferentes e, intervalos de valores:
-
-<div id='byte'></div> 
+Kotlin fornece tipos numéricos para representar valores inteiros de tamanhos variados.
 
 #### Byte
 
-É representado pela palavra-chave `Byte`. Seu tamanho em bits é 8. Com valor mínimo sendo -128 e valor máximo 127:
+O tipo `Byte` ocupa 8 bits e pode armazenar valores entre -128 e 127:
 
 ```kotlin
-val one: Byte = 1
+val byteValue: Byte = 100
 ```
-
-<div id='short'></div> 
 
 #### Short
 
-É representado pela palavra-chave `Short`. Seu tamanho em bits é 16. Com valor mínimo sendo -32768 e valor máximo 32767:
+O tipo `Short` ocupa 16 bits e pode armazenar valores entre -32.768 e 32.767:
 
 ```kotlin
-val one: Short = 1
+val shortValue: Short = 1000
 ```
-
-<div id='int'></div> 
 
 #### Int
 
-É representado pela palavra-chave `Int`. Seu tamanho em bits é 32. Com valor mínimo sendo
--2.147.483.648 (-2<sup>31</sup>) e valor máximo 2.147.483.647 (2<sup>31</sup> - 1):
+O tipo `Int` é o mais utilizado para inteiros. Ele ocupa 32 bits e pode armazenar valores de −2^31 a 2^31-1:
 
 ```kotlin
-val one: Int = 1
-val two = 2
+val intValue: Int = 123456
 ```
-
-<div id='long'></div> 
 
 #### Long
 
-É representado pela palavra-chave `Long`. Seu tamanho em bits é 64. Com valor mínimo sendo
--9.223.372.036.854.775.808 (-2<sup>63</sup>) e valor máximo 9.223.372.036.854.775.807 (2<sup>63</sup> - 1):
+O tipo `Long` ocupa 64 bits e pode armazenar valores entre -2^63 a 2^63-1:
 
 ```kotlin
-val one: Long = 1
-val two = 2L
-val threeBillion = 3000000000
+val longValue: Long = 123456789L
 ```
 
-<div id='integers-functions'></div> 
+### Floating point
 
-#### Funções auxiliares
-
-Cada tipo de número tem funções auxiliares que convertem de um tipo de número para outro:
-
-```kotlin
-const val VALUE: Int = 1234567
-
-VALUE.toByte()
-VALUE.toLong()
-VALUE.toShort()
-```
-
-_Você pode testar esse código [online](https://pl.kotl.in/CowLWv7N-)._
-
-**Nota**
-> Quando você inicializa uma variável sem especificação de tipo explícita, o compilador infere automaticamente o tipo
-> com o menor intervalo suficiente para representar o valor.
-> Se não estiver excedendo o intervalo de `Int`, o tipo será `Int`. Se exceder, o tipo é `Long`.
-
-<div id='floating'></div> 
-
-### Floating
-
-Para [números reais](https://pt.wikipedia.org/wiki/N%C3%BAmero_real), Kotlin fornece os tipos de ponto flutuante `Float`
-e `Double`, que seguem o padrão [IEEE 754](https://en.wikipedia.org/wiki/IEEE_754).
-
-<div id='float'></div> 
+Os números de ponto flutuante em Kotlin podem ser representados pelos tipos `Float` e `Double`.
 
 #### Float
 
-É representado pela palavra-chave `Float`. Seu tamanho em bits é 32. Com dígitos decimais entre 6-7:
+O tipo `Float` ocupa 32 bits e é geralmente usado quando é necessária menos precisão (com 6 a 7 dígitos de precisão
+decimal):
 
 ```kotlin
-val one: Float = 1.0
-val withDecimal = 2.1234567
+val floatValue: Float = 3.14f
 ```
-
-<div id='double'></div> 
 
 #### Double
 
-É representado pela palavra-chave `Double`. Seu tamanho em bits é 64. Com dígitos decimais entre 15-16:
+O tipo `Double` é mais preciso, ocupando 64 bits (15 a 16 dígitos de precisão decimal):
 
 ```kotlin
-val one: Double = 1.0
-val withDecimal = 2.123456789
+val doubleValue: Double = 3.14159265359
 ```
 
-<div id='floating-functions'></div> 
+### Char
 
-#### Funções auxiliares
-
-Cada tipo de número tem funções auxiliares que convertem de um tipo de número para outro:
+O tipo `Char` é utilizado para representar um único caractere, como letras ou símbolos:
 
 ```kotlin
-const val VALUE: Double = 9999.999
-
-VALUE.toFloat()
+val letter: Char = 'A'
 ```
 
-_Você pode testar esse código [online](https://pl.kotl.in/bjqlyLS9B)._
+### Boolean
 
-## Booleans
-
-<div id='booleans'></div> 
-
-O tipo `Boolean` representa objetos booleanos que podem ter dois valores: `true` ou `false`:
+O tipo `Boolean` representa valores de verdade, com possíveis valores `true` ou `false`:
 
 ```kotlin
-val isFull: Boolean = true
-val isEmpty: Boolean = false
+val isValid: Boolean = true
 ```
 
-O tipo `Boolean` em Kotlin é o mesmo que em Java. As operações de disjunção `||`,
-conjunção `&&` e negação `!`, podem ser executadas em tipos booleanos, como em Java.
+### Strings
+
+O tipo `String` representa uma sequência de caracteres. Strings são imutáveis em Kotlin:
 
 ```kotlin
-const val ONE: Int = 1
-const val TWO: Int = 2
-const val THREE: Int = 3
-
-// ONE < TWO)                
-// ONE > TWO)                
-// ONE <= TWO)               
-// ONE >= TWO)               
-// ONE == TWO)               
-// ONE != THREE)             
-// ONE < TWO && ONE < THREE) 
-// ONE < TWO || ONE < THREE) 
+val greeting: String = "Hello, Kotlin!"
 ```
 
-_Você pode testar esse código [online](https://pl.kotl.in/MENBcZNDX)._
+### Arrays
 
-<div id='strings'></div>
-
-## Strings
-
-Em Kotlin as strings são representadas pelo tipo `String`. Geralmente, um valor de string é uma sequência de
-caracteres entre aspas duplas ou aspas triplas:
+Em Kotlin, arrays são representados pelo tipo `Array`. Eles podem armazenar valores de tipos primitivos ou objetos:
 
 ```kotlin
-val name: String = "Kotlin"
-val name = "Kotlin 123"
+val numbers = arrayOf(1, 2, 3)
+val strings = arrayOf("Kotlin", "Java", "Python")
 ```
 
-Strings são imutáveis. Após inicializar uma string, você não pode alterar seu valor ou atribuir um novo valor a
-ela. Todas as operações que transformam strings retornam seus resultados em um novo `String` objeto, deixando a string
-original inalterada:
+### Coleções
+
+Além dos arrays, Kotlin oferece suporte a [coleções](COLLECTIONS.md), como listas (`List`), conjuntos (`Set`) e mapas (
+`Map`). Estas são altamente utilizadas em situações em que se precisa de estruturas de dados dinâmicas.
+
+#### List
+
+Uma lista imutável (não pode ser alterada):
 
 ```kotlin
-val name = "Kotlin"
-
-name.uppercase() // Cria um novo objeto String.
-name             // A string original permanece a mesma.
+val languages: List<String> = listOf("Kotlin", "Java", "Python")
 ```
 
-_Você pode testar esse código [online](https://pl.kotl.in/DkGFWBin6)._
-
-Para criar uma sequêcia de caracteres que abrange várias linhas no arquivo de origem, nós usamos aspas triplas:
+Uma lista mutável (pode ser alterada):
 
 ```kotlin
-val json = """        
-    {
-        "id": "b87a002a-d2a9-4f31-8e95-271ea510b85f",
-        "amount": {
-            "value": "1.00",
-            "currency": "BRL"
-        }
-    }
-    """
+val mutableLanguages: MutableList<String> = mutableListOf("Kotlin", "Java")
+mutableLanguages.add("Python")
 ```
 
-_Você pode testar esse código [online](https://pl.kotl.in/CYxZNp5Cu)._
+#### Set
 
-Kotlin também oferece suporte a interpolação de strings ou de string _templates_. Esta é uma maneira mais fácil de
-construir strings dinâmicas do que a concatenação, que é o que usamos em Java. Usando string templates, podemos
-inserir variáveis e expressões em uma string:
+Um conjunto (`Set`) não permite elementos duplicados:
 
 ```kotlin
-val kotlin = "Kotlin"
-val template = "$kotlin is a programming language."
+val uniqueNumbers: Set<Int> = setOf(1, 2, 3, 3)
 ```
 
-Também é possível obter o mesmo resultado usando a função `format`:
+#### Map
+
+Um mapa (`Map`) armazena pares de chave-valor:
 
 ```kotlin
-val kotlin = "Kotlin"
-val template = "%s is a programming language."
-
-template.format(kotlin)
+val userRoles: Map<String, String> = mapOf("admin" to "Administrator", "user" to "Regular User")
 ```
 
-_Você pode testar esse código [online](https://pl.kotl.in/anUxBdbnq)._
+### Any
 
-<div id='arrays'></div> 
-
-## Arrays
-
-Em Kotlin os arrays são representadas pelo tipo `Array`. Para criar um array, use a função `arrayOf()`
-e passe os valores dos itens para ela:
+O tipo `Any` é a raiz da hierarquia de tipos em Kotlin. Qualquer classe ou tipo em Kotlin herda de `Any`:
 
 ```kotlin
-val names = arrayOf("Kotlin", "Java", "PHP")
-val values = arrayOf(1, 2, 3)
-val mixedValues = arrayOf(1, "Kotlin", true, 2.51)
+val something: Any = "This can be anything"
 ```
 
-_Você pode testar esse código [online](https://pl.kotl.in/72LZvgi4a)._
+### Date
+
+Para trabalhar com datas e horários, é comum utilizar classes da biblioteca padrão Java, como `java.util.Date`,
+`LocalDateTime`, e outras.
+
+#### Date
+
+```kotlin
+import java.util.Date
+
+val currentDate: Date = Date()
+println(currentDate)
+```
+
+#### LocalDateTime
+
+```kotlin
+import java.time.LocalDateTime
+
+val currentDateTime: LocalDateTime = LocalDateTime.now()
+println(currentDateTime)
+```
+
+### Outros tipos úteis
+
+#### Unit
+
+O tipo `Unit` em Kotlin é equivalente ao `void` em outras linguagens, representando a ausência de um valor de retorno.
+
+```kotlin
+fun printMessage(message: String): Unit {
+    println(message)
+}
+```
+
+#### Nothing
+
+O tipo `Nothing` indica que uma função nunca retorna (usado para funções que lançam exceções ou entram em loops
+infinitos):
+
+```kotlin
+fun fail(message: String): Nothing {
+    throw IllegalStateException(message)
+}
+```
 
 <br>
 
-Ir para [loops](LOOPS.md).
+Ir para [coleções](COLLECTIONS.md).

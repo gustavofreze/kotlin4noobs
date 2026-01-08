@@ -1,6 +1,6 @@
 <!--suppress HtmlDeprecatedAttribute -->
 <header>
-    <p align="center"> <img src="doc/images/header-4noobs.svg" alt="Imagem de header."> </p>
+    <p align="center"> <img src="doc/images/header-4noobs.svg" alt="Imagem de header. "> </p>
 </header>
 
 <header>
@@ -9,39 +9,74 @@
 
 </header>
 
+* [Sobre](#about)
 * [Roadmap](#roadmap)
-    - [A linguagem](#language)
-    - [Configuração de ambiente](#environment)
+    * [Configuração de ambiente](#environment)
+    * [Fundamentos](#principles)
+    * [Estruturas de dados](#data-structures)
+    * [Tratamento de erros](#error-handling)
+    * [Programação assíncrona](#asynchronous-programming)
+    * [Boas práticas](#best-practices)
 * [Outros](#others)
 * [Licença](#license)
 * [Contribuindo](#contributing)
+
+<div id='about'></div>
+
+## Sobre
+
+**Kotlin4Noobs** é um guia completo em português para aprender Kotlin do zero ao avançado. Este projeto faz parte da
+iniciativa [4noobs](https://github.com/he4rt/4noobs) e visa democratizar o conhecimento sobre Kotlin no
+Brasil.
 
 <div id='roadmap'></div> 
 
 ## Roadmap
 
-<div id='language'></div> 
-
-### A linguagem
-
-- [Funções](doc/readmes/roadmap/FUNCTIONS.md)
-- [Variáveis](doc/readmes/roadmap/VARIABLES.md)
-- [Tipos de dados](doc/readmes/roadmap/TYPES.md)
-- [Coleções](doc/readmes/roadmap/COLLECTIONS.md)
-- [Loops](doc/readmes/roadmap/LOOPS.md)
-- [Classes e objetos](doc/readmes/roadmap/CLASS.md)
-- [Expressões condicionais](doc/readmes/roadmap/EXPRESSIONS.md)
-- [Exceções](doc/readmes/roadmap/EXCEPTIONS.md)
-- [Corrotinas](doc/readmes/roadmap/COROUTINES.md)
-- [Operadores seguros](doc/readmes/roadmap/NULL_SAFETY.md)
-- [Convenções de codificação](doc/readmes/roadmap/CONVENTIONS.md)
-
 <div id='environment'></div> 
 
 ### Configuração de ambiente
 
-- [Linux](doc/readmes/environment/LINUX.md)
+- [Linux](doc/readmes/roadmap/environment/LINUX.md)
 - [Online](https://play.kotlinlang.org)
+
+<div id='principles'></div>
+
+### Fundamentos
+
+- [Variáveis](doc/readmes/roadmap/principles/VARIABLES.md)
+- [Tipos de Dados](doc/readmes/roadmap/principles/DATA_TYPES.md)
+- [Funções](doc/readmes/roadmap/principles/FUNCTIONS.md)
+- [Operadores](doc/readmes/roadmap/principles/OPERATORS.md)
+- [Expressões condicionais](doc/readmes/roadmap/principles/CONDITIONS.md)
+- [Loops](doc/readmes/roadmap/principles/LOOPS.md)
+
+<div id='data-structures'></div>
+
+### Estruturas de dados
+
+- [Coleções](doc/readmes/roadmap/data-structures/COLLECTIONS.md)
+- [Classes e objetos](doc/readmes/roadmap/data-structures/CLASSES_OBJECTS.md)
+- [Genéricos](doc/readmes/roadmap/data-structures/GENERICS.md)
+
+<div id='error-handling'></div>
+
+### Tratamento de erros
+
+- [Exceções](doc/readmes/roadmap/error-handling/EXCEPTIONS.md)
+- [Operadores seguros](doc/readmes/roadmap/error-handling/NULL_SAFETY.md)
+
+<div id='asynchronous-programming'></div>
+
+### Programação assíncrona
+
+- [Corrotinas](doc/readmes/roadmap/asynchronous-programming/COROUTINES.md)
+
+<div id='best-practices'></div>
+
+### Boas práticas
+
+- [Convenções de codificação](doc/readmes/roadmap/best-practices/CONVENTIONS.md)
 
 <div id='others'></div> 
 

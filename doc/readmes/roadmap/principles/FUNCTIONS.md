@@ -6,7 +6,7 @@ Em Kotlin, as funções são declaradas usando a palavra-chave `fun`:
 
 ```kotlin
 fun add() {
-    // ...
+    // ...  
 }
 ```
 
@@ -37,7 +37,18 @@ Ou usando argumentos nomeados:
 add(augend = 1, addend = 1)
 ```
 
-_Você pode testar esse código [online](https://pl.kotl.in/YZMIY5CDY)._
+Exemplo completo:
+
+```kotlin
+fun add(augend: Int, addend: Int): Int = augend + addend
+
+fun main() {
+    println(add(1, 1))                    // 2
+    println(add(augend = 1, addend = 1))  // 2
+}
+```
+
+_Você pode testar esse código [online](https://pl.kotl.in/cRW0H-KdR)._
 
 **Nota**
 > Usar argumentos nomeados pode ser útil quando uma função tem muitos parâmetros, facilitando a associação de valores
@@ -45,13 +56,14 @@ _Você pode testar esse código [online](https://pl.kotl.in/YZMIY5CDY)._
 
 ### Funções de extensão
 
-Kotlin permite adicionar funcionalidades a classes existentes sem alterá-las diretamente, usando _extension functions_.
+Kotlin permite adicionar funcionalidades a classes existentes sem alterá-las diretamente, usando _extension
+functions_.  
 Isso é útil para estender o comportamento de objetos existentes sem modificá-los ou criar novos tipos.
 
 Para criar uma função de extensão, a sintaxe é:
 
 ```kotlin
-fun ClassName.newFunctionName(arguments...) {
+fun ClassName.newFunctionName(arguments.. .) {
     // ...
 }
 ```
@@ -65,7 +77,17 @@ fun String.screaming(): String = uppercase() + "!!!"
 "Hello World".screaming()
 ```
 
-_Você pode testar esse código [online](https://pl.kotl.in/tmV30VrgP)._
+Exemplo completo:
+
+```kotlin
+fun String.screaming(): String = uppercase() + "!!!"
+
+fun main() {
+    println("Hello World".screaming())  // HELLO WORLD!!!
+}
+```
+
+_Você pode testar esse código [online](https://pl.kotl.in/xogoyNMfO)._
 
 ### Operadores aritméticos
 
@@ -79,13 +101,34 @@ data class BigNumber(val value: Int) {
 
     operator fun plus(addend: BigNumber): Int = value + addend.value
 
-    operator fun minus(subtrahend: BigNumber): Int = value - subtrahend.value
+    operator fun minus(subtrahend: BigNumber): Int = value - subtrahend. value
 
     operator fun times(multiplier: BigNumber): Int = value * multiplier.value
 }
 ```
 
-_Você pode testar esse código [online](https://pl.kotl.in/x2pU4Iixq)._
+Exemplo completo:
+
+```kotlin
+data class BigNumber(val value: Int) {
+    operator fun div(divisor:  BigNumber): Int = value / divisor.value
+    operator fun plus(addend: BigNumber): Int = value + addend.value
+    operator fun minus(subtrahend: BigNumber): Int = value - subtrahend.value
+    operator fun times(multiplier: BigNumber): Int = value * multiplier. value
+}
+
+fun main() {
+    val a = BigNumber(10)
+    val b = BigNumber(5)
+    
+    println(a + b)  // 15
+    println(a - b)  // 5
+    println(a * b)  // 50
+    println(a / b)  // 2
+}
+```
+
+_Você pode testar esse código [online](https://pl.kotl.in/WgVEaDo-b)._
 
 ### Funções de alta ordem e lambdas
 
@@ -99,7 +142,7 @@ usando _function types_.
 
 ```kotlin
 fun applyDiscount(discount: Int): (Double) -> Double {
-    val percentage = discount.toDouble() / 100
+    val percentage = discount. toDouble() / 100
 
     return { value -> value - (percentage * value) }
 }
@@ -114,7 +157,24 @@ var amount = 3459.99
 amount = discountOf15Percent(amount)
 ```
 
-_Você pode testar esse código [online](https://pl.kotl.in/p5_E6KQhn)._
+Exemplo completo:
+
+```kotlin
+fun applyDiscount(discount: Int): (Double) -> Double {
+    val percentage = discount.toDouble() / 100
+    return { value -> value - (percentage * value) }
+}
+
+fun main() {
+    val discountOf15Percent = applyDiscount(discount = 15)
+    var amount = 3459.99
+    
+    amount = discountOf15Percent(amount)
+    println(amount)  // 2940.9915
+}
+```
+
+_Você pode testar esse código [online](https://pl.kotl.in/KqFPwiIMD)._
 
 #### Lambdas
 
@@ -143,11 +203,30 @@ Também é possível criar tipos nomeados para funções usando `typealias`:
 ```kotlin
 typealias Sum = (Int) -> Int
 
-val plusOneLambda: Sum = { value: Int -> value + 1 }
+val plusOneLambda: Sum = { value:  Int -> value + 1 }
 ```
 
-_Você pode testar esse código [online](https://pl.kotl.in/RIlBayu5x)._
+Exemplo completo:
+
+```kotlin
+typealias Sum = (Int) -> Int
+
+fun main() {
+    val plusOneLambda: Sum = { value:  Int -> value + 1 }
+    
+    val plusOneAnonymous = fun(value: Int): Int {
+        return value + 1
+    }
+    
+    println(plusOneLambda(1))           // 2
+    println(plusOneLambda.invoke(1))    // 2
+    println(plusOneAnonymous(2))        // 3
+    println(plusOneAnonymous.invoke(2)) // 3
+}
+```
+
+_Você pode testar esse código [online](https://pl.kotl.in/rf9-4QXk3)._
 
 <br>
 
-Ir para [variáveis](VARIABLES.md).
+Ir para [operadores](OPERATORS.md).

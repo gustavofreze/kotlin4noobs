@@ -1,4 +1,4 @@
-# Convenções de Codificação
+# Convenções de codificação
 
 Em Kotlin, seguir as convenções de codificação é essencial para garantir legibilidade e consistência. Elas também
 facilitam a colaboração em equipe e a manutenção de código. Aqui estão algumas recomendações atualizadas e expandidas
@@ -15,7 +15,7 @@ val userAge = 25
 
 ```kotlin
 fun calculateAverage(scores: List<Double>): Double {
-    // ...
+    // ... 
 }
 ```
 
@@ -94,7 +94,7 @@ exceções mais específicas.
 
 ```kotlin
 try {
-    // Executa o código que pode lançar exceções.
+    // Executa o código que pode lançar exceções. 
 } catch (exception: IOException) {
     // Tratamento específico para IOException.
 } finally {

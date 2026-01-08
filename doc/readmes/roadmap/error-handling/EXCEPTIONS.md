@@ -11,8 +11,8 @@ Para lançar um objeto de exceção, use a palavra-chave `throw`:
 throw Exception("Exceção em Kotlin.")
 ```
 
-> **Nota:** Sempre que uma exceção é lançada, a execução da função é interrompida até que a exceção seja capturada ou
-> propague para o chamador.
+> **Nota:** Sempre que uma exceção é lançada, a execução da função é interrompida até
+> que a exceção seja capturada ou propague para o chamador.
 
 ### Tratamento de exceções
 
@@ -36,7 +36,7 @@ try {
     // Código que pode lançar múltiplos tipos de exceção
 } catch (exception: IOException) {
     // Tratamento específico para IOException
-    println("Erro de I/O: ${exception.message}")
+    println("Erro de I/O:  ${exception.message}")
 } catch (exception: Exception) {
     // Tratamento genérico para outras exceções
     println("Erro inesperado: ${exception.message}")
@@ -66,4 +66,4 @@ Criar exceções personalizadas serve para representar erros específicos do dom
 
 <br>
 
-Ir para [corrotinas](COROUTINES.md).
+Ir para [operadores seguros](NULL_SAFETY.md).

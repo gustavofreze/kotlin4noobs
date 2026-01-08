@@ -9,13 +9,23 @@ estrutura `for`.
 
 ```kotlin
 for (index in 1..10) {
-    // ...
+    // ... 
 }
 ```
 
 Neste caso, o loop será executado para os valores de `index` de 1 a 10 (inclusive).
 
-_Você pode testar esse código [online](https://pl.kotl.in/PgBqGYNTL)._
+Exemplo completo:
+
+```kotlin
+fun main() {
+    for (index in 1..10) {
+        println(index)
+    }
+}
+```
+
+_Você pode testar esse código [online](https://pl.kotl.in/GzrBg8UF8)._
 
 #### Loop decrescente
 
@@ -27,7 +37,17 @@ for (index in 10 downTo 1) {
 
 Aqui, o loop será executado para os valores de `index` de 10 a 1 (inclusive), em ordem decrescente.
 
-_Você pode testar esse código [online](https://pl.kotl.in/WwyJmmj1_)._
+Exemplo completo:
+
+```kotlin
+fun main() {
+    for (index in 10 downTo 1) {
+        println(index)
+    }
+}
+```
+
+_Você pode testar esse código [online](https://pl.kotl.in/cDrgNYuv9)._
 
 #### Loop com passo personalizado
 
@@ -40,7 +60,17 @@ for (index in 0 until 10 step 2) {
 Nesse exemplo, o loop será executado para os valores de `index` de 0 a 10 (exclusive), com um `step` de 2. Ou seja, o
 valor de `index` será 0, 2, 4, 6, 8.
 
-_Você pode testar esse código [online](https://pl.kotl.in/obdSr37me)._
+Exemplo completo:
+
+```kotlin
+fun main() {
+    for (index in 0 until 10 step 2) {
+        println(index)
+    }
+}
+```
+
+_Você pode testar esse código [online](https://pl.kotl.in/wMm0N838v)._
 
 #### Loop sobre uma coleção
 
@@ -54,7 +84,19 @@ for (value in values) {
 
 O loop será executado para cada elemento da coleção `values`.
 
-_Você pode testar esse código [online](https://pl.kotl.in/kNUVVz1d8)._
+Exemplo completo:
+
+```kotlin
+fun main() {
+    val values = arrayOf(1, 2, 3)
+    
+    for (value in values) {
+        println(value)
+    }
+}
+```
+
+_Você pode testar esse código [online](https://pl.kotl.in/2eSvrA3MZ)._
 
 ### While e do-while
 
@@ -75,7 +117,20 @@ while (value > 0) {
 }
 ```
 
-_Você pode testar esse código [online](https://pl.kotl.in/9YvYZcpQq)._
+Exemplo completo:
+
+```kotlin
+fun main() {
+    var value = 2
+    
+    while (value > 0) {
+        println(value)
+        value--
+    }
+}
+```
+
+_Você pode testar esse código [online](https://pl.kotl.in/HYU75pOW2)._
 
 #### Do-while
 
@@ -90,8 +145,21 @@ do {
 } while (value > 0)
 ```
 
-_Você pode testar esse código [online](https://pl.kotl.in/5cfV9SsAE)._
+Exemplo completo:
+
+```kotlin
+fun main() {
+    var value = 2
+    
+    do {
+        println(value)
+        value--
+    } while (value > 0)
+}
+```
+
+_Você pode testar esse código [online](https://pl.kotl.in/yRSfR4sFy)._
 
 <br>
 
-Ir para [classes e objetos](CLASS.md).
+Ir para o [início](https://github.com/gustavofreze/kotlin4noobs#Roadmap).

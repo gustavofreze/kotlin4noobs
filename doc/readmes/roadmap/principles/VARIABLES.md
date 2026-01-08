@@ -1,6 +1,6 @@
 # Variáveis
 
-Em Kotlin, as variáveis podem ser declaradas utilizando duas palavras-chave: `val` ou `var`. Ambas são usadas para
+Em Kotlin, as variáveis podem ser declaradas utilizando duas palavras-chave:  `val` ou `var`. Ambas são usadas para
 armazenar dados, mas com comportamentos diferentes em relação à mutabilidade.
 
 ### Val
@@ -58,7 +58,27 @@ println(language.name)  // Acessando a variável global 'name'
 language.register()     // Acessando a variável local 'template' dentro da função
 ```
 
-_Você pode testar esse código [online](https://pl.kotl.in/8PJa4lWr3)._
+Exemplo completo:
+
+```kotlin
+class Language {
+    val name = "Kotlin"
+
+    fun register() {
+        val template = "Language: <%s>."
+        println(template. format(name))
+    }
+}
+
+fun main() {
+    val language = Language()
+    
+    println(language.name)  // Kotlin
+    language.register()     // Language: <Kotlin>.
+}
+```
+
+_Você pode testar esse código [online](https://pl.kotl.in/0mEjbAJVx)._
 
 > Sempre que possível, prefira usar `val` em vez de `var`, pois isso promove imutabilidade no código, o que pode evitar
 > bugs e facilitar a manutenção.
@@ -67,4 +87,4 @@ _Você pode testar esse código [online](https://pl.kotl.in/8PJa4lWr3)._
 
 <br>
 
-Ir para [tipos de dados](TYPES.md).
+Ir para [tipos de dados](DATA_TYPES.md).

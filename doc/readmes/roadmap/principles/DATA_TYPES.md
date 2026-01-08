@@ -95,7 +95,8 @@ val strings = arrayOf("Kotlin", "Java", "Python")
 
 ### Coleções
 
-Além dos arrays, Kotlin oferece suporte a [coleções](COLLECTIONS.md), como listas (`List`), conjuntos (`Set`) e mapas (
+Além dos arrays, Kotlin oferece suporte a [coleções](../data-structures/COLLECTIONS.md), como listas (`List`),
+conjuntos (`Set`) e mapas (
 `Map`). Estas são altamente utilizadas em situações em que se precisa de estruturas de dados dinâmicas.
 
 #### List
@@ -103,7 +104,7 @@ Além dos arrays, Kotlin oferece suporte a [coleções](COLLECTIONS.md), como li
 Uma lista imutável (não pode ser alterada):
 
 ```kotlin
-val languages: List<String> = listOf("Kotlin", "Java", "Python")
+val languages:  List<String> = listOf("Kotlin", "Java", "Python")
 ```
 
 Uma lista mutável (pode ser alterada):
@@ -156,7 +157,7 @@ println(currentDate)
 ```kotlin
 import java.time.LocalDateTime
 
-val currentDateTime: LocalDateTime = LocalDateTime.now()
+val currentDateTime: LocalDateTime = LocalDateTime. now()
 println(currentDateTime)
 ```
 
@@ -185,4 +186,4 @@ fun fail(message: String): Nothing {
 
 <br>
 
-Ir para [coleções](COLLECTIONS.md).
+Ir para [funções](FUNCTIONS.md).

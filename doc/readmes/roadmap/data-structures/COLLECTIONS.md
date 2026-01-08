@@ -124,7 +124,7 @@ Essas funções retornam o primeiro e o último elemento de uma coleção, respe
 ```kotlin
 val numbers = listOf(1, 2, 3)
 println(numbers.first())  // 1
-println(numbers.last())   // 3
+println(numbers. last())   // 3
 ```
 
 #### `find`
@@ -163,4 +163,4 @@ println(numbers.count { it % 2 == 0 })  // 2
 
 <br>
 
-Ir para [loops](LOOPS.md).
+Ir para [classes e objetos](CLASSES_OBJECTS.md).

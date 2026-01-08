@@ -29,28 +29,49 @@ fun execute() {
 }
 ```
 
-_Você pode testar esse código [online](https://pl.kotl.in/9Aj0TsKI4)._
+Exemplo completo:
+
+```kotlin
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx. coroutines.launch
+
+@OptIn(DelicateCoroutinesApi::class)
+fun main() {
+    GlobalScope.launch {
+        delay(1000)
+        println("Coroutine executada.")
+    }
+
+    println("A execução do programa continua enquanto a coroutine está sendo executada...")
+    
+    Thread.sleep(2000)
+}
+```
+
+_Você pode testar esse código [online](https://pl.kotl.in/2OZ7AyKT0)._
 
 > **Nota:** Evite usar `GlobalScope` a menos que necessário, pois ele cria coroutines que não são vinculadas ao ciclo de
 > vida da aplicação, o que pode levar a vazamentos de memória e execução indesejada de coroutines em segundo plano.
 
-### CoroutineScope com Dispatchers.Default
+### CoroutineScope com Dispatchers Default
 
 Neste exemplo, usamos `CoroutineScope(Default)` para criar um escopo de coroutines que será executado no pool de threads
 padrão (`Dispatchers.Default`). Isso oferece melhor controle sobre o ciclo de vida da coroutine.
 
 ```kotlin
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers.Default
+import kotlinx.coroutines.Dispatchers. Default
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines. runBlocking
 
 fun execute() = runBlocking {
     val defaultScope = CoroutineScope(Default)
 
-    // Iniciando uma coroutine dentro do escopo.
+    // Iniciando uma coroutine dentro do escopo. 
     defaultScope.launch {
         delay(1000)
         println("Coroutine executada.")
@@ -58,13 +79,38 @@ fun execute() = runBlocking {
 
     println("A execução do programa continua enquanto a coroutine está sendo executada...")
 
-    // Esperando a execução da coroutine finalizar.
+    // Esperando a execução da coroutine finalizar. 
     delay(2000)
     defaultScope.cancel() // Cancelando todas as coroutines dentro do escopo.
 }
 ```
 
-_Você pode testar esse código [online](https://pl.kotl.in/j3nqrHKKF)._
+Exemplo completo:
+
+```kotlin
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines. Dispatchers.Default
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines. delay
+import kotlinx.coroutines.launch
+import kotlinx. coroutines.runBlocking
+
+fun main() = runBlocking {
+    val defaultScope = CoroutineScope(Default)
+
+    defaultScope.launch {
+        delay(1000)
+        println("Coroutine executada.")
+    }
+
+    println("A execução do programa continua enquanto a coroutine está sendo executada...")
+    
+    delay(2000)
+    defaultScope.cancel()
+}
+```
+
+_Você pode testar esse código [online](https://pl.kotl.in/F1t0ei9xS)._
 
 Aqui usamos `runBlocking` para bloquear o thread principal até que todas as coroutines dentro do `defaultScope` sejam
 finalizadas e corretamente canceladas.
@@ -82,7 +128,7 @@ import kotlinx.coroutines.runBlocking
 fun execute() = runBlocking {
     val deferred = async { accountBalance() }
     val balance = deferred.await()
-    val template = "O saldo da conta é: R$ %.2f."
+    val template = "O saldo da conta é: R$ %. 2f."
 
     println(template.format(balance))
 }
@@ -90,11 +136,32 @@ fun execute() = runBlocking {
 suspend fun accountBalance(): Double {
     delay(1000)
 
-    return (100..10000).random().toDouble()
+    return (100.. 10000).random().toDouble()
 }
 ```
 
-_Você pode testar esse código [online](https://pl.kotl.in/8GYzf82R-)._
+Exemplo completo:
+
+```kotlin
+import kotlinx.coroutines.async
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.runBlocking
+
+suspend fun accountBalance(): Double {
+    delay(1000)
+    return (100..10000).random().toDouble()
+}
+
+fun main() = runBlocking {
+    val deferred = async { accountBalance() }
+    val balance = deferred. await()
+    val template = "O saldo da conta é: R$ %.2f."
+    
+    println(template.format(balance))
+}
+```
+
+_Você pode testar esse código [online](https://pl.kotl.in/YeCMV3YZK)._
 
 Nesse exemplo, usamos `async` para executar a função `accountBalance`, que simula uma operação demorada com `delay` e
 retorna um valor. A função `await` é usada para esperar a conclusão da coroutine.
@@ -106,4 +173,4 @@ retorna um valor. A função `await` é usada para esperar a conclusão da corou
 
 <br>
 
-Ir para [operadores seguros](NULL_SAFETY.md).
+Ir para o [início](https://github.com/gustavofreze/kotlin4noobs#Roadmap).

@@ -1,0 +1,48 @@
+---
+/**
+ * The language menu. A native <details> disclosure, so it opens and closes with no script and scales to
+ * any number of locales. The script only adds the dismissal a menu is expected to have and carries the
+ * section being read across the switch.
+ */
+import { LOCALES } from '../i18n'
+import type { Locale, SiteCopy } from '../i18n/strings'
+import Icon from './Icon.astro'
+
+interface Props {
+  locale: Locale
+  labels: SiteCopy['localeSwitch']
+  /** The equivalent address of the current page in each language. */
+  paths: Record<Locale, string>
+  /** The anchors of the sections of the current page in each language, in order, for a topic page. */
+  sections?: Record<Locale, readonly string[]> | undefined
+}
+const { locale, labels, paths, sections } = Astro.props
+---
+
+<details class="locale-menu">
+  <summary class="locale-menu__trigger" aria-label={`${labels.ariaLabel}: ${labels.names[locale]} (${locale})`}>
+    <Icon name="globe" size={16} />
+    <span class="locale-menu__code">{locale}</span>
+    <Icon name="chevron" size={14} class="locale-menu__chevron" />
+  </summary>
+  <ul class="locale-menu__list">
+    {
+      LOCALES.map((localeOption) => (
+        <li>
+          <a
+            href={paths[localeOption]}
+            hreflang={localeOption}
+            lang={localeOption}
+            aria-current={localeOption === locale ? 'page' : undefined}
+            class:list={['locale-menu__item', localeOption === locale && 'is-current']}
+            data-locale-link
+            data-sections={sections?.[localeOption].join(' ')}
+          >
+            <span>{labels.names[localeOption]}</span>
+            {localeOption === locale && <Icon name="check" size={16} />}
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</details>

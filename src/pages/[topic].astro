@@ -1,0 +1,12 @@
+---
+import type { GetStaticPaths } from 'astro'
+import TopicPage from '../components/TopicPage.astro'
+import { topicsOf } from '../content'
+
+export const getStaticPaths = (() =>
+  topicsOf('en-US').map((topic) => ({ params: { topic: topic.slug } }))) satisfies GetStaticPaths
+
+const { topic } = Astro.params
+---
+
+<TopicPage locale="en-US" slug={topic} />

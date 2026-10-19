@@ -48,8 +48,6 @@ fun main() {
 }
 ```
 
-_Você pode testar esse código [online](https://pl.kotl.in/cRW0H-KdR)._
-
 **Nota**
 > Usar argumentos nomeados pode ser útil quando uma função tem muitos parâmetros, facilitando a associação de valores
 > aos argumentos.
@@ -87,8 +85,6 @@ fun main() {
 }
 ```
 
-_Você pode testar esse código [online](https://pl.kotl.in/xogoyNMfO)._
-
 ### Operadores aritméticos
 
 Kotlin permite que você sobrescreva operadores, fornecendo implementações personalizadas para operadores como `+` ou
@@ -101,7 +97,7 @@ data class BigNumber(val value: Int) {
 
     operator fun plus(addend: BigNumber): Int = value + addend.value
 
-    operator fun minus(subtrahend: BigNumber): Int = value - subtrahend. value
+    operator fun minus(subtrahend: BigNumber): Int = value - subtrahend.value
 
     operator fun times(multiplier: BigNumber): Int = value * multiplier.value
 }
@@ -111,10 +107,10 @@ Exemplo completo:
 
 ```kotlin
 data class BigNumber(val value: Int) {
-    operator fun div(divisor:  BigNumber): Int = value / divisor.value
+    operator fun div(divisor: BigNumber): Int = value / divisor.value
     operator fun plus(addend: BigNumber): Int = value + addend.value
     operator fun minus(subtrahend: BigNumber): Int = value - subtrahend.value
-    operator fun times(multiplier: BigNumber): Int = value * multiplier. value
+    operator fun times(multiplier: BigNumber): Int = value * multiplier.value
 }
 
 fun main() {
@@ -128,8 +124,6 @@ fun main() {
 }
 ```
 
-_Você pode testar esse código [online](https://pl.kotl.in/WgVEaDo-b)._
-
 ### Funções de alta ordem e lambdas
 
 #### Funções de alta ordem
@@ -142,7 +136,7 @@ usando _function types_.
 
 ```kotlin
 fun applyDiscount(discount: Int): (Double) -> Double {
-    val percentage = discount. toDouble() / 100
+    val percentage = discount.toDouble() / 100
 
     return { value -> value - (percentage * value) }
 }
@@ -174,8 +168,6 @@ fun main() {
 }
 ```
 
-_Você pode testar esse código [online](https://pl.kotl.in/KqFPwiIMD)._
-
 #### Lambdas
 
 Funções podem ser instanciadas de duas maneiras: usando expressões lambda ou funções anônimas.
@@ -203,7 +195,7 @@ Também é possível criar tipos nomeados para funções usando `typealias`:
 ```kotlin
 typealias Sum = (Int) -> Int
 
-val plusOneLambda: Sum = { value:  Int -> value + 1 }
+val plusOneLambda: Sum = { value: Int -> value + 1 }
 ```
 
 Exemplo completo:
@@ -212,7 +204,7 @@ Exemplo completo:
 typealias Sum = (Int) -> Int
 
 fun main() {
-    val plusOneLambda: Sum = { value:  Int -> value + 1 }
+    val plusOneLambda: Sum = { value: Int -> value + 1 }
     
     val plusOneAnonymous = fun(value: Int): Int {
         return value + 1
@@ -224,8 +216,6 @@ fun main() {
     println(plusOneAnonymous.invoke(2)) // 3
 }
 ```
-
-_Você pode testar esse código [online](https://pl.kotl.in/rf9-4QXk3)._
 
 <br>
 

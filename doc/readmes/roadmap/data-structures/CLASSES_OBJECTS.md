@@ -41,7 +41,7 @@ Por padrão, toda classe que criamos não é aberta para ser herdada por outra,
 então, precisamos usar a palavra-chave `open` para que a herança seja permitida:
 
 ```kotlin
-open class Person(val age:  Int, val name: String)
+open class Person(val age: Int, val name: String)
 
 class Driver(age: Int, name: String, val license: String) : Person(age, name)
 ```
@@ -49,7 +49,7 @@ class Driver(age: Int, name: String, val license: String) : Person(age, name)
 Exemplo completo:
 
 ```kotlin
-open class Person(val age: Int, val name:  String)
+open class Person(val age: Int, val name: String)
 
 class Driver(age: Int, name: String, val license: String) : Person(age, name)
 
@@ -62,8 +62,6 @@ fun main() {
 }
 ```
 
-_Você pode testar esse código [online](https://pl.kotl.in/LJGuHSRdQ)._
-
 ### Data class
 
 Não é incomum criar classes cujo objetivo principal seja armazenar dados, como,
@@ -71,7 +69,7 @@ Não é incomum criar classes cujo objetivo principal seja armazenar dados, como
 Em Kotlin, elas são chamadas classes de dados sendo declaradas usando a palavra-chave `data`:
 
 ```kotlin
-data class Person(val age: Int, val name:  String)
+data class Person(val age: Int, val name: String)
 ```
 
 O compilador deriva automaticamente os seguintes membros de todas as propriedades declaradas no construtor primário:
@@ -110,8 +108,6 @@ fun main() {
 }
 ```
 
-_Você pode testar esse código [online](https://pl.kotl.in/7hMYnjdCu)._
-
 ### Enum class
 
 As classes do tipo enum em Kotlin são declaradas usando a palavra-chave `enum`:
@@ -142,14 +138,12 @@ enum class Type(val value: Int) {
 }
 
 fun main() {
-    val type = Type. CUSTOMER
+    val type = Type.CUSTOMER
     
     println(type)       // CUSTOMER
     println(type.value) // 1
 }
 ```
-
-_Você pode testar esse código [online](https://pl.kotl.in/KAsr0ANRo)._
 
 As constantes de enumeração podem declarar suas próprias classes anônimas com seus métodos correspondentes, bem como
 substituir os métodos-base:
@@ -191,8 +185,6 @@ fun main() {
 }
 ```
 
-_Você pode testar esse código [online](https://pl.kotl.in/Xol_t4TcX)._
-
 **Nota**
 > Uma classe enum pode implementar uma interface, mas não pode derivar de uma classe, fornecendo uma implementação
 > comum de membros de interface para todas as entradas ou implementações separadas para cada entrada dentro de sua
@@ -212,7 +204,7 @@ abstract class Customer {
 E na classe que você deseja que estenda a classe abstrata, basta fazer:
 
 ```kotlin
-class Person(val age: Int, val name:  String) : Customer() {
+class Person(val age: Int, val name: String) : Customer() {
 
     override fun register() {
         val template = "Registrado %s, %s anos."
@@ -240,8 +232,6 @@ fun main() {
     person.register()  // Registrado Gustavo, 25 anos.
 }
 ```
-
-_Você pode testar esse código [online](https://pl.kotl.in/OR7XdCy2u)._
 
 ### Objects
 
@@ -275,7 +265,7 @@ object PersonValidator {
         return age in 0..150
     }
     
-    fun isValidName(name:  String): Boolean {
+    fun isValidName(name: String): Boolean {
         return name.isNotBlank() && name.length >= 2
     }
 }
@@ -288,13 +278,11 @@ fun main() {
 }
 ```
 
-_Você pode testar esse código [online](https://pl.kotl.in/XbqOgQltY)._
-
 O Kotlin também nos permite criar o que é chamado companion object, um objeto que fica em uma classe. Para isso,
 precisamos usar a palavra-chave `companion object`:
 
 ```kotlin
-class Person(val age: Int, val name:  String) {
+class Person(val age: Int, val name: String) {
 
     companion object {
         fun newborn(name: String) = Person(age = 0, name = name)
@@ -312,7 +300,7 @@ val person = Person.newborn(name = "Gustavo")
 Exemplo completo:
 
 ```kotlin
-class Person(val age:  Int, val name: String) {
+class Person(val age: Int, val name: String) {
     companion object {
         fun newborn(name: String) = Person(age = 0, name = name)
     }
@@ -325,8 +313,6 @@ fun main() {
     println(person.age)   // 0
 }
 ```
-
-_Você pode testar esse código [online](https://pl.kotl.in/72w8_xGYo)_
 
 ### Interfaces
 
@@ -369,7 +355,7 @@ interface PremiumCustomer : Customer {
     val minimumLimit: Double
 }
 
-class VIPCustomer :  PremiumCustomer {
+class VIPCustomer : PremiumCustomer {
     override val minimumLimit = 10000.0
     
     override fun register() {
@@ -383,8 +369,6 @@ fun main() {
     vip.register()  // VIP registrado com limite: R$ 10000.00
 }
 ```
-
-_Você pode testar esse código [online](https://pl.kotl.in/NihZqK-_R)._
 
 O padrão [Delegation](https://en.wikipedia.org/wiki/Delegation_pattern) provou ser uma boa alternativa para a herança de
 implementação, e o Kotlin o suporta nativamente. Uma classe `Person` pode implementar uma interface `Customer`
@@ -400,7 +384,7 @@ class CustomerAdapter(private val name: String) : Customer {
 
     override fun register() {
         val template = "Registrado %s."
-        println(template. format(name))
+        println(template.format(name))
     }
 }
 
@@ -431,8 +415,6 @@ fun main() {
 }
 ```
 
-_Você pode testar esse código [online](https://pl.kotl.in/BlCJfERT7)._
-
 ### Sealed class
 
 Sealed classes são úteis quando você tem uma hierarquia de classes restrita onde todas as possíveis subclasses são
@@ -453,7 +435,7 @@ todos os casos foram cobertos, eliminando a necessidade de uma cláusula `else`:
 fun handleEvent(event: PersonEvent) {
     when (event) {
         is PersonEvent.Created -> println("Pessoa criada: ${event.person.name}")
-        is PersonEvent.Updated -> println("Pessoa atualizada: ${event. person.name}")
+        is PersonEvent.Updated -> println("Pessoa atualizada: ${event.person.name}")
         is PersonEvent.Deleted -> println("Pessoa removida: ID ${event.id}")
         // Não precisa de else
     }
@@ -474,8 +456,8 @@ sealed class PersonEvent {
 fun handleEvent(event: PersonEvent) {
     when (event) {
         is PersonEvent.Created -> println("Pessoa criada: ${event.person.name}")
-        is PersonEvent.Updated -> println("Pessoa atualizada: ${event.person. name}")
-        is PersonEvent. Deleted -> println("Pessoa removida: ID ${event.id}")
+        is PersonEvent.Updated -> println("Pessoa atualizada: ${event.person.name}")
+        is PersonEvent.Deleted -> println("Pessoa removida: ID ${event.id}")
     }
 }
 
@@ -483,12 +465,10 @@ fun main() {
     val person = Person(1, "Gustavo")
     
     handleEvent(PersonEvent.Created(person))
-    handleEvent(PersonEvent.Updated(person. copy(name = "Gustavo Freze")))
+    handleEvent(PersonEvent.Updated(person.copy(name = "Gustavo Freze")))
     handleEvent(PersonEvent.Deleted(1))
 }
 ```
-
-_Você pode testar esse código [online](https://pl.kotl.in/lpEjOo2iD)._
 
 As sealed classes são abstratas por natureza e não podem ser instanciadas diretamente. Todas as subclasses de uma
 sealed class devem ser declaradas no mesmo arquivo ou como classes aninhadas:
@@ -541,7 +521,7 @@ value class PersonId(val value: Int)
 @JvmInline
 value class PersonName(val value: String) {
     init {
-        require(value. isNotBlank()) { "Nome não pode ser vazio" }
+        require(value.isNotBlank()) { "Nome não pode ser vazio" }
     }
 }
 
@@ -562,8 +542,6 @@ fun main() {
     println(checkAdult(age)) // true
 }
 ```
-
-_Você pode testar esse código [online](https://pl.kotl.in/9RMYlSwYP)._
 
 ### Nested e Inner classes
 
@@ -616,11 +594,9 @@ fun main() {
     val team = company.Team()
     
     println(department.getCode()) // DEPT-001
-    println(team. getTeamSize())  // 2
+    println(team.getTeamSize())  // 2
 }
 ```
-
-_Você pode testar esse código [online](https://pl.kotl.in/OexGufcOn)._
 
 <br>
 

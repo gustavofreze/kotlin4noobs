@@ -1,0 +1,19 @@
+---
+/**
+ * The control in the corner of the window that takes a reader back to the top of the page. It is a link
+ * the browser follows with no script; the script only decides when it is worth drawing, and with no
+ * script it is not drawn at all.
+ */
+import Icon from './Icon.astro'
+
+interface Props {
+  label: string
+}
+const { label } = Astro.props
+---
+
+<nav aria-label={label}>
+  <a href="#top" class="kt-to-top" aria-label={label} title={label} data-to-top>
+    <Icon name="arrow-up" size={20} />
+  </a>
+</nav>

@@ -9,4 +9,4 @@ A ideia desta seção, é fornecer exemplos de códigos para quem está começan
 
 <br>
 
-Ir para o [início](https://github.com/gustavofreze/kotlin4noobs#Roadmap).
+Ir para o [início](https://github.com/gustavofreze/kotlin4noobs#topics).

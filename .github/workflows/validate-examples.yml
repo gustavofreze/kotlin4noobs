@@ -1,0 +1,56 @@
+name: Validate examples
+
+on:
+  pull_request:
+    paths:
+      - 'doc/readmes/**'
+      - 'tools/check-examples.mjs'
+      - 'tools/examples.mjs'
+    branches:
+      - main
+  schedule:
+    - cron: '0 6 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  examples:
+    name: Run examples
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      issues: write
+      contents: read
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+      - name: Setup Node
+        uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+      - if: github.event_name == 'pull_request'
+        name: Run the programs of the notes
+        run: node tools/check-examples.mjs --programs-only
+      - if: github.event_name != 'pull_request'
+        id: check
+        name: Run the programs of the notes and check the Playground
+        run: node tools/check-examples.mjs --report examples-report.md
+        continue-on-error: true
+      - if: github.event_name != 'pull_request' && steps.check.outcome == 'failure'
+        name: Create issue
+        uses: peter-evans/create-issue-from-file@fca9117c27cdc29c6c4db3b86c48e4115a786710 # v6.0.0
+        with:
+          title: Examples report
+          labels: 'report, automated-issue'
+          content-filepath: ./examples-report.md
+      - if: github.event_name != 'pull_request' && steps.check.outcome == 'failure'
+        name: Assign issues and pull requests
+        uses: gustavofreze/auto-assign@3c8ebe3f6f2cc5b92bb8969f13bc5886895f70e3 # 2.1.1
+        with:
+          assignees: '${{ vars.ASSIGNEES }}'
+          github_token: '${{ secrets.GITHUB_TOKEN }}'
+          allow_self_assign: 'true'
+          allow_no_assignees: 'true'
+          assignment_options: 'ISSUE'

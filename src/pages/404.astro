@@ -1,0 +1,31 @@
+---
+/**
+ * The page GitHub Pages answers with for any address that publishes nothing, in either language. It is
+ * one file for the whole site, so it speaks both languages instead of guessing which one was asked for,
+ * and it declares no address of its own.
+ */
+import { pageHref } from '../i18n'
+import { getCopy, MAIN_ID } from '../i18n/strings'
+import BaseLayout from '../layouts/BaseLayout.astro'
+
+const english = getCopy('en-US').notFound
+const portuguese = getCopy('pt-BR').notFound
+---
+
+<BaseLayout locale="en-US" title={english.title} paths={null}>
+  <main id={MAIN_ID} class="kt-wrap kt-lost">
+    <p class="kt-lost__code" aria-hidden="true">404</p>
+    <div class="kt-lost__languages">
+      <section class="kt-lost__language">
+        <h1 class="kt-cover__title">{english.title}</h1>
+        <p class="kt-lost__lede">{english.lede}</p>
+        <a href={pageHref('en-US')} class="kt-button kt-button--primary">{english.back}</a>
+      </section>
+      <section class="kt-lost__language" lang="pt-BR">
+        <h2 class="kt-cover__title">{portuguese.title}</h2>
+        <p class="kt-lost__lede">{portuguese.lede}</p>
+        <a href={pageHref('pt-BR')} class="kt-button kt-button--primary">{portuguese.back}</a>
+      </section>
+    </div>
+  </main>
+</BaseLayout>

@@ -25,8 +25,6 @@ fun main() {
 }
 ```
 
-_Você pode testar esse código [online](https://pl.kotl.in/GzrBg8UF8)._
-
 #### Loop decrescente
 
 ```kotlin
@@ -46,8 +44,6 @@ fun main() {
     }
 }
 ```
-
-_Você pode testar esse código [online](https://pl.kotl.in/cDrgNYuv9)._
 
 #### Loop com passo personalizado
 
@@ -69,8 +65,6 @@ fun main() {
     }
 }
 ```
-
-_Você pode testar esse código [online](https://pl.kotl.in/wMm0N838v)._
 
 #### Loop sobre uma coleção
 
@@ -95,8 +89,6 @@ fun main() {
     }
 }
 ```
-
-_Você pode testar esse código [online](https://pl.kotl.in/2eSvrA3MZ)._
 
 ### While e do-while
 
@@ -130,8 +122,6 @@ fun main() {
 }
 ```
 
-_Você pode testar esse código [online](https://pl.kotl.in/HYU75pOW2)._
-
 #### Do-while
 
 Executa o corpo do loop pelo menos uma vez, independentemente da condição, e só depois verifica a condição:
@@ -158,8 +148,6 @@ fun main() {
 }
 ```
 
-_Você pode testar esse código [online](https://pl.kotl.in/yRSfR4sFy)._
-
 <br>
 
-Ir para o [início](https://github.com/gustavofreze/kotlin4noobs#Roadmap).
+Ir para [funções de escopo](SCOPE_FUNCTIONS.md).

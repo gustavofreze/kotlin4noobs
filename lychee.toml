@@ -1,0 +1,4 @@
+# aws.amazon.com resets connections when hit by many parallel requests.
+max_concurrency = 8
+max_retries = 5
+retry_wait_time = 5

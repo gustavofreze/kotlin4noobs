@@ -61,8 +61,6 @@ fun main() {
 }
 ```
 
-_Você pode testar esse código [online](https://pl.kotl.in/iiAXzON4b)._
-
 ### Funções genéricas
 
 Funções podem ter seus próprios parâmetros de tipo:
@@ -128,8 +126,6 @@ fun main() {
 }
 ```
 
-_Você pode testar esse código [online](https://pl.kotl.in/QIAyRkvPz)._
-
 ### Constraints
 
 Você pode restringir os tipos que podem ser usados como argumentos genéricos:
@@ -155,7 +151,7 @@ Múltiplas restrições com `where`:
 ```kotlin
 fun <T> process(item: T) 
     where T : CharSequence,
-          T :  Comparable<T> {
+          T : Comparable<T> {
     // T deve ser CharSequence E Comparable
 }
 ```
@@ -184,19 +180,19 @@ data class Product(
 ) : Identifiable
 
 // Função com constraint simples
-fun <T :  Identifiable> findById(list: List<T>, id: Int): T? {
+fun <T : Identifiable> findById(list: List<T>, id: Int): T? {
     return list.find { it.id == id }
 }
 
 // Função com múltiplas constraints
 fun <T> getOldest(list: List<T>): T? 
-    where T :  Identifiable,
-          T :  Comparable<T> {
+    where T : Identifiable,
+          T : Comparable<T> {
     return list.maxOrNull()
 }
 
 // Classe genérica com constraint
-class Cache<T :  Identifiable>(private val maxSize: Int) {
+class Cache<T : Identifiable>(private val maxSize: Int) {
     private val items = mutableListOf<T>()
     
     fun add(item: T) {
@@ -240,8 +236,6 @@ fun main() {
     println(cache.getAll())  // [Bruno, Carlos]
 }
 ```
-
-_Você pode testar esse código [online](https://pl.kotl.in/Pp2gv31D6)._
 
 ### Variância
 
@@ -293,7 +287,7 @@ class PersonConsumer<in T : Person> {
 class PersonStorage<T : Person> {
     private var stored: T? = null
     
-    fun store(person:  T) {
+    fun store(person: T) {
         stored = person
     }
     
@@ -307,7 +301,7 @@ fun main() {
     println(personProducer.get().name)
     
     // Contravariância (in) permite usar supertipos
-    val personConsumer:  PersonConsumer<Person> = PersonConsumer()
+    val personConsumer: PersonConsumer<Person> = PersonConsumer()
     val employeeConsumer: PersonConsumer<Employee> = personConsumer  // OK! Person é supertipo de Employee
     employeeConsumer.process(Employee("Maria", 456))
     
@@ -329,8 +323,6 @@ fun main() {
     // val mutablePeople: MutableList<Person> = mutableListOf(Employee("Test", 999))  // Erro!
 }
 ```
-
-_Você pode testar esse código [online](https://pl.kotl.in/6qLaBfxwT)._
 
 ### Reified type parameters
 
@@ -363,7 +355,7 @@ inline fun <reified T> createInstance(): String {
     } as String
 }
 
-inline fun <reified T :  Person> findPeople(people: List<Person>): List<T> {
+inline fun <reified T : Person> findPeople(people: List<Person>): List<T> {
     return people.filterIsInstance<T>()
 }
 
@@ -378,11 +370,11 @@ inline fun <reified T> safeCast(value: Any): T? {
 // Função que cria um mapa agrupando por tipo
 inline fun <reified T> List<Any>.groupByType(): Map<String, List<T>> {
     val items = filterIsInstance<T>()
-    return mapOf(T::class.simpleName. orEmpty() to items)
+    return mapOf(T::class.simpleName.orEmpty() to items)
 }
 
 fun main() {
-    val mixedList:  List<Person> = listOf(
+    val mixedList: List<Person> = listOf(
         Person("João"),
         Employee("Maria", 123),
         Customer("Pedro", 500),
@@ -401,7 +393,7 @@ fun main() {
     val anyList: List<Any> = listOf("text", 123, true, "more text", 456, Person("Test"))
     println("\nContagem por tipo:")
     println("Strings: ${anyList.countType<String>()}")
-    println("Inteiros: ${anyList. countType<Int>()}")
+    println("Inteiros: ${anyList.countType<Int>()}")
     println("Booleanos: ${anyList.countType<Boolean>()}")
     println("Pessoas: ${anyList.countType<Person>()}")
     
@@ -420,23 +412,21 @@ fun main() {
 }
 ```
 
-_Você pode testar esse código [online](https://pl.kotl.in/qZPUt-CgS)._
-
 ### Generics com data classes
 
 Generics são muito úteis com data classes para criar estruturas reutilizáveis:
 
 ```kotlin
 data class Result<T>(
-    val data: T?  = null,
-    val error:  String? = null
+    val data: T? = null,
+    val error: String? = null
 ) {
     val isSuccess: Boolean get() = data != null
     val isError: Boolean get() = error != null
 }
 
 data class PagedList<T>(
-    val items:  List<T>,
+    val items: List<T>,
     val page: Int,
     val totalPages: Int
 )
@@ -497,8 +487,8 @@ class PersonService {
         Person("Carlos", 35)
     )
     
-    fun findById(id:  Int): Result<Person> {
-        return if (id in people. indices) {
+    fun findById(id: Int): Result<Person> {
+        return if (id in people.indices) {
             Result.Success(people[id])
         } else {
             Result.Error(NoSuchElementException("Person not found"))
@@ -521,8 +511,8 @@ class PersonService {
         return listOf(
             KeyValue("total", people.size),
             KeyValue("averageAge", people.map { it.age }. average()),
-            KeyValue("youngest", people.minBy { it. age }),
-            KeyValue("oldest", people.maxBy { it. age })
+            KeyValue("youngest", people.minBy { it.age }),
+            KeyValue("oldest", people.maxBy { it.age })
         )
     }
 }
@@ -541,7 +531,7 @@ fun main() {
     
     // Mapeando Result
     val nameResult = service.findById(0).map { it.name.uppercase() }
-    println("Nome em maiúsculas: ${nameResult. getOrDefault("DESCONHECIDO")}")
+    println("Nome em maiúsculas: ${nameResult.getOrDefault("DESCONHECIDO")}")
     
     // Usando PagedResponse<T>
     val page1 = service.getPaged(1, 2)
@@ -552,13 +542,11 @@ fun main() {
     // Usando KeyValue<K, V>
     println("\nEstatísticas:")
     service.getStatistics().forEach { stat ->
-        println("  ${stat.key}: ${stat. value}")
+        println("  ${stat.key}: ${stat.value}")
     }
 }
 ```
 
-_Você pode testar esse código [online](https://pl.kotl.in/W3Nl0cu1e)._
-
 <br>
 
-Ir para o [início](https://github.com/gustavofreze/kotlin4noobs#Roadmap).
+Ir para o [início](https://github.com/gustavofreze/kotlin4noobs#topics).

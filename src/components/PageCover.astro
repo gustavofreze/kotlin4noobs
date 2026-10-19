@@ -1,0 +1,34 @@
+---
+/**
+ * The deep band on top of a page that is not a topic: the breadcrumb back to the home, a glyph, the
+ * title and one line under it. It wears the same ground and the same size as the cover of a topic.
+ */
+import { pageHref } from '../i18n'
+import { getCopy, type Locale } from '../i18n/strings'
+
+interface Props {
+  locale: Locale
+  /** The piece of syntax that marks the page, the way a glyph marks a topic. */
+  glyph: string
+  title: string
+  lede: string
+}
+const { locale, glyph, title, lede } = Astro.props
+const copy = getCopy(locale)
+---
+
+<div class="kt-cover">
+  <span class="kt-cover__mark" aria-hidden="true">{glyph}</span>
+  <div class="kt-wrap kt-cover__inner">
+    <nav aria-label={copy.nav.breadcrumb} class="kt-crumbs">
+      <a href={pageHref(locale)}>{copy.nav.home}</a>
+      <span class="kt-crumbs__sep" aria-hidden="true">/</span>
+      <span>{title}</span>
+    </nav>
+    <div class="kt-cover__head">
+      <span class="kt-glyph kt-glyph--deep">{glyph}</span>
+      <h1 class="kt-cover__title">{title}</h1>
+    </div>
+    <p class="kt-cover__lede">{lede}</p>
+  </div>
+</div>

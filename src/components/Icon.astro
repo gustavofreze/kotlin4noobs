@@ -1,0 +1,29 @@
+---
+/**
+ * One line icon from the set in `icons.ts`. Always decorative: the label beside it carries the meaning,
+ * so it is hidden from assistive tech and never reachable.
+ */
+import { ICONS, type IconName } from './icons'
+
+interface Props {
+  name: IconName
+  class?: string
+  size?: number
+}
+const { name, class: className = '', size = 16 } = Astro.props
+---
+
+<svg
+  aria-hidden="true"
+  focusable="false"
+  viewBox="0 0 24 24"
+  width={size}
+  height={size}
+  fill="none"
+  stroke="currentColor"
+  stroke-width="1.8"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  class:list={['kt-icon', className]}
+  set:html={ICONS[name]}
+/>

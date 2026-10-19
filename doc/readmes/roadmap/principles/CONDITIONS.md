@@ -40,8 +40,6 @@ fun main() {
 }
 ```
 
-_Você pode testar esse código [online](https://pl.kotl.in/LoXSU10R9)._
-
 Uma expressão `if` pode ser usada em blocos. Nesse caso, a última expressão é o valor do bloco:
 
 ```kotlin
@@ -63,8 +61,6 @@ fun main() {
     println(maxValue)  // 2
 }
 ```
-
-_Você pode testar esse código [online](https://pl.kotl.in/Oz_ybrE6r)._
 
 **Nota**
 > Quando usar `if` como expressão para retornar ou atribuir valores, o uso de `else` é obrigatório para garantir que o
@@ -104,8 +100,6 @@ fun main() {
 }
 ```
 
-_Você pode testar esse código [online](https://pl.kotl.in/wbRqcPm9T)._
-
 O `when` também suporta _ranges_ nas condições:
 
 ```kotlin
@@ -133,8 +127,6 @@ fun main() {
     println(result)
 }
 ```
-
-_Você pode testar esse código [online](https://pl.kotl.in/sEs5sj3k6)._
 
 O `when` pode ser usado tanto como uma expressão quanto como uma instrução. Se usado como expressão, o valor da primeira
 condição correspondida será o valor da expressão. Se usado como instrução, os valores das ramificações individuais serão

@@ -32,4 +32,4 @@ A várias maneiras de configurar o ambiente, e nesta seção escolhi utilizar o 
 
 <br>
 
-Ir para o [início](https://github.com/gustavofreze/kotlin4noobs#Roadmap).
+Ir para o [início](https://github.com/gustavofreze/kotlin4noobs#topics).

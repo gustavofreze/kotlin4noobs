@@ -1,0 +1,19 @@
+---
+import { REPOSITORY_HREF } from '../i18n'
+import { getCopy, type Locale } from '../i18n/strings'
+import Icon from './Icon.astro'
+
+interface Props {
+  locale: Locale
+}
+const { locale } = Astro.props
+const copy = getCopy(locale)
+---
+
+<footer class="kt-footer">
+  <div class="kt-wrap kt-footer__inner">
+    <a href={REPOSITORY_HREF} target="_blank" rel="noopener noreferrer" class="kt-footer__github" aria-label={copy.footer.source} title={copy.footer.source}>
+      <Icon name="github" size={20} />
+    </a>
+  </div>
+</footer>

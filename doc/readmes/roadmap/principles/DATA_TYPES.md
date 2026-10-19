@@ -1,7 +1,7 @@
 # Tipos de dados
 
 Kotlin oferece uma ampla gama de tipos de dados, desde os básicos como números inteiros e ponto flutuante, até tipos
-mais específicos como `Date` e outros. Aqui estão os tipos mais comuns que você encontrará em Kotlin.
+mais específicos como datas e outros. Aqui estão os tipos mais comuns que você encontrará em Kotlin.
 
 ### Integers
 
@@ -104,7 +104,7 @@ conjuntos (`Set`) e mapas (
 Uma lista imutável (não pode ser alterada):
 
 ```kotlin
-val languages:  List<String> = listOf("Kotlin", "Java", "Python")
+val languages: List<String> = listOf("Kotlin", "Java", "Python")
 ```
 
 Uma lista mutável (pode ser alterada):
@@ -140,16 +140,18 @@ val something: Any = "This can be anything"
 
 ### Date
 
-Para trabalhar com datas e horários, é comum utilizar classes da biblioteca padrão Java, como `java.util.Date`,
-`LocalDateTime`, e outras.
+Para trabalhar com datas e horários na JVM, use a API `java.time`, que é imutável e segura entre threads. As classes
+antigas `java.util.Date` e `java.util.Calendar` são legadas e devem ser evitadas em código novo. Em projetos
+multiplataforma, a biblioteca [kotlinx-datetime](https://github.com/Kotlin/kotlinx-datetime) cumpre o mesmo papel.
 
-#### Date
+#### LocalDate
 
 ```kotlin
-import java.util.Date
+import java.time.LocalDate
 
-val currentDate: Date = Date()
-println(currentDate)
+val today: LocalDate = LocalDate.now()
+val nextWeek: LocalDate = today.plusWeeks(1)
+println("Hoje: $today, daqui a uma semana: $nextWeek")
 ```
 
 #### LocalDateTime
@@ -157,7 +159,7 @@ println(currentDate)
 ```kotlin
 import java.time.LocalDateTime
 
-val currentDateTime: LocalDateTime = LocalDateTime. now()
+val currentDateTime: LocalDateTime = LocalDateTime.now()
 println(currentDateTime)
 ```
 

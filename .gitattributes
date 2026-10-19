@@ -1,5 +1,6 @@
-# The notes are Kotlin study material written as Markdown, so GitHub reports the repository as Kotlin.
-doc/readmes/**/*.md linguist-language=Kotlin linguist-detectable=true
+# The notes are Kotlin study material written as Markdown, so GitHub reports the repository as Kotlin. They
+# live under doc/, which GitHub would otherwise leave out as documentation.
+doc/readmes/**/*.md linguist-language=Kotlin linguist-detectable=true linguist-documentation=false
 
 # The site that publishes the notes is tooling, kept out of the language statistics.
 src/** linguist-detectable=false

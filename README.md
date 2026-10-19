@@ -52,9 +52,9 @@ runs the examples in the page.
 
 Every Kotlin block with a `fun main` is a runnable example. On the site it runs in place on the
 [Kotlin Playground](https://play.kotlinlang.org), on the latest stable version of Kotlin. The `Validate examples`
-workflow compiles and runs every example on that same version on each pull request that changes the notes and every
-Monday. The weekly run also checks for a newer Kotlin Playground, and opens an issue saying what to change when either
-check fails.
+workflow compiles and runs every example on that same version on each pull request that changes the notes and on the
+first day of every month. The monthly run also checks for a newer Kotlin Playground, and opens an issue saying what to
+change when either check fails.
 
 ### Other resources
 

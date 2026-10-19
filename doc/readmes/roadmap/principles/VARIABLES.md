@@ -66,7 +66,7 @@ class Language {
 
     fun register() {
         val template = "Language: <%s>."
-        println(template. format(name))
+        println(template.format(name))
     }
 }
 
@@ -77,8 +77,6 @@ fun main() {
     language.register()     // Language: <Kotlin>.
 }
 ```
-
-_Você pode testar esse código [online](https://pl.kotl.in/0mEjbAJVx)._
 
 > Sempre que possível, prefira usar `val` em vez de `var`, pois isso promove imutabilidade no código, o que pode evitar
 > bugs e facilitar a manutenção.

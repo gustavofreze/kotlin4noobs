@@ -11,7 +11,7 @@ variável que pode ser `null`, você deve definir explicitamente o tipo da vari�
 
 ```kotlin
 val nonNullable: String = "Kotlin"  // Variável não nula
-val nullable:  String? = null       // Variável que pode ser nula
+val nullable: String? = null       // Variável que pode ser nula
 ```
 
 ### Operador seguro de chamada `?.`
@@ -20,7 +20,7 @@ O operador `?.` é usado para acessar propriedades ou métodos de um objeto que 
 ponteiro nulo. Se a variável for `null`, a chamada será ignorada e o resultado será `null`:
 
 ```kotlin
-val length:  Int? = nullable?.length  // Se 'nullable' for null, o resultado será null
+val length: Int? = nullable?.length  // Se 'nullable' for null, o resultado será null
 ```
 
 ### Operador elvis `?:`
@@ -29,7 +29,7 @@ O operador Elvis `?:` é usado para fornecer um valor padrão caso a expressão 
 evitar retornos `null`:
 
 ```kotlin
-val lengthOrZero:  Int = nullable?.length ?: 0  // Retorna 0 se 'nullable' for null
+val lengthOrZero: Int = nullable?.length ?: 0  // Retorna 0 se 'nullable' for null
 ```
 
 ### Operador `!!` (forçar nulo)
@@ -63,7 +63,7 @@ que a variável não é mais `null` dentro do bloco `if`:
 
 ```kotlin
 if (nullable != null) {
-    println("A variável não é nula.  Comprimento: ${nullable.length}")
+    println("A variável não é nula. Comprimento: ${nullable.length}")
 } else {
     println("A variável é nula.")
 }
@@ -79,7 +79,7 @@ fun main() {
     println(nullableString?.length)
 
     // Operador Elvis
-    val lengthOrZero:  Int = nullableString?.length ?: 0
+    val lengthOrZero: Int = nullableString?.length ?: 0
     println(lengthOrZero)
 
     // Operador !!  (forçar nulo)
@@ -108,7 +108,7 @@ fun main() {
 
     println(nullableString?.length)
 
-    val lengthOrZero:  Int = nullableString?.length ?: 0
+    val lengthOrZero: Int = nullableString?.length ?: 0
     println(lengthOrZero)
 
     val forcedLength: Int = nullableString!!.length
@@ -126,8 +126,6 @@ fun main() {
 }
 ```
 
-_Você pode testar esse código [online](https://pl.kotl.in/KA-ndJbeA)._
-
 <br>
 
-Ir para o [início](https://github.com/gustavofreze/kotlin4noobs#Roadmap).
+Ir para o [início](https://github.com/gustavofreze/kotlin4noobs#topics).

@@ -1,0 +1,56 @@
+---
+/**
+ * The editor beside the words of the home: a Kotlin program that walks the marks of the roadmap, run the
+ * way an IDE runs it. The run control is pressed, the build bar fills, and the console prints one mark
+ * after the other while the string it prints lights up in the code. The marks are the glyphs of the
+ * topics themselves, so the picture changes with the roadmap.
+ *
+ * Decorative and hidden from assistive tech, because the same roadmap is published as links right below.
+ * Every line is in the page from the start, so a reader who asked for reduced motion sees the finished
+ * run, still.
+ */
+import { TOPICS } from '../content/site'
+
+interface Props {
+  labels: { readonly run: string; readonly console: string; readonly finished: string }
+}
+const { labels } = Astro.props
+
+const SHOWN = ['variables', 'functions', 'conditions', 'null-safety', 'coroutines']
+const marks = SHOWN.map((slug) => TOPICS.find((topic) => topic.slug === slug)?.glyph ?? slug)
+const strings = marks.map((mark, index) => `<span class="s" style="--i:${index}">"${mark}"</span>`)
+const half = Math.ceil(strings.length / 2)
+const lines = [
+  `<span class="k">fun</span> <span class="f">main</span>() {`,
+  `    <span class="k">val</span> roadmap = <span class="f">listOf</span>(`,
+  `        ${strings.slice(0, half).join(', ')},`,
+  `        ${strings.slice(half).join(', ')},`,
+  `    )`,
+  `    roadmap.<span class="f">forEachIndexed</span> { i, topic <span class="k">-&gt;</span>`,
+  `        <span class="f">println</span>(<span class="s">"\${i + <span class="n">1</span>}. \$topic"</span>)`,
+  `    }`,
+  `}`,
+]
+---
+
+<div class="kt-editor" aria-hidden="true">
+  <div class="kt-editor__tab">
+    <span class="kt-editor__file">Roadmap.kt</span>
+    <span class="kt-editor__run">{labels.run}</span>
+    <span class="kt-editor__build"></span>
+  </div>
+  <pre class="kt-editor__code"><code>{lines.map((line) => <span class="kt-editor__line" set:html={line} />)}</code></pre>
+  <div class="kt-editor__console">
+    <p class="kt-editor__label">{labels.console}</p>
+    {
+      marks.map((mark, index) => (
+        <span class="kt-editor__out" style={`--i:${index}`}>
+          {index + 1}. {mark}
+        </span>
+      ))
+    }
+    <span class="kt-editor__out kt-editor__exit" style={`--i:${marks.length}`}>
+      {labels.finished}<span class="kt-editor__caret"></span>
+    </span>
+  </div>
+</div>

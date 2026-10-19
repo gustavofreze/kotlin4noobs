@@ -1,0 +1,1799 @@
+/*
+ * The theme of the notes. Shared primitives on @theme, adaptive roles that swap between light and dark,
+ * and component classes written against those roles.
+ *
+ * The look comes from the world the notes teach: the editor. Headings, marks and code are set in
+ * JetBrains Mono, the face of the IDE most Kotlin is written in, and the text in Inter. The palette is
+ * the gradient of the language, violet to coral, over a deep night violet. Each topic is marked by a
+ * piece of its own syntax instead of a pictogram.
+ *
+ * Both light and dark are first-class. An explicit choice from the theme control lands as data-theme on
+ * the root (persisted, resolved before paint by the inline head script in BaseLayout), and with no choice
+ * the theme follows prefers-color-scheme. Every pair of text and ground holds 4.5:1 in both modes, and
+ * the ratio of each one is written beside its value.
+ */
+
+@import 'tailwindcss';
+
+/*
+ * Inter and JetBrains Mono, self-hosted, latin subset only, both variable. font-display:swap keeps text
+ * visible during load.
+ */
+@font-face {
+  font-family: 'Inter Variable';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url('../assets/fonts/inter-latin-variable.woff2') format('woff2-variations');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308,
+    U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'JetBrains Mono Variable';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 800;
+  src: url('../assets/fonts/jetbrains-mono-latin-variable.woff2') format('woff2-variations');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308,
+    U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@theme {
+  /* The values of the palette that never adapt. Violet marks; the strong violet is the ground of the one
+     action, because white on it holds 5.9:1 where white on the brand violet only reaches 4.6:1; coral
+     and magenta close the gradient; night is the ground of the deep bands. */
+  --color-kt-violet: #7f52ff;
+  --color-kt-violet-strong: #6b3df0;
+  --color-kt-violet-deeper: #5a2fd4;
+  --color-kt-magenta: #c711e1;
+  --color-kt-coral: #e44857;
+  --color-kt-night: #150e26;
+  --gradient-kt: linear-gradient(90deg, #7f52ff, #c711e1 55%, #e44857);
+
+  /* Fixed ink for the always-deep bands, measured on the night. */
+  --color-ink-inverse: #ffffff;
+  --color-ink-inverse-muted: #cfc8e3; /* 11.6:1 */
+  --color-ink-inverse-accent: #b39aff; /* 8:1 */
+
+  /* The colors of the code the hero writes, measured on its editor (#1c1430). */
+  --color-code-ground: #1c1430;
+  --color-code-console: #110b1f;
+  --color-code-ink: #e8e3f5;
+  --color-code-keyword: #cfb3ff; /* 9.7:1 */
+  --color-code-function: #ffb86b; /* 10.3:1 */
+  --color-code-string: #9be29b; /* 11.5:1 */
+  --color-code-number: #ff9ec7; /* 9.2:1 */
+  --color-code-muted: #a49dbb; /* 6.8:1 */
+
+  /* Theme-adaptive roles. Values swap with the theme below. */
+  --color-page: var(--page);
+  --color-surface: var(--surface);
+  --color-surface-strong: var(--surface-strong);
+  --color-band-deep: var(--band-deep);
+  --color-ink: var(--ink);
+  --color-ink-muted: var(--ink-muted);
+  --color-hair: var(--hair);
+  /* The brand violet is too light for small text on light grounds and too dark on dark ones, so the
+     small-text accent adapts: a deep violet on light, a pale one on dark. */
+  --color-accent: var(--accent);
+  --color-selection: var(--selection);
+  --color-selection-ink: var(--selection-ink);
+
+  --font-sans: 'Inter Variable', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono Variable', 'JetBrains Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+
+  --font-weight-light: 300;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-demibold: 600;
+  --font-weight-bold: 700;
+
+  --text-caption: 0.75rem;
+  --text-small: 0.875rem;
+  --text-body: 1rem;
+  --text-h4: 1.125rem;
+  --text-h3: 1.5rem;
+  --text-h2: 2rem;
+  --text-h1: 3rem;
+
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-pill: 9999px;
+
+  --shadow-card: 0 1px 2px rgba(21, 14, 38, 0.06);
+  --shadow-raised: 0 12px 32px rgba(21, 14, 38, 0.16);
+  --shadow-cta: 0 10px 28px rgba(107, 61, 240, 0.35);
+
+  --ease-out-soft: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration-micro: 120ms;
+  --duration-base: 220ms;
+  --duration-entrance: 480ms;
+}
+
+:root {
+  --page: #f7f6fb;
+  --surface: #ffffff;
+  --surface-strong: #efedf6;
+  --band-deep: #150e26;
+  --ink: #16121f; /* 17.1:1 on the page */
+  --ink-muted: #4d4660; /* 8.3:1 on the page, 7.7:1 on the strong surface */
+  --hair: #dedbea;
+  --accent: #5a2fd4; /* 7:1 on the page */
+  --selection: #efe9ff;
+  --selection-ink: #3d1c99; /* 9.7:1 on the selection */
+  color-scheme: light;
+}
+
+:root[data-theme='dark'] {
+  --page: #0e0a18;
+  --surface: #161126;
+  --surface-strong: #211a35;
+  --band-deep: #0b0716;
+  --ink: #f2eff9; /* 17.2:1 on the page */
+  --ink-muted: #b8b0cc; /* 9.4:1 on the page, 8:1 on the strong surface */
+  --hair: #2e2645;
+  --accent: #b7a0ff; /* 8.3:1 on the surface */
+  --selection: #2a1f4f;
+  --selection-ink: #dccfff; /* 10.2:1 on the selection */
+  color-scheme: dark;
+}
+
+/* No explicit choice (no JavaScript, or before the inline script runs): follow the system. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']):not([data-theme='dark']) {
+    --page: #0e0a18;
+    --surface: #161126;
+    --surface-strong: #211a35;
+    --band-deep: #0b0716;
+    --ink: #f2eff9;
+    --ink-muted: #b8b0cc;
+    --hair: #2e2645;
+    --accent: #b7a0ff;
+    --selection: #2a1f4f;
+    --selection-ink: #dccfff;
+    color-scheme: dark;
+  }
+}
+
+@layer base {
+  html {
+    font-family: var(--font-sans);
+    font-weight: var(--font-weight-regular);
+    line-height: 1.5;
+    scrollbar-gutter: stable;
+    scroll-behavior: smooth;
+    scroll-padding-top: 1.5rem;
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+
+  body {
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--color-page);
+    color: var(--color-ink);
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--color-kt-violet);
+    outline-offset: 2px;
+    border-radius: var(--radius-sm);
+  }
+
+  ::selection {
+    background-color: var(--color-kt-violet);
+    color: #ffffff;
+  }
+}
+
+@layer components {
+  .skip-link {
+    position: absolute;
+    left: 1rem;
+    top: 0.75rem;
+    z-index: 60;
+    transform: translateY(-5rem);
+    border-radius: var(--radius-md);
+    background: var(--color-kt-violet);
+    padding: 0.5rem 1rem;
+    color: #ffffff;
+    font-weight: var(--font-weight-demibold);
+    box-shadow: var(--shadow-raised);
+    transition: transform var(--duration-micro) var(--ease-out-soft);
+  }
+  .skip-link:focus-visible {
+    transform: none;
+  }
+
+  .kt-wrap {
+    width: 100%;
+    max-width: 76rem;
+    margin-inline: auto;
+    padding-inline: 1rem;
+  }
+  @media (min-width: 40rem) {
+    .kt-wrap {
+      padding-inline: 1.5rem;
+    }
+  }
+  @media (min-width: 64rem) {
+    .kt-wrap {
+      padding-inline: 2.5rem;
+    }
+  }
+}
+
+/* ------------------------------------ the bar ------------------------------------ */
+.kt-bar {
+  border-block-end: 1px solid var(--color-hair);
+  background: var(--color-surface);
+}
+.kt-bar__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  min-height: 4rem;
+}
+.kt-bar__controls {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+}
+.kt-bar__home {
+  color: inherit;
+  text-decoration: none;
+}
+.kt-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
+}
+.kt-brand__word {
+  font-family: var(--font-mono);
+  font-size: 1.0625rem;
+  font-weight: var(--font-weight-bold);
+  letter-spacing: -0.01em;
+}
+@media (max-width: 40rem) {
+  .kt-brand__word {
+  font-family: var(--font-mono);
+    display: none;
+  }
+}
+
+/* Theme control: a pill holding the two choices, with the theme in force lit. Hidden when scripting is
+   off, since the page then follows the system theme with no control to operate. */
+.theme-pill {
+  display: inline-flex;
+  gap: 0.125rem;
+  padding: 3px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--color-hair);
+  background: var(--color-page);
+}
+.theme-pill__choice {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: none;
+  color: var(--color-ink-muted);
+  cursor: pointer;
+}
+/* The 44 square a finger aims at, reaching past the paint instead of growing it. */
+.theme-pill__choice::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 2.75rem;
+  height: 2.75rem;
+  transform: translate(-50%, -50%);
+}
+.theme-pill__choice:hover {
+  color: var(--color-ink);
+}
+.theme-pill__choice[data-active] {
+  color: var(--color-selection-ink);
+  background: var(--color-selection);
+}
+@media (scripting: none) {
+  .theme-pill {
+    display: none;
+  }
+}
+
+/* Language menu: a native <details> disclosure. */
+.locale-menu {
+  position: relative;
+}
+.locale-menu__trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  min-height: 2.25rem;
+  padding: 0 0.75rem;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--color-hair);
+  background: var(--color-page);
+  color: var(--color-ink);
+  font-size: var(--text-small);
+  font-weight: var(--font-weight-demibold);
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+}
+.locale-menu__trigger::-webkit-details-marker {
+  display: none;
+}
+.locale-menu__trigger:hover {
+  background: var(--color-surface-strong);
+}
+.locale-menu__chevron {
+  transition: transform var(--duration-micro) var(--ease-out-soft);
+}
+.locale-menu[open] .locale-menu__chevron {
+  transform: rotate(180deg);
+}
+.locale-menu__list {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 0.5rem);
+  z-index: 50;
+  min-width: 12rem;
+  margin: 0;
+  padding: 0.375rem;
+  list-style: none;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-hair);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-raised);
+}
+.locale-menu__item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  min-height: 2.75rem;
+  padding: 0 0.75rem;
+  border-radius: var(--radius-md);
+  color: var(--color-ink);
+  font-size: var(--text-small);
+  font-weight: var(--font-weight-medium);
+  text-decoration: none;
+}
+.locale-menu__item:hover {
+  background: var(--color-surface-strong);
+}
+.locale-menu__item.is-current {
+  color: var(--color-selection-ink);
+  background: var(--color-selection);
+  font-weight: var(--font-weight-demibold);
+}
+
+/* ------------------------------------ buttons ------------------------------------ */
+.kt-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 2.75rem;
+  padding: 0.625rem 1.25rem;
+  border-radius: var(--radius-md);
+  font-family: var(--font-mono);
+  font-size: var(--text-small);
+  font-weight: var(--font-weight-bold);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: transform var(--duration-micro) var(--ease-out-soft);
+}
+.kt-button--primary {
+  background: var(--color-kt-violet-strong);
+  color: #ffffff;
+  box-shadow: var(--shadow-cta);
+}
+.kt-button--primary:hover {
+  background: var(--color-kt-violet-deeper);
+}
+.kt-button--ghost {
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: var(--color-ink-inverse);
+}
+.kt-button--ghost:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+.kt-button .kt-icon {
+  transition: transform var(--duration-micro) var(--ease-out-soft);
+}
+.kt-button:hover .kt-icon {
+  transform: translateX(2px);
+}
+@media (prefers-reduced-motion: reduce) {
+  .kt-button .kt-icon {
+    transition: none;
+  }
+}
+
+/* ------------------------------------- hero -------------------------------------- */
+/* The deep band of the home and of every cover. Its one ornament is the shape of the language: a wedge
+   of the gradient cut on the diagonal at the far edge, and the gradient again as a rule along the foot.
+   Both are painted, never animated. */
+.kt-hero,
+.kt-cover {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  background: var(--color-band-deep);
+  color: var(--color-ink-inverse);
+}
+.kt-hero::before,
+.kt-cover::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset-block: 0;
+  inset-inline-end: 0;
+  width: min(46rem, 70%);
+  background: var(--gradient-kt);
+  clip-path: polygon(100% 0, 100% 100%, 22% 100%);
+  opacity: 0.16;
+  pointer-events: none;
+}
+.kt-hero::after,
+.kt-cover::after {
+  content: '';
+  position: absolute;
+  inset-inline: 0;
+  inset-block-end: 0;
+  height: 3px;
+  background: var(--gradient-kt);
+}
+.kt-hero__inner {
+  display: grid;
+  gap: 2rem;
+  padding-block: 2.25rem 2.75rem;
+}
+@media (min-width: 40rem) {
+  .kt-hero__inner {
+    gap: 2.5rem;
+    padding-block: 3.5rem 4rem;
+  }
+}
+/* On a wide screen the words and the editor are one block: two equal columns of the same height, the
+   eyebrow level with the top of the editor and the actions level with its foot. */
+@media (min-width: 60rem) {
+  .kt-hero__inner {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: stretch;
+    gap: 4rem;
+    padding-block: 5rem;
+  }
+  .kt-hero__words {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .kt-hero__words .kt-hero__facts {
+    margin-top: 0;
+  }
+}
+.kt-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: fit-content;
+  font-family: var(--font-mono);
+  font-size: var(--text-small);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-ink-inverse-accent);
+}
+.kt-eyebrow::before {
+  content: '//';
+  color: var(--color-code-muted);
+}
+.kt-hero__title {
+  margin-top: 1rem;
+  font-family: var(--font-mono);
+  font-size: clamp(3rem, 1.75rem + 5vw, 5.25rem);
+  font-weight: var(--font-weight-bold);
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+.kt-hero__title span,
+.kt-hero__title em {
+  display: block;
+}
+.kt-hero__title em {
+  font-style: normal;
+  background: linear-gradient(90deg, #b39aff, #ef7fff 55%, #ff8e98);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.kt-hero__lede code {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--color-ink-inverse);
+}
+.kt-hero__lede {
+  margin-top: 1.25rem;
+  max-width: 32rem;
+  font-size: 1.125rem;
+  line-height: 1.6;
+  color: var(--color-ink-inverse-muted);
+  text-wrap: pretty;
+}
+/* The actions of the hero share one width, the width of the longest label, and never stretch to fill the
+   row. They sit side by side, and stack where the row is too narrow for all of them. */
+.kt-hero__facts {
+  margin-top: 1.5rem;
+  font-family: var(--font-mono);
+  font-size: var(--text-small);
+  color: var(--color-ink-inverse-muted);
+}
+.kt-hero__facts::before {
+  content: '// ';
+  color: var(--color-code-muted);
+}
+.kt-hero__actions {
+  display: inline-grid;
+  grid-auto-columns: 1fr;
+  grid-auto-flow: column;
+  gap: 0.75rem;
+  margin-top: 1.25rem;
+}
+@media (max-width: 34rem) {
+  .kt-hero__actions {
+    grid-auto-flow: row;
+  }
+}
+
+/* The editor beside the words of the home: a short Kotlin program over the roadmap and the console that
+   prints it. Decorative and hidden from assistive tech, because the roadmap it walks is published as links
+   right below. The code is colored by hand, with the colors of the code tokens. */
+.kt-editor {
+  min-width: 0;
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: var(--color-code-ground);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.45);
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  line-height: 1.7;
+  color: var(--color-code-ink);
+}
+@media (min-width: 40rem) {
+  .kt-editor {
+    font-size: 0.875rem;
+  }
+}
+.kt-editor__tab {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.625rem 0.5rem 1rem;
+  border-block-end: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--color-code-muted);
+}
+.kt-editor__file {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-inline-end: auto;
+}
+.kt-editor__file::before {
+  content: '';
+  width: 0.625rem;
+  height: 0.625rem;
+  border-radius: 2px;
+  background: var(--gradient-kt);
+}
+/* The run control of the IDE, and the build bar along the foot of the tab that it starts. */
+.kt-editor__run {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.125rem 0.625rem;
+  border-radius: var(--radius-sm);
+  background: rgba(155, 226, 155, 0.12);
+  color: var(--color-code-string);
+}
+.kt-editor__run::before {
+  content: '';
+  border-block: 0.28rem solid transparent;
+  border-inline-start: 0.45rem solid currentColor;
+}
+.kt-editor__build {
+  position: absolute;
+  inset-inline: 0;
+  inset-block-end: -1px;
+  height: 2px;
+  background: var(--gradient-kt);
+  transform-origin: left center;
+  opacity: 0;
+}
+/* The light on a string of the code while the console prints it. */
+.kt-editor .s[style] {
+  position: relative;
+}
+.kt-editor .s[style]::before {
+  content: '';
+  position: absolute;
+  inset: -0.0625rem -0.1875rem;
+  border-radius: var(--radius-sm);
+  background: rgba(155, 226, 155, 0.18);
+  opacity: 0;
+}
+.kt-editor__code {
+  overflow-x: auto;
+  scrollbar-width: thin;
+  padding: 1rem 1rem 1.125rem 0;
+  counter-reset: line;
+}
+.kt-editor code {
+  padding: 0;
+  background: none;
+  font-size: inherit;
+}
+.kt-editor__line {
+  display: block;
+  white-space: pre;
+}
+.kt-editor__line::before {
+  counter-increment: line;
+  content: counter(line);
+  display: inline-block;
+  width: 2.75rem;
+  padding-inline-end: 1rem;
+  text-align: right;
+  color: var(--color-code-muted);
+}
+.kt-editor .k {
+  color: var(--color-code-keyword);
+}
+.kt-editor .f {
+  color: var(--color-code-function);
+}
+.kt-editor .s {
+  color: var(--color-code-string);
+}
+.kt-editor .n {
+  color: var(--color-code-number);
+}
+.kt-editor__console {
+  padding: 0.875rem 1.125rem 1rem;
+  border-block-start: 1px solid rgba(255, 255, 255, 0.08);
+  border-end-start-radius: inherit;
+  border-end-end-radius: inherit;
+  background: var(--color-code-console);
+}
+.kt-editor__label {
+  margin-bottom: 0.375rem;
+  color: var(--color-code-muted);
+}
+.kt-editor__label::before {
+  content: '';
+  display: inline-block;
+  margin-inline-end: 0.5rem;
+  border-block: 0.3rem solid transparent;
+  border-inline-start: 0.5rem solid var(--color-code-string);
+}
+.kt-editor__out {
+  display: block;
+}
+.kt-editor__exit {
+  margin-top: 0.375rem;
+  color: var(--color-code-muted);
+}
+.kt-editor__caret {
+  display: inline-block;
+  width: 0.5rem;
+  height: 1em;
+  margin-inline-start: 0.375rem;
+  vertical-align: text-bottom;
+  background: var(--color-code-ink);
+}
+
+/* ----------------------------------- roadmap ------------------------------------- */
+.kt-roadmap {
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+  padding-block: 4rem 5rem;
+}
+.kt-group__head {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+  margin-bottom: 1.5rem;
+}
+.kt-group__title {
+  font-family: var(--font-mono);
+  font-size: var(--text-h3);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: -0.02em;
+}
+.kt-group__lede {
+  color: var(--color-ink-muted);
+}
+.kt-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 20rem), 1fr));
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.kt-card {
+  position: relative;
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 1.375rem;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-hair);
+  background: var(--color-surface);
+  color: var(--color-ink);
+  text-decoration: none;
+  box-shadow: var(--shadow-card);
+}
+/* On hover the gradient of the language draws a rule along the top of the card. Only its opacity moves. */
+.kt-card::before {
+  content: '';
+  position: absolute;
+  inset-inline: 0;
+  inset-block-start: 0;
+  height: 3px;
+  background: var(--gradient-kt);
+  opacity: 0;
+  transition: opacity var(--duration-base) ease;
+}
+.kt-card:hover {
+  border-color: color-mix(in srgb, var(--color-kt-violet) 45%, var(--color-hair));
+}
+.kt-card:hover::before {
+  opacity: 1;
+}
+@media (prefers-reduced-motion: reduce) {
+  .kt-card::before,
+  .kt-card__arrow {
+    transition: none;
+  }
+}
+.kt-card__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.kt-card__step {
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  font-weight: var(--font-weight-medium);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.06em;
+  color: var(--color-ink-muted);
+}
+.kt-card__title {
+  font-size: var(--text-h4);
+  font-weight: var(--font-weight-bold);
+  line-height: 1.3;
+}
+.kt-card__summary {
+  flex: 1;
+  font-size: var(--text-small);
+  color: var(--color-ink-muted);
+}
+/* The sections of a topic, on one line that fades out at its end, so every card keeps the same foot
+   whatever the sections are called. */
+.kt-card__foot {
+  display: flex;
+  min-width: 0;
+  flex: 1;
+  gap: 0.375rem;
+  overflow: hidden;
+  mask-image: linear-gradient(to right, black calc(100% - 2rem), transparent);
+}
+.kt-card__arrow {
+  flex: none;
+  margin-inline-start: 0.5rem;
+  color: var(--color-ink-muted);
+  transition: transform var(--duration-micro) var(--ease-out-soft);
+}
+.kt-card:hover .kt-card__arrow {
+  color: var(--color-accent);
+  transform: translateX(3px);
+}
+
+/* The mark of a topic: a piece of its own syntax, set in the mono face on a tinted tile. */
+.kt-glyph {
+  display: inline-grid;
+  place-items: center;
+  min-width: 2.75rem;
+  height: 2.75rem;
+  flex: none;
+  padding-inline: 0.5rem;
+  border-radius: var(--radius-md);
+  background: var(--color-selection);
+  color: var(--color-selection-ink);
+  font-family: var(--font-mono);
+  font-size: var(--text-small);
+  font-weight: var(--font-weight-bold);
+  white-space: nowrap;
+}
+.kt-glyph--deep {
+  border: 1px solid rgba(179, 154, 255, 0.35);
+  background: rgba(127, 82, 255, 0.18);
+  color: var(--color-ink-inverse-accent);
+}
+/* The arrow of a control on the pager, a tile like the glyph but drawn with the icon. */
+.kt-tile {
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  flex: none;
+  border-radius: var(--radius-md);
+  background: var(--color-selection);
+  color: var(--color-selection-ink);
+}
+
+.kt-chip {
+  font-family: var(--font-mono);
+  display: inline-flex;
+  align-items: center;
+  padding: 0.125rem 0.55rem;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--color-hair);
+  background: var(--color-page);
+  color: var(--color-ink-muted);
+  font-size: var(--text-caption);
+  font-weight: var(--font-weight-demibold);
+  white-space: nowrap;
+}
+
+/* ---------------------------------- topic page ----------------------------------- */
+/* The cover wears the deep band of the home (see the hero), so the inner pages read as the same site. The
+   mark of the topic is drawn large and faint at the far edge, inside the wedge. Decorative. */
+.kt-cover__mark {
+  position: absolute;
+  z-index: -1;
+  inset-inline-end: max(1rem, calc((100vw - 76rem) / 2 + 1.5rem));
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--font-mono);
+  font-size: 7rem;
+  font-weight: var(--font-weight-bold);
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: rgba(255, 255, 255, 0.09);
+  white-space: nowrap;
+  pointer-events: none;
+}
+@media (max-width: 48rem) {
+  .kt-cover__mark {
+    display: none;
+  }
+}
+.kt-cover__inner {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding-block: 1.5rem 1.75rem;
+}
+@media (min-width: 64rem) {
+  .kt-cover__inner {
+    padding-block: 2rem 2.25rem;
+  }
+}
+.kt-crumbs {
+  font-family: var(--font-mono);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: var(--text-small);
+  color: var(--color-ink-inverse-muted);
+}
+.kt-crumbs a {
+  color: var(--color-ink-inverse-muted);
+  text-decoration: none;
+}
+.kt-crumbs a:hover {
+  color: var(--color-ink-inverse);
+  text-decoration: underline;
+}
+.kt-crumbs span:last-child {
+  color: var(--color-ink-inverse-accent);
+  font-weight: var(--font-weight-bold);
+  font-variant-numeric: tabular-nums;
+}
+.kt-crumbs__sep {
+  opacity: 0.7;
+}
+.kt-crumbs .kt-crumbs__sep {
+  color: inherit;
+  font-weight: inherit;
+}
+.kt-cover__head {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.kt-cover__title {
+  font-family: var(--font-mono);
+  font-size: clamp(1.5rem, 1.1rem + 1.6vw, 2.25rem);
+  font-weight: var(--font-weight-bold);
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+}
+.kt-cover__lede {
+  max-width: 46rem;
+  font-size: var(--text-body);
+  line-height: 1.6;
+  color: var(--color-ink-inverse-muted);
+  text-wrap: pretty;
+}
+.kt-cover__lede code {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--color-ink-inverse);
+}
+.kt-cover__lede a {
+  color: var(--color-ink-inverse-accent);
+  font-weight: var(--font-weight-demibold);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* The sections of the topic, as tabs on a bar that stays on top while the page scrolls. The section
+   being read is underlined in violet. On a narrow screen the bar scrolls sideways, its edges fade out,
+   and the script keeps the lit tab in view. */
+.kt-subnav {
+  position: sticky;
+  inset-block-start: 0;
+  z-index: 30;
+  border-block-end: 1px solid var(--color-hair);
+  background: var(--color-surface);
+}
+.kt-subnav__list {
+  position: relative;
+  display: flex;
+  gap: 1.75rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  overflow-x: auto;
+  scrollbar-width: none;
+  mask-image: linear-gradient(to right, black calc(100% - 2rem), transparent);
+}
+.kt-subnav__list::-webkit-scrollbar {
+  display: none;
+}
+.kt-subnav__list li:last-child {
+  padding-inline-end: 2rem;
+}
+.kt-subnav__tab {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  min-height: 3.25rem;
+  color: var(--color-ink-muted);
+  font-size: var(--text-small);
+  font-weight: var(--font-weight-demibold);
+  text-decoration: none;
+  white-space: nowrap;
+}
+.kt-subnav__tab::after {
+  content: '';
+  position: absolute;
+  inset-inline: 0;
+  bottom: -1px;
+  height: 2px;
+  border-radius: 2px 2px 0 0;
+  background: var(--color-kt-violet);
+  transform: scaleX(0);
+  transition: transform var(--duration-micro) var(--ease-out-soft);
+}
+.kt-subnav__tab:hover {
+  color: var(--color-ink);
+}
+.kt-subnav__tab[aria-current] {
+  color: var(--color-ink);
+}
+.kt-subnav__tab[aria-current]::after {
+  transform: scaleX(1);
+}
+
+.kt-main {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding-block: 2.5rem 4rem;
+}
+@media (min-width: 64rem) {
+  .kt-main {
+    padding-block: 3rem 5rem;
+  }
+}
+
+/* One section of a topic, drawn as a card: a header row with the name, its full name and the way to its
+   official page, and the notes below it across the whole width of the card. */
+.kt-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  padding: 1.5rem;
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--color-hair);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-card);
+  scroll-margin-top: 5rem;
+}
+@media (min-width: 48rem) {
+  .kt-section {
+    padding: 1.75rem 2rem 2rem;
+  }
+}
+.kt-section:target {
+  border-color: var(--color-kt-violet);
+}
+.kt-section__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1rem;
+  padding-block-end: 1.125rem;
+  border-block-end: 1px solid var(--color-hair);
+}
+.kt-section__name {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.25rem 0.75rem;
+  margin-inline-end: auto;
+}
+.kt-section__title {
+  font-size: 1.625rem;
+  font-weight: var(--font-weight-bold);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+.kt-section__anchor::after {
+  content: '#';
+  margin-inline-start: 0.5rem;
+  font-family: var(--font-mono);
+  color: var(--color-accent);
+  opacity: 0;
+  transition: opacity var(--duration-micro) ease;
+}
+.kt-section__anchor:hover::after,
+.kt-section__anchor:focus-visible::after {
+  opacity: 1;
+}
+/* Inline rather than flex, so a long heading wraps inside the card on a phone. */
+.kt-section__anchor {
+  color: var(--color-ink);
+  text-decoration: none;
+  overflow-wrap: anywhere;
+}
+.kt-section--intro {
+  font-size: 1.0625rem;
+}
+
+/* ------------------------------------- notes -------------------------------------- */
+/* The Markdown of a topic, drawn inside its card. Only the elements the notes use are styled. */
+.kt-md {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 1rem;
+  line-height: 1.7;
+  text-wrap: pretty;
+}
+.kt-md > * {
+  margin: 0;
+}
+.kt-md h3 {
+  margin-top: 0.75rem;
+  font-size: var(--text-h4);
+  font-weight: var(--font-weight-bold);
+  line-height: 1.3;
+}
+.kt-md a {
+  color: var(--color-accent);
+  font-weight: var(--font-weight-demibold);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+.kt-md strong {
+  font-weight: var(--font-weight-bold);
+}
+.kt-md ul,
+.kt-md ol {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding-inline-start: 1.5rem;
+}
+.kt-md ul {
+  list-style: none;
+  padding-inline-start: 0;
+}
+.kt-md ul > li {
+  position: relative;
+  padding-inline-start: 1.25rem;
+}
+.kt-md ul > li::before {
+  content: '';
+  position: absolute;
+  left: 0.2rem;
+  top: 0.68em;
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: 2px;
+  background: var(--color-kt-violet);
+  transform: rotate(45deg);
+}
+.kt-md ol {
+  list-style: decimal;
+}
+.kt-md ol > li::marker {
+  color: var(--color-accent);
+  font-weight: var(--font-weight-bold);
+}
+.kt-md li > * + * {
+  margin-top: 0.5rem;
+}
+.kt-md blockquote {
+  padding: 0.875rem 1.125rem;
+  border-radius: var(--radius-md);
+  border: 1px solid color-mix(in srgb, var(--color-kt-violet) 35%, var(--color-hair));
+  border-inline-start: 3px solid var(--color-kt-violet);
+  background: var(--color-selection);
+}
+.kt-md table {
+  display: block;
+  overflow-x: auto;
+  border-collapse: collapse;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-hair);
+  font-size: 0.9375rem;
+}
+.kt-md th,
+.kt-md td {
+  padding: 0.625rem 0.875rem;
+  text-align: left;
+  vertical-align: top;
+}
+.kt-md thead th {
+  background: var(--color-surface-strong);
+  font-weight: var(--font-weight-bold);
+}
+.kt-md tbody tr {
+  border-block-start: 1px solid var(--color-hair);
+}
+code {
+  padding: 0.1em 0.4em;
+  border-radius: var(--radius-sm);
+  background: var(--color-surface-strong);
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+}
+
+/* Code colored by Shiki in both themes at build time. Each token carries the color of each theme, and
+   the one in force is picked here, the same way the roles of the page are. */
+.astro-code {
+  overflow-x: auto;
+  padding: 1rem 1.125rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-hair);
+  font-size: 0.875rem;
+  line-height: 1.6;
+  tab-size: 4;
+}
+.astro-code,
+.astro-code span {
+  color: var(--shiki-light);
+  background-color: var(--shiki-light-bg);
+}
+.astro-code code {
+  padding: 0;
+  background: none;
+  font-size: inherit;
+}
+:root[data-theme='dark'] .astro-code,
+:root[data-theme='dark'] .astro-code span {
+  color: var(--shiki-dark);
+  background-color: var(--shiki-dark-bg);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']):not([data-theme='dark']) .astro-code,
+  :root:not([data-theme='light']):not([data-theme='dark']) .astro-code span {
+    color: var(--shiki-dark);
+    background-color: var(--shiki-dark-bg);
+  }
+}
+
+/* A program that can run: the block, and the control in its corner that hands it to the Playground. The
+   control keeps one width through its three states, so its label never resizes it. */
+.kt-code {
+  position: relative;
+}
+.kt-code .astro-code {
+  padding-bottom: 3.25rem;
+}
+.kt-run {
+  font-family: var(--font-mono);
+  position: absolute;
+  right: 0.625rem;
+  bottom: 0.625rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 8.5rem;
+  gap: 0.375rem;
+  min-height: 2.25rem;
+  padding: 0 0.875rem 0 0.75rem;
+  border-radius: var(--radius-pill);
+  background: var(--color-kt-violet-strong);
+  color: #ffffff;
+  font-size: var(--text-small);
+  font-weight: var(--font-weight-bold);
+  cursor: pointer;
+  box-shadow: var(--shadow-cta);
+}
+.kt-run::before {
+  content: '';
+  width: 0;
+  height: 0;
+  border-block: 0.3rem solid transparent;
+  border-inline-start: 0.5rem solid currentColor;
+}
+.kt-run:hover {
+  background: var(--color-kt-violet-deeper);
+}
+.kt-run:disabled {
+  cursor: progress;
+  opacity: 0.8;
+}
+.kt-run:disabled::before {
+  display: none;
+}
+.kt-playground {
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-hair);
+}
+
+/* The Kotlin Playground draws the marks of its editor (the icons in the gutter, the wavy underlines and the
+   icons of its completion list) with images on a host that no longer serves them, which fills the console
+   with failed requests. They are drawn here instead, inline, and the selectors outrank the ones the
+   Playground injects. The completion list is attached to the body, outside the playground. */
+.kt-playground .ERRORgutter {
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 13 13'%3E%3Ccircle cx='6.5' cy='6.5' r='6.5' fill='%23e5484d'/%3E%3Cpath d='M6.5 3v4.2M6.5 9.4v.1' stroke='%23fff' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat center / contain;
+}
+.kt-playground .WARNINGgutter {
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 13 13'%3E%3Cpath d='M6.5.8 12.6 12H.4z' fill='%23f5a524'/%3E%3Cpath d='M6.5 4.6v3.6M6.5 10v.1' stroke='%231c1430' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat center / contain;
+}
+.kt-playground .cm__red_wavy_line {
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='3' viewBox='0 0 6 3'%3E%3Cpath d='M0 2.5Q1.5 0 3 1.5T6 .5' fill='none' stroke='%23e5484d' stroke-width='.9'/%3E%3C/svg%3E") repeat-x 0 100%;
+}
+.kt-playground .cm__green_wavy_line {
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='3' viewBox='0 0 6 3'%3E%3Cpath d='M0 2.5Q1.5 0 3 1.5T6 .5' fill='none' stroke='%23f5a524' stroke-width='.9'/%3E%3C/svg%3E") repeat-x 0 100%;
+}
+.CodeMirror-hints .icon {
+  background: none;
+}
+.CodeMirror-hints .icon.class {
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%236b3df0'/%3E%3Ctext x='8' y='11.5' font-family='monospace' font-size='10' font-weight='700' text-anchor='middle' fill='%23fff'%3Ec%3C/text%3E%3C/svg%3E");
+}
+.CodeMirror-hints .icon.method {
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23c2410c'/%3E%3Ctext x='8' y='11.5' font-family='monospace' font-size='10' font-weight='700' text-anchor='middle' fill='%23fff'%3Em%3C/text%3E%3C/svg%3E");
+}
+.CodeMirror-hints .icon.property {
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23a16207'/%3E%3Ctext x='8' y='11.5' font-family='monospace' font-size='10' font-weight='700' text-anchor='middle' fill='%23fff'%3Ep%3C/text%3E%3C/svg%3E");
+}
+.CodeMirror-hints .icon.genericValue {
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%2315803d'/%3E%3Ctext x='8' y='11.5' font-family='monospace' font-size='10' font-weight='700' text-anchor='middle' fill='%23fff'%3Ev%3C/text%3E%3C/svg%3E");
+}
+.CodeMirror-hints .icon.package {
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23475569'/%3E%3Ctext x='8' y='11.5' font-family='monospace' font-size='10' font-weight='700' text-anchor='middle' fill='%23fff'%3Ek%3C/text%3E%3C/svg%3E");
+}
+
+.kt-block {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.kt-block__title {
+  font-size: var(--text-caption);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+
+.kt-links {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 18rem), 1fr));
+  gap: 0.625rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.kt-link-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  min-height: 3.25rem;
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-hair);
+  background: var(--color-surface);
+  color: var(--color-ink);
+  font-weight: var(--font-weight-demibold);
+  text-decoration: none;
+}
+.kt-link-card:hover {
+  border-color: var(--color-kt-violet);
+}
+.kt-link-card .kt-icon {
+  flex: none;
+  color: var(--color-accent);
+}
+
+/* The way to the topics before and after this one on the roadmap: two compact controls of the same
+   size, one at each end of the row. */
+.kt-pager {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+/* Both controls are the same size whatever the topics are called, and neither stretches across the row:
+   a fixed width, never more than half the row, one line of title, and an ellipsis for a name that does
+   not fit a phone. */
+.kt-pager a {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 17rem;
+  min-width: 0;
+  max-width: calc(50% - 0.375rem);
+  height: 4rem;
+  padding: 0 0.875rem;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-hair);
+  background: var(--color-surface);
+  color: var(--color-ink);
+  text-decoration: none;
+}
+.kt-pager a:hover {
+  border-color: var(--color-kt-violet);
+}
+.kt-pager .kt-tile {
+  width: 2.25rem;
+  height: 2.25rem;
+}
+.kt-pager__next {
+  margin-inline-start: auto;
+  justify-content: flex-end;
+  text-align: right;
+}
+.kt-pager__text {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+}
+.kt-pager__label {
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  color: var(--color-ink-muted);
+}
+.kt-pager__title {
+  overflow: hidden;
+  font-size: var(--text-small);
+  font-weight: var(--font-weight-demibold);
+  line-height: 1.4;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ------------------------------------- footer ------------------------------------- */
+.kt-footer {
+  border-block-start: 1px solid var(--color-hair);
+  background: var(--color-surface);
+}
+.kt-footer__inner {
+  display: flex;
+  justify-content: center;
+  padding-block: 1.25rem;
+}
+.kt-footer__github {
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: var(--radius-pill);
+  color: var(--color-ink-muted);
+}
+.kt-footer__github:hover {
+  background: var(--color-surface-strong);
+  color: var(--color-ink);
+}
+
+/* ------------------------------------- to top ------------------------------------- */
+.kt-to-top {
+  display: none;
+}
+:root[data-to-top='on'] .kt-to-top {
+  position: fixed;
+  z-index: 40;
+  inset-block-end: max(1rem, env(safe-area-inset-bottom));
+  inset-inline-end: max(1rem, env(safe-area-inset-right));
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border: 1px solid var(--color-hair);
+  border-radius: var(--radius-pill);
+  background: var(--color-surface);
+  color: var(--color-ink);
+  box-shadow: var(--shadow-raised);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(0.5rem);
+  transition:
+    opacity var(--duration-micro) ease,
+    transform var(--duration-micro) var(--ease-out-soft),
+    visibility 0s linear var(--duration-micro);
+}
+:root[data-to-top='on'] .kt-to-top.is-shown {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  transition:
+    opacity var(--duration-micro) ease,
+    transform var(--duration-micro) var(--ease-out-soft);
+}
+:root[data-to-top='on'] .kt-to-top:hover {
+  color: var(--color-accent);
+}
+
+/* ------------------------------------ not found ----------------------------------- */
+.kt-lost {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 1rem;
+  padding-block: 6rem;
+}
+.kt-lost__code {
+  font-size: 5rem;
+  font-weight: var(--font-weight-bold);
+  line-height: 1;
+  color: var(--color-accent);
+}
+
+/* ------------------------------------- phone -------------------------------------- */
+/* On a phone the cards give their room back to the notes, the code is set a step smaller so a typical
+   line fits, and a table keeps each row on one line and scrolls sideways instead of squeezing its cells
+   into columns of single words. */
+@media (max-width: 40rem) {
+  .kt-section {
+    gap: 1rem;
+    padding: 1.125rem;
+    border-radius: var(--radius-lg);
+  }
+  .kt-section__title {
+    font-size: 1.375rem;
+  }
+  .kt-md {
+    gap: 0.875rem;
+  }
+  .astro-code {
+    padding: 0.875rem;
+    font-size: 0.8125rem;
+  }
+  .kt-md table {
+    font-size: 0.875rem;
+  }
+  .kt-md th,
+  .kt-md td {
+    padding: 0.5rem 0.75rem;
+    white-space: nowrap;
+  }
+  .kt-card {
+    padding: 1.125rem;
+  }
+  .kt-roadmap {
+    gap: 3rem;
+    padding-block: 2.5rem 3.5rem;
+  }
+  .kt-editor {
+    font-size: 0.75rem;
+  }
+  .kt-editor__line::before {
+    width: 2rem;
+    padding-inline-end: 0.75rem;
+  }
+  .kt-main {
+    padding-block: 1.5rem 3rem;
+  }
+}
+
+/* The narrowest phones set the editor of the hero one more step down, so its longest line still fits. */
+@media (max-width: 24rem) {
+  .kt-editor {
+    font-size: 0.6875rem;
+  }
+  .kt-editor__line::before {
+    width: 1.75rem;
+    padding-inline-end: 0.625rem;
+  }
+}
+
+/* -------------------------------------- motion ------------------------------------- */
+/* The one orchestrated moment of the site, on the home: a run of the program of the editor. The run
+   control is pressed, the build bar fills, then the console prints one line after the other while the
+   string each line prints lights up in the code, and the run ends on the exit line and a blinking caret.
+   Every step moves only opacity and transform. Additive only: every line is in the page from the start,
+   so with reduced motion the editor shows the finished run, still. */
+.kt-editor {
+  --run-press: 250ms;
+  --run-build: 450ms;
+  --run-print: 1250ms;
+  --run-step: 320ms;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .kt-editor__run {
+    animation: kt-press 260ms var(--ease-out-soft) var(--run-press) both;
+  }
+  .kt-editor__build {
+    animation: kt-build 700ms cubic-bezier(0.45, 0, 0.55, 1) var(--run-build) both;
+  }
+  .kt-editor__out {
+    animation: kt-print 360ms var(--ease-out-soft) both;
+    animation-delay: calc(var(--run-print) + var(--i, 0) * var(--run-step));
+  }
+  .kt-editor .s[style]::before {
+    animation: kt-light calc(var(--run-step) * 2) ease-out both;
+    animation-delay: calc(var(--run-print) + var(--i, 0) * var(--run-step) - 60ms);
+  }
+  .kt-editor__caret {
+    animation: kt-blink 1s steps(1) calc(var(--run-print) + 6 * var(--run-step)) infinite;
+  }
+  @keyframes kt-press {
+    40% {
+      transform: scale(0.88);
+    }
+  }
+  @keyframes kt-build {
+    0% {
+      opacity: 1;
+      transform: scaleX(0);
+    }
+    85% {
+      opacity: 1;
+      transform: scaleX(1);
+    }
+    100% {
+      opacity: 0;
+      transform: scaleX(1);
+    }
+  }
+  @keyframes kt-print {
+    from {
+      opacity: 0;
+      transform: translateY(4px);
+    }
+  }
+  @keyframes kt-light {
+    20% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+  @keyframes kt-blink {
+    50% {
+      opacity: 0;
+    }
+  }
+}
+
+@media print {
+  .kt-bar,
+  .kt-subnav,
+  .kt-pager,
+  .kt-run,
+  .kt-to-top,
+  .kt-footer {
+    display: none !important;
+  }
+}
+
+/* The small controls keep the size they are drawn at, and an invisible layer centred on each one gives
+   the 44 square a finger aims at, reaching past the paint instead of growing it. */
+.locale-menu__trigger,
+.kt-crumbs a {
+  position: relative;
+}
+.locale-menu__trigger::after,
+.kt-crumbs a::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: max(100%, 2.75rem);
+  height: 2.75rem;
+  transform: translate(-50%, -50%);
+}
+
+/* The main landmark of a page holds its cover, its tabs and its content, and fills the window. */
+.kt-page {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+/* --------------------------------- bar tools ---------------------------------- */
+.kt-bar__tools {
+  display: flex;
+  align-items: center;
+  gap: 0.125rem;
+}
+.kt-bar__tool {
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: var(--radius-pill);
+  color: var(--color-ink-muted);
+}
+.kt-bar__tool:hover {
+  background: var(--color-surface-strong);
+  color: var(--color-ink);
+}
+
+/* On the narrowest phones every control of the bar still fits on one line: the gaps tighten and the
+   language menu drops its globe, keeping the code of the language in force, and the tools narrow while
+   keeping the 44 height. */
+.locale-menu__trigger {
+  white-space: nowrap;
+}
+@media (max-width: 24rem) {
+  .kt-bar__inner {
+    gap: 0.5rem;
+  }
+  .kt-bar__controls {
+    gap: 0.25rem;
+  }
+  .locale-menu__trigger {
+    gap: 0.25rem;
+    padding-inline: 0.5rem;
+  }
+  .locale-menu__trigger > svg:first-child {
+    display: none;
+  }
+  .kt-bar__tool {
+    width: 2.25rem;
+  }
+}
+
+/* ------------------------------------ search ------------------------------------ */
+.kt-search {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+}
+.kt-search__field {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-height: 3.5rem;
+  padding: 0 1.125rem;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-hair);
+  background: var(--color-surface);
+  color: var(--color-ink-muted);
+  box-shadow: var(--shadow-card);
+}
+.kt-search__field:focus-within {
+  border-color: var(--color-kt-violet);
+}
+.kt-search__field input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  background: none;
+  color: var(--color-ink);
+  font: inherit;
+  font-size: 1.125rem;
+  outline: none;
+}
+.kt-search__status {
+  font-size: var(--text-small);
+  color: var(--color-ink-muted);
+}
+.kt-results {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.kt-result {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 1.25rem 1.5rem;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-hair);
+  background: var(--color-surface);
+}
+.kt-result__page {
+  font-size: var(--text-h4);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-ink);
+  text-decoration: none;
+}
+.kt-result__page:hover {
+  color: var(--color-accent);
+}
+.kt-result__sections {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.kt-result__sections a {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+  padding: 0.625rem 0.875rem;
+  border-radius: var(--radius-md);
+  background: var(--color-page);
+  color: var(--color-ink-muted);
+  font-size: var(--text-small);
+  text-decoration: none;
+}
+.kt-result__sections a:hover {
+  color: var(--color-ink);
+}
+.kt-result__sections strong:not(:empty) {
+  color: var(--color-ink);
+  font-weight: var(--font-weight-bold);
+}
+.kt-result mark {
+  border-radius: 2px;
+  background: var(--color-selection);
+  color: var(--color-selection-ink);
+  font-weight: var(--font-weight-bold);
+}

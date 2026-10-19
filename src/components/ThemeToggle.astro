@@ -1,0 +1,51 @@
+---
+/**
+ * The theme control. A pill holding the two choices, sun and moon, with the theme in force lit.
+ *
+ * Both choices stay on screen, so the theme in force reads without a hover. The lit chip is drawn at 28
+ * and the button around it is the 44 square a finger aims at. Which one is lit is settled by the script,
+ * so the pill is hidden where no script runs and the page follows the system theme.
+ */
+import type { SiteCopy } from '../i18n/strings'
+
+interface Props {
+  theme: SiteCopy['theme']
+}
+const { theme } = Astro.props
+---
+
+<div class="theme-pill" role="group" aria-label={theme.label}>
+  <button type="button" class="theme-pill__choice" data-theme-choice="light" aria-label={theme.light}>
+    <svg
+      aria-hidden="true"
+      width="14"
+      height="14"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <circle cx="12" cy="12" r="4"></circle>
+      <path
+        d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"
+      ></path>
+    </svg>
+  </button>
+  <button type="button" class="theme-pill__choice" data-theme-choice="dark" aria-label={theme.dark}>
+    <svg
+      aria-hidden="true"
+      width="14"
+      height="14"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path>
+    </svg>
+  </button>
+</div>

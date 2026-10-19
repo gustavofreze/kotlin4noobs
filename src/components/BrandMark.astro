@@ -1,0 +1,33 @@
+---
+/**
+ * The lockup of the site: a mark on the night tile beside the wordmark. The mark is two strokes in the
+ * gradient of the language, an angle and a bar, and never the logo of Kotlin, because the notes are a
+ * community study project and not a page of JetBrains. The wordmark is text in currentColor, so the bar
+ * decides its color per theme.
+ */
+interface Props {
+  label: string
+  size?: number
+}
+const { label, size = 32 } = Astro.props
+---
+
+<span class="kt-brand">
+  <svg aria-hidden="true" focusable="false" width={size} height={size} viewBox="0 0 32 32" class="shrink-0">
+    <defs>
+      <linearGradient id="kt-brand-gradient" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="var(--color-kt-violet)"></stop>
+        <stop offset="1" stop-color="var(--color-kt-coral)"></stop>
+      </linearGradient>
+    </defs>
+    <rect width="32" height="32" rx="9" fill="var(--color-kt-night)"></rect>
+    <path
+      d="M11 8.5v15M21.5 8.5 14 16l7.5 7.5"
+      fill="none"
+      stroke="url(#kt-brand-gradient)"
+      stroke-width="3"
+      stroke-linecap="round"
+      stroke-linejoin="round"></path>
+  </svg>
+  <span class="kt-brand__word">{label}</span>
+</span>

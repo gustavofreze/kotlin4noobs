@@ -1,0 +1,4 @@
+# pnpm 11 blocks dependency build scripts by default. esbuild, the bundler under Astro, needs its own.
+allowBuilds:
+  esbuild: true
+  sharp: true

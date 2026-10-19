@@ -1,99 +1,117 @@
 <!--suppress HtmlDeprecatedAttribute -->
-<header>
-    <p align="center"> <img src="doc/images/header-4noobs.svg" alt="Imagem de header. "> </p>
-</header>
+<p align="center"><img src="doc/images/header-4noobs.svg" alt="4noobs header."></p>
 
-<header>
-  <h2 align="center">Kotlin4Noobs</h2>
-  <h1 align="center"><img src="doc/images/kotlin-logo.svg" alt="Imagem da linguagem." width="100"></h1>
+# Kotlin4Noobs
 
-</header>
+[![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 
-* [Sobre](#about)
-* [Roadmap](#roadmap)
-    * [Configuração de ambiente](#environment)
-    * [Fundamentos](#principles)
-    * [Estruturas de dados](#data-structures)
-    * [Tratamento de erros](#error-handling)
-    * [Programação assíncrona](#asynchronous-programming)
-    * [Boas práticas](#best-practices)
-* [Outros](#others)
-* [Licença](#license)
-* [Contribuindo](#contributing)
+* [Overview](#overview)
+    - [Topics](#topics)
+    - [Runnable examples](#runnable-examples)
+    - [Other resources](#other-resources)
+* [Installation](#installation)
+    - [Repository](#repository)
+    - [Configuration](#configuration)
+    - [Tests](#tests)
+    - [Review](#review)
+    - [Examples](#examples)
+* [Environment setup](#environment-setup)
+    - [Access URLs](#access-urls)
+* [Deployment](#deployment)
+* [Contributing](#contributing)
 
-<div id='about'></div>
+## Overview
 
-## Sobre
+A guide to learn Kotlin from scratch, part of the [4noobs](https://github.com/he4rt/4noobs) initiative, in Portuguese
+and English, published at [gustavofreze.github.io/kotlin4noobs](https://gustavofreze.github.io/kotlin4noobs/). The
+notes are the Markdown files under `doc/readmes/`, read the same way on GitHub and on the site, which adds search and
+runs the examples in the page.
 
-**Kotlin4Noobs** é um guia completo em português para aprender Kotlin do zero ao avançado. Este projeto faz parte da
-iniciativa [4noobs](https://github.com/he4rt/4noobs) e visa democratizar o conhecimento sobre Kotlin no
-Brasil.
+### Topics
 
-<div id='roadmap'></div> 
+| Group                    | Topic                   | Portuguese                                                              | English                                                                     |
+|:-------------------------|:------------------------|:------------------------------------------------------------------------|:----------------------------------------------------------------------------|
+| Environment setup        | Linux                   | [Português](doc/readmes/roadmap/environment/LINUX.md)                   | [English](doc/readmes/en-us/roadmap/environment/LINUX.md)                   |
+| Principles               | Variables               | [Português](doc/readmes/roadmap/principles/VARIABLES.md)                | [English](doc/readmes/en-us/roadmap/principles/VARIABLES.md)                |
+| Principles               | Data types              | [Português](doc/readmes/roadmap/principles/DATA_TYPES.md)               | [English](doc/readmes/en-us/roadmap/principles/DATA_TYPES.md)               |
+| Principles               | Functions               | [Português](doc/readmes/roadmap/principles/FUNCTIONS.md)                | [English](doc/readmes/en-us/roadmap/principles/FUNCTIONS.md)                |
+| Principles               | Operators               | [Português](doc/readmes/roadmap/principles/OPERATORS.md)                | [English](doc/readmes/en-us/roadmap/principles/OPERATORS.md)                |
+| Principles               | Conditional expressions | [Português](doc/readmes/roadmap/principles/CONDITIONS.md)               | [English](doc/readmes/en-us/roadmap/principles/CONDITIONS.md)               |
+| Principles               | Loops                   | [Português](doc/readmes/roadmap/principles/LOOPS.md)                    | [English](doc/readmes/en-us/roadmap/principles/LOOPS.md)                    |
+| Principles               | Scope functions         | [Português](doc/readmes/roadmap/principles/SCOPE_FUNCTIONS.md)          | [English](doc/readmes/en-us/roadmap/principles/SCOPE_FUNCTIONS.md)          |
+| Data structures          | Collections             | [Português](doc/readmes/roadmap/data-structures/COLLECTIONS.md)         | [English](doc/readmes/en-us/roadmap/data-structures/COLLECTIONS.md)         |
+| Data structures          | Classes and objects     | [Português](doc/readmes/roadmap/data-structures/CLASSES_OBJECTS.md)     | [English](doc/readmes/en-us/roadmap/data-structures/CLASSES_OBJECTS.md)     |
+| Data structures          | Generics                | [Português](doc/readmes/roadmap/data-structures/GENERICS.md)            | [English](doc/readmes/en-us/roadmap/data-structures/GENERICS.md)            |
+| Error handling           | Exceptions              | [Português](doc/readmes/roadmap/error-handling/EXCEPTIONS.md)           | [English](doc/readmes/en-us/roadmap/error-handling/EXCEPTIONS.md)           |
+| Error handling           | Null safety             | [Português](doc/readmes/roadmap/error-handling/NULL_SAFETY.md)          | [English](doc/readmes/en-us/roadmap/error-handling/NULL_SAFETY.md)          |
+| Asynchronous programming | Coroutines              | [Português](doc/readmes/roadmap/asynchronous-programming/COROUTINES.md) | [English](doc/readmes/en-us/roadmap/asynchronous-programming/COROUTINES.md) |
+| Best practices           | Coding conventions      | [Português](doc/readmes/roadmap/best-practices/CONVENTIONS.md)          | [English](doc/readmes/en-us/roadmap/best-practices/CONVENTIONS.md)          |
 
-## Roadmap
+### Runnable examples
 
-<div id='environment'></div> 
+Every Kotlin block with a `fun main` is a runnable example. On the site it runs in place on the
+[Kotlin Playground](https://play.kotlinlang.org), on the latest stable version of Kotlin. The `Validate examples`
+workflow compiles and runs every example on that same version on each pull request that changes the notes and every
+Monday. The weekly run also checks for a newer Kotlin Playground, and opens an issue saying what to change when either
+check fails.
 
-### Configuração de ambiente
+### Other resources
 
-- [Linux](doc/readmes/roadmap/environment/LINUX.md)
-- [Online](https://play.kotlinlang.org)
+| Resource                         | Link                                                   |
+|:---------------------------------|:-------------------------------------------------------|
+| IntelliJ IDEA                    | [Link](https://www.jetbrains.com/idea/download/)       |
+| Kotlin Playground                | [Link](https://play.kotlinlang.org)                    |
+| Kotlin POCs                      | [Link](doc/readmes/POCs.md)                            |
+| Brazilian companies using Kotlin | [Link](https://github.com/Kotlin-BR/kotlin-no-backend) |
 
-<div id='principles'></div>
+## Installation
 
-### Fundamentos
+### Repository
 
-- [Variáveis](doc/readmes/roadmap/principles/VARIABLES.md)
-- [Tipos de Dados](doc/readmes/roadmap/principles/DATA_TYPES.md)
-- [Funções](doc/readmes/roadmap/principles/FUNCTIONS.md)
-- [Operadores](doc/readmes/roadmap/principles/OPERATORS.md)
-- [Expressões condicionais](doc/readmes/roadmap/principles/CONDITIONS.md)
-- [Loops](doc/readmes/roadmap/principles/LOOPS.md)
+```bash
+git clone https://github.com/gustavofreze/kotlin4noobs.git
+```
 
-<div id='data-structures'></div>
+### Configuration
 
-### Estruturas de dados
+```bash
+make configure
+make start
+```
 
-- [Coleções](doc/readmes/roadmap/data-structures/COLLECTIONS.md)
-- [Classes e objetos](doc/readmes/roadmap/data-structures/CLASSES_OBJECTS.md)
-- [Genéricos](doc/readmes/roadmap/data-structures/GENERICS.md)
+### Tests
 
-<div id='error-handling'></div>
+```bash
+make tests
+```
 
-### Tratamento de erros
+### Review
 
-- [Exceções](doc/readmes/roadmap/error-handling/EXCEPTIONS.md)
-- [Operadores seguros](doc/readmes/roadmap/error-handling/NULL_SAFETY.md)
+```bash
+make review
+```
 
-<div id='asynchronous-programming'></div>
+### Examples
 
-### Programação assíncrona
+```bash
+make examples
+```
 
-- [Corrotinas](doc/readmes/roadmap/asynchronous-programming/COROUTINES.md)
+> You can check other available commands by running `make help`.
 
-<div id='best-practices'></div>
+## Environment setup
 
-### Boas práticas
+### Access URLs
 
-- [Convenções de codificação](doc/readmes/roadmap/best-practices/CONVENTIONS.md)
+| Environment  | URL                                           |
+|:-------------|:----------------------------------------------|
+| `Local`      | http://localhost:4321/kotlin4noobs/           |
+| `Production` | https://gustavofreze.github.io/kotlin4noobs   |
 
-<div id='others'></div> 
+## Deployment
 
-## Outros
+The `CD (Deploy site)` workflow builds the site and publishes it on GitHub Pages. It runs on demand from the Actions tab.
 
-- [IDEA](https://www.jetbrains.com/idea/download/#section=linux)
-- [POCs em Kotlin](doc/readmes/POCs.md)
-- [Empresas brasileiras que usam Kotlin](https://github.com/Kotlin-BR/kotlin-no-backend)
+## Contributing
 
-<div id='license'></div> 
-
-## Licença
-
-Licenciado sob [MIT](LICENSE).
-
-<div id='contributing'></div>
-
-## Contribuindo
-
-Siga as [diretrizes de contribuição](CONTRIBUTING.md) para contribuir com o projeto.
+Follow the [contribution guidelines](CONTRIBUTING.md) to contribute to the project.

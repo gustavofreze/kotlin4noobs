@@ -1,0 +1,146 @@
+---
+/**
+ * One topic of the roadmap in one language.
+ *
+ * Every topic page has the same structure. The cover is a deep band, the same ground as the home, naming
+ * the topic and where it sits on the roadmap. A bar of pills stays on top while the reader scrolls and
+ * marks the section being read, because a reader comes back to these pages holding one subject in mind.
+ * The notes are the Markdown of the topic, which the pipeline in `content/markdown.ts` cuts into one
+ * card per section. Every Kotlin block that is a whole program can be run in place, on the Playground.
+ */
+import { plainText, renderInline } from '../content/inline'
+import { topicAt, topicsOf } from '../content'
+import { pageHref, pagePaths } from '../i18n'
+import { getCopy, type Locale, MAIN_ID } from '../i18n/strings'
+import BaseLayout from '../layouts/BaseLayout.astro'
+import Icon from './Icon.astro'
+
+interface Props {
+  locale: Locale
+  slug: string
+}
+const { locale, slug } = Astro.props
+const copy = getCopy(locale)
+const { topic, previous, next } = topicAt(locale, slug)
+const { Content } = topic
+const anchors = (option: Locale): readonly string[] => topicAt(option, slug).topic.sections.map((section) => section.id)
+const sections: Record<Locale, readonly string[]> = { 'pt-BR': anchors('pt-BR'), 'en-US': anchors('en-US') }
+const total = topicsOf(locale).length
+const index = topicsOf(locale).indexOf(topic) + 1
+const absolute = (path: string): string => new URL(path, Astro.site).href
+const headline = topic.headline ?? copy.topic.headline(topic.name)
+const description = `${plainText(topic.summary)} ${copy.topic.pitch}`
+const breadcrumb = [
+  { name: copy.nav.home, item: absolute(pageHref(locale)) },
+  { name: topic.name, item: absolute(pageHref(locale, topic.slug)) },
+].map((crumb, position) => ({ '@type': 'ListItem', position: position + 1, ...crumb }))
+---
+
+<BaseLayout
+  locale={locale}
+  title={headline}
+  description={description}
+  paths={pagePaths(topic.slug)}
+  sections={sections}
+  kind="article"
+  structuredData={{
+    '@graph': [
+      { '@type': 'BreadcrumbList', itemListElement: breadcrumb },
+      {
+        '@type': 'TechArticle',
+        headline,
+        description,
+        url: absolute(pageHref(locale, topic.slug)),
+        inLanguage: locale,
+        proficiencyLevel: 'Beginner',
+        about: { '@type': 'ComputerLanguage', name: 'Kotlin' },
+        isPartOf: { '@type': 'WebSite', name: copy.home.title, url: absolute(pageHref(locale)) },
+      },
+    ],
+  }}
+>
+  <main id={MAIN_ID} class="kt-page" data-pagefind-body>
+    <div class="kt-cover">
+      <span class="kt-cover__mark" aria-hidden="true">{topic.glyph}</span>
+      <div class="kt-wrap kt-cover__inner">
+        <nav aria-label={copy.nav.breadcrumb} class="kt-crumbs" data-pagefind-ignore>
+          <a href={pageHref(locale)}>{copy.nav.home}</a>
+          <span class="kt-crumbs__sep" aria-hidden="true">/</span>
+          <a href={`${pageHref(locale)}#roadmap`}>{copy.home.groups[topic.group].title}</a>
+          <span class="kt-crumbs__sep" aria-hidden="true">/</span>
+          <span>{copy.topic.step(index, total)}</span>
+        </nav>
+        <div class="kt-cover__head">
+          <span class="kt-glyph kt-glyph--deep">{topic.glyph}</span>
+          <h1 class="kt-cover__title">{topic.title}</h1>
+        </div>
+        <p class="kt-cover__lede" set:html={renderInline(topic.summary)} />
+      </div>
+    </div>
+
+    {topic.sections.length > 1 && (
+    <nav aria-label={copy.topic.onThisPage} class="kt-subnav" data-pagefind-ignore>
+      <div class="kt-wrap">
+        <ul class="kt-subnav__list" data-subnav>
+          {
+            topic.sections.map((section) => (
+              <li>
+                <a href={`#${section.id}`} class="kt-subnav__tab" data-section-link={section.id}>
+                  {section.name}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </nav>
+    )}
+
+    <div
+      class="kt-wrap kt-main"
+      data-playground
+      data-run={copy.topic.run}
+      data-loading={copy.topic.loading}
+      data-unavailable={copy.topic.unavailable}
+    >
+      <Content />
+
+      <nav class="kt-pager" aria-label={copy.nav.roadmap} data-pagefind-ignore>
+        {
+          previous && (
+            <a href={pageHref(locale, previous.slug)} rel="prev" class="kt-pager__prev">
+              <span class="kt-tile">
+                <Icon name="arrow-left" size={20} />
+              </span>
+              <span class="kt-pager__text">
+                <span class="kt-pager__label">{copy.topic.previous}</span>
+                <span class="kt-pager__title">{previous.name}</span>
+              </span>
+            </a>
+          )
+        }
+        {
+          next && (
+            <a href={pageHref(locale, next.slug)} rel="next" class="kt-pager__next">
+              <span class="kt-pager__text">
+                <span class="kt-pager__label">{copy.topic.next}</span>
+                <span class="kt-pager__title">{next.name}</span>
+              </span>
+              <span class="kt-tile">
+                <Icon name="arrow-right" size={20} />
+              </span>
+            </a>
+          )
+        }
+      </nav>
+    </div>
+  </main>
+</BaseLayout>
+
+<script>
+  import '../scripts/reading.ts'
+
+  if (document.querySelector('pre[data-runnable]') !== null) {
+    void import('../scripts/playground.ts')
+  }
+</script>

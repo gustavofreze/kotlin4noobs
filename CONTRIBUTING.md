@@ -1,4 +1,4 @@
-# Contribuído
+# Contribuindo
 
 * [Overview](#overview)
 * [Como posso contribuir?](#contributing)
@@ -53,3 +53,12 @@ Para iniciar o desenvolvimento, você precisará seguir alguns passos:
 - Crie uma branch a partir da branch `main`.
 - Adicione sua contribuição, faça o commit e push.
 - Abra um [pull request](https://github.com/gustavofreze/kotlin4noobs/pulls).
+
+Ao alterar o conteúdo, mantenha as duas línguas em sincronia:
+
+- As notas em português ficam em `doc/readmes/roadmap/` e as em inglês em `doc/readmes/en-us/roadmap/`, com os mesmos
+  arquivos e as mesmas seções (`###`) na mesma ordem.
+- Um tópico novo também precisa ser registrado em `src/content/site.ts`, com o seu grupo, glifo, nome e resumo.
+- Todo bloco `kotlin` com `fun main` vira um exemplo executável no site, então ele precisa compilar e rodar sozinho.
+
+Antes de abrir o pull request, rode `make tests`, `make review` e `make examples`.

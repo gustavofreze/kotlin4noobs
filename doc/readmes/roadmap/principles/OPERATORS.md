@@ -33,8 +33,6 @@ fun main() {
 }
 ```
 
-_Você pode testar esse código [online](https://pl.kotl.in/zM0ecawNn)._
-
 ### Operadores de atribuição compostos
 
 Kotlin suporta operadores de atribuição compostos para operações mais concisas:
@@ -72,8 +70,6 @@ fun main() {
     println("Após %= 4: $x")      // 2
 }
 ```
-
-_Você pode testar esse código [online](https://pl.kotl.in/CZJljoOzp)._
 
 ### Operadores de comparação
 
@@ -124,8 +120,6 @@ fun main() {
 }
 ```
 
-_Você pode testar esse código [online](https://pl.kotl.in/Md1dpUF0J)._
-
 ### Operadores lógicos
 
 Operadores para combinar expressões booleanas:
@@ -151,7 +145,7 @@ fun main() {
     val hasLicense = person.hasDriverLicense
     
     val canDrive = isAdult && hasLicense
-    val needsAttention = ! isAdult || !hasLicense
+    val needsAttention = !isAdult || !hasLicense
     
     println("É adulto: $isAdult")                    // true
     println("Tem habilitação: $hasLicense")          // true
@@ -159,8 +153,6 @@ fun main() {
     println("Precisa de atenção: $needsAttention")   // false
 }
 ```
-
-_Você pode testar esse código [online](https://pl.kotl.in/k8-L5aAQn)._
 
 ### Operador `in` e `!in`
 
@@ -214,8 +206,6 @@ fun main() {
 }
 ```
 
-_Você pode testar esse código [online](https://pl.kotl.in/PfAx-LDvJ)._
-
 ### Operadores `is` e `!is` (Type Checking)
 
 Os operadores `is` e `!is` verificam o tipo de um objeto em runtime:
@@ -251,13 +241,13 @@ Exemplo completo:
 ```kotlin
 open class Person(val name: String)
 class Employee(name: String, val id: Int) : Person(name)
-class Customer(name:  String, val loyaltyPoints:  Int) : Person(name)
+class Customer(name: String, val loyaltyPoints: Int) : Person(name)
 
 fun processPerson(person: Person) {
     when (person) {
         is Employee -> {
             // Smart cast para Employee
-            println("Funcionário: ${person.name}, ID: ${person. id}")
+            println("Funcionário: ${person.name}, ID: ${person.id}")
         }
         is Customer -> {
             // Smart cast para Customer
@@ -289,8 +279,6 @@ fun main() {
     }
 }
 ```
-
-_Você pode testar esse código [online](https://pl.kotl.in/xOd0ZzfS1)._
 
 ### Operador `as` e `as?` (Type Casting)
 
@@ -340,8 +328,6 @@ fun main() {
 class Customer(name: String) : Person(name)
 ```
 
-_Você pode testar esse código [online](https://pl.kotl.in/Uae03196A)._
-
 ### Operador range (`..`)
 
 O operador `..` cria ranges, muito úteis em loops e verificações:
@@ -378,7 +364,7 @@ fun main() {
     val children = 0..17
     val youngAdults = 18..30
     val adults = 31..60
-    val seniors = 61.. 120
+    val seniors = 61..120
     
     // Categorizando pessoas
     people.forEach { person ->
@@ -405,8 +391,6 @@ fun main() {
     println("🚀")
 }
 ```
-
-_Você pode testar esse código [online](https://pl.kotl.in/wujv6Qrs5)._
 
 ### Operador Elvis (`?:`)
 
@@ -463,14 +447,12 @@ fun main() {
     println("Email de Carlos: ${service.getEmail("Carlos")}")
     
     // Encadeando Elvis operators
-    val config:  String? = null
-    val backup:  String?  = null
+    val config: String? = null
+    val backup: String? = null
     val finalValue = config ?: backup ?:  "valor padrão"
     println("Configuração final: $finalValue")
 }
 ```
-
-_Você pode testar esse código [online](https://pl.kotl.in/IPDdkXm8C)._
 
 ### Operador de Spread (`*`)
 
@@ -511,7 +493,7 @@ fun main() {
     
     // Combinando arrays com spread
     val allNumbers = intArrayOf(1, 2, *numbers, 99, *moreNumbers, 100)
-    println("Todos os números: ${allNumbers. toList()}")
+    println("Todos os números: ${allNumbers.toList()}")
     
     // Usando spread com listas convertidas
     val person = Person(
@@ -522,8 +504,6 @@ fun main() {
     announceSkills(person.name, *person.skills.toTypedArray())
 }
 ```
-
-_Você pode testar esse código [online](https://pl.kotl.in/fiCRoVvqv)._
 
 ### Precedência de Operadores
 
@@ -567,7 +547,7 @@ fun main() {
     println("(true || false) && true = $result4")
     
     // Precedência com Elvis e comparação
-    val number:  Int? = null
+    val number: Int? = null
     val result5 = number ?: 10 > 5  // true (?:  tem menor precedência)
     val result6 = (number ?: 10) > 5  // true (mais claro com parênteses)
     
@@ -575,8 +555,6 @@ fun main() {
     println("(null ?: 10) > 5 = $result6")
 }
 ```
-
-_Você pode testar esse código [online](https://pl.kotl.in/btsTuokzF)._
 
 <br>
 

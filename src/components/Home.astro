@@ -1,0 +1,156 @@
+---
+/**
+ * The home of the notes in one language: a deep band that names the guide and starts the roadmap, the
+ * roadmap itself, every topic as a card in its group, and the links that lead out of the notes.
+ */
+import { programCount, type TopicGroup, topicsOf } from '../content'
+import { renderInline } from '../content/inline'
+import { SITE } from '../content/site'
+import { pageHref, pagePaths } from '../i18n'
+import { getCopy, type Locale, MAIN_ID } from '../i18n/strings'
+import BaseLayout from '../layouts/BaseLayout.astro'
+import HeroEditor from './HeroEditor.astro'
+import Icon from './Icon.astro'
+
+interface Props {
+  locale: Locale
+}
+const { locale } = Astro.props
+const copy = getCopy(locale)
+const topics = topicsOf(locale)
+const first = topics[0]
+const groups: readonly TopicGroup[] = SITE.groups
+const facts = copy.home.facts
+  .replace('{topics}', String(topics.length))
+  .replace('{programs}', String(programCount(locale)))
+const step = (slug: string): string => String(topics.findIndex((t) => t.slug === slug) + 1).padStart(2, '0')
+---
+
+<BaseLayout
+  locale={locale}
+  paths={pagePaths()}
+  structuredData={{
+    '@graph': [
+      {
+        '@type': 'WebSite',
+        name: copy.home.title,
+        description: copy.meta.description,
+        url: new URL(pageHref(locale), Astro.site).href,
+        inLanguage: locale,
+        about: { '@type': 'ComputerLanguage', name: 'Kotlin' },
+      },
+      {
+        '@type': 'ItemList',
+        name: copy.nav.roadmap,
+        itemListElement: topics.map((topic, index) => ({
+          '@type': 'ListItem',
+          position: index + 1,
+          name: topic.name,
+          url: new URL(pageHref(locale, topic.slug), Astro.site).href,
+        })),
+      },
+    ],
+  }}
+>
+  <main id={MAIN_ID}>
+    <section class="kt-hero" aria-labelledby="hero-title">
+      <div class="kt-wrap kt-hero__inner">
+        <div class="kt-hero__words">
+          <div>
+          <p class="kt-eyebrow">
+            {copy.home.eyebrow}
+          </p>
+          <h1 id="hero-title" class="kt-hero__title">
+            <span>{SITE.name.lead}</span>
+            <em>{SITE.name.highlight}</em>
+          </h1>
+          <p class="kt-hero__lede" set:html={renderInline(copy.home.lede)} />
+          </div>
+          <div>
+          <p class="kt-hero__facts">{facts}</p>
+          <div class="kt-hero__actions">
+            {
+              first && (
+                <a href={pageHref(locale, first.slug)} class="kt-button kt-button--primary">
+                  {copy.home.start}
+                  <Icon name="arrow-right" size={18} />
+                </a>
+              )
+            }
+            <a href={SITE.playground} target="_blank" rel="noopener noreferrer" class="kt-button kt-button--ghost">
+              {copy.home.playground}
+              <Icon name="external" size={16} />
+            </a>
+            <a href={SITE.community} target="_blank" rel="noopener noreferrer" class="kt-button kt-button--ghost">
+              {copy.home.community}
+              <Icon name="external" size={16} />
+            </a>
+          </div>
+          </div>
+        </div>
+
+        <HeroEditor labels={{ run: copy.topic.run, console: copy.home.console, finished: copy.home.finished }} />
+      </div>
+    </section>
+
+    <div class="kt-wrap kt-roadmap" id="roadmap">
+      {
+        groups.map((group) => {
+          const members = topics.filter((topic) => topic.group === group)
+          return (
+            <section aria-labelledby={`group-${group}`}>
+              <header class="kt-group__head">
+                <h2 id={`group-${group}`} class="kt-group__title">
+                  {copy.home.groups[group].title}
+                </h2>
+                <p class="kt-group__lede">{copy.home.groups[group].lede}</p>
+              </header>
+              <ul class="kt-grid">
+                {members.map((topic) => (
+                  <li>
+                    <a href={pageHref(locale, topic.slug)} class="kt-card">
+                      <span class="kt-card__top">
+                        <span class="kt-glyph">{topic.glyph}</span>
+                        <span class="kt-card__step">{step(topic.slug)}</span>
+                      </span>
+                      <span class="kt-card__title">{topic.name}</span>
+                      <span class="kt-card__summary" set:html={renderInline(topic.summary)} />
+                      <span class="kt-card__top">
+                        <span class="kt-card__foot">
+                          {topic.sections.slice(0, 3).map((section) => (
+                            <span class="kt-chip">{section.name}</span>
+                          ))}
+                          {topic.sections.length > 3 && <span class="kt-chip">+{topic.sections.length - 3}</span>}
+                        </span>
+                        <Icon name="arrow-right" size={18} class="kt-card__arrow" />
+                      </span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )
+        })
+      }
+
+      <section aria-labelledby="group-others">
+        <header class="kt-group__head">
+          <h2 id="group-others" class="kt-group__title">{copy.home.others.title}</h2>
+          <p class="kt-group__lede">{copy.home.others.lede}</p>
+        </header>
+        <ul class="kt-links">
+          {
+            copy.home.others.links.map((link) => (
+              <li>
+                <a href={link.href} target="_blank" rel="noopener noreferrer" class="kt-link-card">
+                  <span>{link.label}</span>
+                  <Icon name="external" size={16} />
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </section>
+    </div>
+  </main>
+</BaseLayout>

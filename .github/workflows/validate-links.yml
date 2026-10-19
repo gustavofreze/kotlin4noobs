@@ -1,36 +1,52 @@
 name: Validate links
 
 on:
-  pull_request:
-    branches:
-      - main
   schedule:
     - cron: '0 0 * * *'
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
   link-checker:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     permissions:
       issues: write
       contents: read
     steps:
-      - uses: actions/checkout@v7
-      - name: Check links
-        id: lychee
-        uses: lycheeverse/lychee-action@v2.9.0
+      - name: Checkout repository
+        uses: actions/checkout@v7
+      - name: Setup pnpm
+        uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413 # v6.1.0
+      - name: Setup Node
+        uses: actions/setup-node@v7
         with:
+          cache: pnpm
+          node-version-file: .nvmrc
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Build site
+        run: pnpm build
+      - name: Mount site under its base path
+        run: mkdir -p site && cp -r dist site/${{ github.event.repository.name }}
+      - id: lychee
+        name: Check links
+        uses: lycheeverse/lychee-action@e7477775783ea5526144ba13e8db5eec57747ce8 # v2.9.0
+        with:
+          args: "--verbose --no-progress --root-dir ${{ github.workspace }}/site --exclude 'gustavofreze\\.github\\.io' './README.md' './site/**/*.html'"
           fail: false
-      - name: Create issue
-        if: steps.lychee.outputs.exit_code != 0
-        uses: peter-evans/create-issue-from-file@v6
+      - if: steps.lychee.outputs.exit_code != 0
+        name: Create issue
+        uses: peter-evans/create-issue-from-file@fca9117c27cdc29c6c4db3b86c48e4115a786710 # v6.0.0
         with:
           title: Link checker report
           labels: 'report, automated-issue'
           content-filepath: ./lychee/out.md
-      - name: Assign issues and pull requests
-        if: steps.lychee.outputs.exit_code != 0
-        uses: gustavofreze/auto-assign@2.1.0
+      - if: steps.lychee.outputs.exit_code != 0
+        name: Assign issues and pull requests
+        uses: gustavofreze/auto-assign@3c8ebe3f6f2cc5b92bb8969f13bc5886895f70e3 # 2.1.1
         with:
           assignees: '${{ vars.ASSIGNEES }}'
           github_token: '${{ secrets.GITHUB_TOKEN }}'

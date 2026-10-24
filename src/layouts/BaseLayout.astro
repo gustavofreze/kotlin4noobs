@@ -21,10 +21,12 @@ interface Props {
   kind?: 'website' | 'article'
   /** Kept out of the index, for a page that is a tool rather than content. */
   noindex?: boolean
+  /** Whether the page is the search itself, whose bar then opens no search dialog. */
+  searching?: boolean
   /** The schema.org description of the page, published as JSON-LD for search engines. */
   structuredData?: Record<string, unknown>
 }
-const { locale, title, description, paths, sections, kind = 'website', noindex = false, structuredData } = Astro.props
+const { locale, title, description, paths, sections, kind = 'website', noindex = false, searching = false, structuredData } = Astro.props
 const copy = getCopy(locale)
 const documentTitle = title ? `${title} · ${copy.home.title}` : copy.meta.title
 const documentDescription = description ?? copy.meta.description
@@ -65,6 +67,9 @@ const jsonLd = structuredData
     <link rel="icon" href={assetHref('favicon.svg')} type="image/svg+xml" />
     <title>{documentTitle}</title>
     <meta name="description" content={documentDescription} />
+    {/* Proves to Google Search Console that the site is ours. Removing it loses the verification, and with
+        it the reports and the sitemap the console holds for the site. */}
+    <meta name="google-site-verification" content="03NLy1Dxn_HS7c6jW_j9RBoZWjHsga-ipdeQoxqwfzY" />
     {canonical ? <link rel="canonical" href={canonical} /> : null}
     {canonical === null || noindex ? <meta name="robots" content="noindex" /> : null}
     {alternates.map((alt) => <link rel="alternate" hreflang={alt.hreflang} href={alt.href} />)}
@@ -83,11 +88,12 @@ const jsonLd = structuredData
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:image" content={ogImage} />
     <link rel="sitemap" href={assetHref('sitemap.xml')} />
+    <link rel="alternate" type="text/plain" href={assetHref('llms.txt')} title={`${copy.home.title} for language models`} />
     {jsonLd ? <script type="application/ld+json" set:html={jsonLd} /> : null}
   </head>
   <body>
     <a href={`#${MAIN_ID}`} class="skip-link">{copy.skipLink}</a>
-    <SiteBar locale={locale} paths={barPaths} sections={sections} />
+    <SiteBar locale={locale} paths={barPaths} sections={sections} searching={searching} />
     <slot />
     <SiteFooter locale={locale} />
     <ToTop label={copy.nav.toTop} />

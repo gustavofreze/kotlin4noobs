@@ -1,22 +1,26 @@
 ---
 /**
  * The bar on top of every page: the brand that leads home, the way to search, and the theme and language
- * controls. It stays where it was drawn rather than following the reader, and the control in the corner
+ * controls. The search opens as a dialog over the page, and is a link to the search page where no script
+ * runs. It stays where it was drawn rather than following the reader, and the control in the corner
  * is the way back up to it.
  */
 import { pageHref } from '../i18n'
 import { getCopy, type Locale } from '../i18n/strings'
 import BrandMark from './BrandMark.astro'
 import Icon from './Icon.astro'
+import SearchDialog from './SearchDialog.astro'
 import LocaleMenu from './LocaleMenu.astro'
 import ThemeToggle from './ThemeToggle.astro'
 
 interface Props {
   locale: Locale
+  /** Whether the page is the search itself, which needs no dialog to search from. */
+  searching?: boolean
   paths: Record<Locale, string>
   sections?: Record<Locale, readonly string[]> | undefined
 }
-const { locale, paths, sections } = Astro.props
+const { locale, paths, sections, searching = false } = Astro.props
 const copy = getCopy(locale)
 ---
 
@@ -27,7 +31,14 @@ const copy = getCopy(locale)
     </a>
     <div class="kt-bar__controls">
       <div class="kt-bar__tools">
-        <a href={pageHref(locale, 'search')} class="kt-bar__tool" aria-label={copy.nav.search} title={copy.nav.search}>
+        <a
+          href={pageHref(locale, 'search')}
+          class="kt-bar__tool"
+          aria-label={copy.nav.search}
+          title={copy.nav.search}
+          aria-haspopup={searching ? undefined : 'dialog'}
+          data-search-open
+        >
           <Icon name="search" size={18} />
         </a>
       </div>
@@ -36,3 +47,4 @@ const copy = getCopy(locale)
     </div>
   </div>
 </header>
+{!searching && <SearchDialog locale={locale} />}

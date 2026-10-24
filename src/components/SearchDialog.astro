@@ -1,0 +1,30 @@
+---
+/**
+ * The search as a dialog over the page, which the control of the bar opens. Its script ships only with
+ * the pages that draw it, which are all but the search page.
+ */
+import { getCopy, type Locale } from '../i18n/strings'
+import SearchForm from './SearchForm.astro'
+
+interface Props {
+  locale: Locale
+}
+const { locale } = Astro.props
+const copy = getCopy(locale)
+---
+
+<dialog class="kt-dialog" aria-label={copy.search.title} closedby="any" data-search-dialog>
+  <div class="kt-dialog__head">
+    <p class="kt-dialog__title">{copy.search.title}</p>
+    <form method="dialog">
+      <button type="submit" class="kt-bar__tool" aria-label={copy.search.close} title={copy.search.close}>
+        <span aria-hidden="true">✕</span>
+      </button>
+    </form>
+  </div>
+  <SearchForm locale={locale} id="search-dialog-term" autofocus />
+</dialog>
+
+<script>
+  import '../scripts/search-dialog.ts'
+</script>

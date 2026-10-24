@@ -5,13 +5,14 @@
  * The index is built by Pagefind after the site, from the text of the topic pages only, and one index is
  * kept per language, so a reader on the English page searches the English notes. The page ships the
  * form and an empty list, and the script fetches the index the first time the reader types, so no other
- * page pays for it.
+ * page pays for it. A reader with a script opens the same search as a dialog from the bar of any page, so
+ * this page serves a reader without one and a search shared by its address.
  */
 import { pagePaths } from '../i18n'
 import { getCopy, type Locale, MAIN_ID } from '../i18n/strings'
 import BaseLayout from '../layouts/BaseLayout.astro'
-import Icon from './Icon.astro'
 import PageCover from './PageCover.astro'
+import SearchForm from './SearchForm.astro'
 
 interface Props {
   locale: Locale
@@ -21,37 +22,12 @@ const copy = getCopy(locale)
 const labels = copy.search
 ---
 
-<BaseLayout locale={locale} title={labels.title} description={labels.lede} paths={pagePaths('search')} noindex>
+<BaseLayout locale={locale} title={labels.title} description={labels.lede} paths={pagePaths('search')} noindex searching>
   <main id={MAIN_ID} class="kt-page">
     <PageCover locale={locale} glyph="find()" title={labels.title} lede={labels.lede} />
 
     <div class="kt-wrap kt-main">
-      <form
-        class="kt-search"
-        role="search"
-        data-search
-        data-idle={labels.idle}
-        data-loading={labels.loading}
-        data-empty={labels.empty}
-        data-unavailable={labels.unavailable}
-        data-count={labels.count}
-      >
-        <label for="search-term" class="kt-block__title">{labels.label}</label>
-        <div class="kt-search__field">
-          <Icon name="search" size={20} />
-          <input
-            id="search-term"
-            name="q"
-            type="search"
-            inputmode="search"
-            autocomplete="off"
-            spellcheck="false"
-            placeholder={labels.placeholder}
-          />
-        </div>
-        <p class="kt-search__status" role="status" aria-live="polite" data-search-status>{labels.idle}</p>
-      </form>
-      <ol class="kt-results" data-search-results></ol>
+      <SearchForm locale={locale} id="search-term" />
     </div>
   </main>
 </BaseLayout>

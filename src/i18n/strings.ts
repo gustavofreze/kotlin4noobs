@@ -57,6 +57,7 @@ export interface SiteCopy {
     readonly unavailable: string
     /** How many pages matched, with `{count}` standing for the number. */
     readonly count: string
+    readonly close: string
   }
   readonly footer: { readonly source: string }
   readonly notFound: { readonly title: string; readonly lede: string; readonly back: string }
@@ -108,6 +109,7 @@ const ptBR: SiteCopy = {
     empty: 'Nada encontrado. Tente outra palavra.',
     unavailable: 'A busca só funciona no site gerado pelo build.',
     count: 'Resultados: {count}',
+    close: 'Fechar a busca',
   },
   footer: { source: 'Código no GitHub' },
   notFound: {
@@ -163,6 +165,7 @@ const enUS: SiteCopy = {
     empty: 'Nothing found. Try another word.',
     unavailable: 'Search only works on the site produced by the build.',
     count: 'Results: {count}',
+    close: 'Close the search',
   },
   footer: { source: 'Source on GitHub' },
   notFound: {

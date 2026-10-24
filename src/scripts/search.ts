@@ -1,9 +1,12 @@
 /**
- * The search box of the notes. It loads the Pagefind index on the first search, so the page itself
- * ships only the form, and it writes the results as plain links to the section that matched.
+ * The search box of the notes, bound to a form wherever it sits: the search page, or the dialog the bar
+ * opens on every page. It loads the Pagefind index on the first search, so a page ships only the form,
+ * and it writes the results as plain links to the section that matched.
  *
- * Pressing enter submits the form the native way, to this page with the term in the address, which is
- * also what makes a search shareable. The index exists only in the site the build produces. Under the development server the import fails,
+ * On the search page the term follows into the address, which is what makes a search shareable. In the
+ * dialog the results come as the reader types. Either way pressing enter submits the form the native way,
+ * to the search page with the term in the address.
+ * The index exists only in the site the build produces. Under the development server the import fails,
  * and the box says so instead of failing silently.
  */
 interface PagefindResult {
@@ -25,9 +28,9 @@ const MAX_SECTIONS = 3
 
 let pagefind: Promise<Pagefind> | undefined
 
-/** Loads the index once, from the folder Pagefind writes beside the site. */
+/** Loads the index once, from the folder Pagefind writes beside the site. The base ends in a slash, as every address of the site does. */
 function loadPagefind(): Promise<Pagefind> {
-  pagefind ??= import(/* @vite-ignore */ `${import.meta.env.BASE_URL.replace(/\/?$/, '/')}pagefind/pagefind.js`)
+  pagefind ??= import(/* @vite-ignore */ `${import.meta.env.BASE_URL}pagefind/pagefind.js`)
   return pagefind
 }
 
@@ -47,11 +50,12 @@ function resultItem(result: PagefindResult): string {
   return `<li class="kt-result"><a class="kt-result__page" href="${result.url}">${result.meta.title ?? ''}</a><ul class="kt-result__sections">${links.join('')}</ul></li>`
 }
 
-function init(): void {
-  const form = document.querySelector<HTMLFormElement>('[data-search]')
+/** Binds the search to the form inside a root, writing the term to the address when asked to. */
+function bind(root: ParentNode, followAddress: boolean): void {
+  const form = root.querySelector<HTMLFormElement>('[data-search]')
   const input = form?.querySelector('input')
-  const status = document.querySelector<HTMLElement>('[data-search-status]')
-  const results = document.querySelector<HTMLOListElement>('[data-search-results]')
+  const status = root.querySelector<HTMLElement>('[data-search-status]')
+  const results = root.querySelector<HTMLOListElement>('[data-search-results]')
   if (!form || !input || !status || !results) {
     return
   }
@@ -61,7 +65,9 @@ function init(): void {
 
   const run = async (): Promise<void> => {
     const term = input.value.trim()
-    history.replaceState(null, '', term === '' ? '?' : `?q=${encodeURIComponent(term)}`)
+    if (followAddress) {
+      history.replaceState(null, '', term ? `?q=${encodeURIComponent(term)}` : '?')
+    }
     if (term.length < 2) {
       results.innerHTML = ''
       say('idle')
@@ -70,10 +76,10 @@ function init(): void {
     say('loading')
     try {
       const search = await (await loadPagefind()).debouncedSearch(term)
-      if (search !== null) {
+      if (search) {
         const pages = await Promise.all(search.results.slice(0, MAX_PAGES).map((result) => result.data()))
         results.innerHTML = pages.map(resultItem).join('')
-        say(search.results.length === 0 ? 'empty' : 'count', search.results.length)
+        say(search.results.length ? 'count' : 'empty', search.results.length)
       }
     } catch {
       say('unavailable')
@@ -81,12 +87,18 @@ function init(): void {
   }
 
   input.addEventListener('input', () => void run())
+  if (!followAddress) {
+    return
+  }
   input.value = new URLSearchParams(window.location.search).get('q') ?? ''
-  if (input.value !== '') {
+  if (input.value) {
     void run()
   }
 }
 
-init()
+// The dialog of the bar holds the form on every page but the search page, where the form is the page and
+// follows the address.
+const dialog = document.querySelector('dialog[data-search-dialog]')
+bind(dialog ?? document, dialog === null)
 
 export {}

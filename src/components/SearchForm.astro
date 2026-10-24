@@ -1,0 +1,45 @@
+---
+/** The form of the search, its status and its results, which the search page and the dialog of the bar share. */
+import { pageHref } from '../i18n'
+import { getCopy, type Locale } from '../i18n/strings'
+import Icon from './Icon.astro'
+
+interface Props {
+  locale: Locale
+  /** The id of the field, unique on the page. */
+  id: string
+  /** Whether the field takes the focus when the form appears. */
+  autofocus?: boolean
+}
+const { locale, id, autofocus = false } = Astro.props
+const labels = getCopy(locale).search
+---
+
+<form
+  class="kt-search"
+  role="search"
+  action={pageHref(locale, 'search')}
+  data-search
+  data-idle={labels.idle}
+  data-loading={labels.loading}
+  data-empty={labels.empty}
+  data-unavailable={labels.unavailable}
+  data-count={labels.count}
+>
+  <label for={id} class="kt-block__title">{labels.label}</label>
+  <div class="kt-search__field">
+    <Icon name="search" size={20} />
+    <input
+      id={id}
+      name="q"
+      type="search"
+      inputmode="search"
+      autocomplete="off"
+      spellcheck="false"
+      placeholder={labels.placeholder}
+      autofocus={autofocus}
+    />
+  </div>
+  <p class="kt-search__status" role="status" aria-live="polite" data-search-status>{labels.idle}</p>
+</form>
+<ol class="kt-results" data-search-results></ol>

@@ -2,3 +2,10 @@
 allowBuilds:
   esbuild: true
   sharp: true
+
+# @rolldown/binding-wasm32-wasi pins @emnapi/runtime 2.0.0-beta.2, and pnpm hands that version to the
+# runtime peer of @napi-rs/wasm-runtime 1.2.4 under @astrojs/astro2tsx too, which pairs it with
+# @emnapi/core 1.x. The mismatched pair throws on import, so astro check cannot load @astrojs/check.
+# Drop this once pnpm typecheck passes without it.
+overrides:
+  '@napi-rs/wasm-runtime@1.2.4>@emnapi/runtime': 1.11.3
